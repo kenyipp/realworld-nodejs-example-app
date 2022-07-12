@@ -1,0 +1,62 @@
+TABLE Article {
+	ArticleId int [pk, increment]
+	Slug varchar [not null]
+	Title varchar [not null]
+	Description text [not null]
+	Body longtext [not null]
+	UserId int
+	RecStatus char [default: "A"]
+	Remark text [not null]
+	EnterDate timestamp [default: "CURRENT_TIMESTAMP"]
+	LastUpdate timestamp [default: "CURRENT_TIMESTAMP"]
+}
+
+TABLE ArticleComment {
+	ArticleCommentId int [pk, increment]
+	ArticleId int [not null]
+	Body text [not null]
+	UserId int [not null]
+	RecStatus char [default: "A"]
+	EnterDate timestamp [default: "CURRENT_TIMESTAMP"]
+	LastUpdate timestamp [default: "CURRENT_TIMESTAMP"]
+}
+
+TABLE ArticleFavorite {
+	ArticleId int [pk]
+	UserId int [pk]
+	EnterDate timestamp [default: "CURRENT_TIMESTAMP", not null]
+}
+
+TABLE ArticleTag {
+	ArticleId int [pk]
+	Tag varchar [pk]
+}
+
+TABLE User {
+	UserId int [pk, increment]
+	Username varchar [not null]
+	Hash varchar [not null]
+	Salt varchar [not null]
+	Email varchar [not null]
+	Image text [not null]
+	Bio text [not null]
+	RecStatus char [default: "A"]
+	Remark text [not null]
+	EnterDate timestamp [default: "CURRENT_TIMESTAMP"]
+	LastUpdate timestamp [default: "CURRENT_TIMESTAMP"]
+}
+
+TABLE UserFollow {
+	FollowUser int [pk]
+	UserId int [pk]
+	EnterDate timestamp [default: "CURRENT_TIMESTAMP", not null]
+}
+
+Ref: User.UserId > Article.UserId
+Ref: Article.ArticleId > ArticleComment.ArticleId
+Ref: User.UserId > ArticleComment.UserId
+Ref: Article.ArticleId > ArticleFavorite.ArticleId
+Ref: User.UserId > ArticleFavorite.UserId
+Ref: Article.ArticleId > ArticleTag.ArticleId
+Ref: User.UserId > UserFollow.FollowUser
+Ref: User.UserId > UserFollow.UserId

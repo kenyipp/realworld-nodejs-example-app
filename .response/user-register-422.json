@@ -1,0 +1,9 @@
+{
+    "errors": {
+        "body": [
+            "\"username\" length must be at least 4 characters long",
+            "\"email\" must be a valid email",
+            "\"password\" length must be at least 6 characters long"
+        ]
+    }
+}
