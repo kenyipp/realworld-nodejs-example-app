@@ -15,8 +15,8 @@ export class DtoComment {
 	constructor({ comment, author, following }: DtoCommentConstructor) {
 		this.author = new DtoProfile({ dbDtoUser: author, following });
 		this.id = comment.id;
-		this.createdAt = comment.createdAt;
-		this.updatedAt = comment.updatedAt;
+		this.createdAt = new Date(comment.createdAt);
+		this.updatedAt = new Date(comment.updatedAt);
 		this.body = comment.body;
 	}
 

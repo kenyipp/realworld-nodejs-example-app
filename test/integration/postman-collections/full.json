@@ -7,6 +7,27 @@
 	},
 	"item": [
 		{
+			"name": "Prerequisite",
+			"item": [
+				{
+					"name": "Reset Server",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{APIURL}}/reset",
+							"host": [
+								"{{APIURL}}"
+							],
+							"path": [
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Auth",
 			"item": [
 				{
@@ -213,7 +234,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -269,7 +290,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -657,7 +678,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -734,7 +755,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -812,7 +833,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -889,7 +910,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -966,7 +987,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1049,7 +1070,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1120,7 +1141,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1194,7 +1215,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1267,7 +1288,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1335,7 +1356,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1407,7 +1428,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1483,7 +1504,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1555,7 +1576,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1618,7 +1639,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1686,7 +1707,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1786,7 +1807,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1823,7 +1844,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -1968,7 +1989,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -2033,7 +2054,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {
@@ -2099,7 +2120,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Token {{token}}"
+								"value": "Bearer {{token}}"
 							}
 						],
 						"body": {

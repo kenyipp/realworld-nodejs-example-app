@@ -30,8 +30,9 @@ export class DtoArticle {
 		this.title = article.title;
 		this.description = article.description;
 		this.body = article.body;
-		this.createdAt = article.createdAt;
-		this.updatedAt = article.updatedAt;
+		// Ensure that the 'createdAt' and 'updatedAt' fields always use ISO timestamp format.
+		this.createdAt = new Date(article.createdAt);
+		this.updatedAt = new Date(article.updatedAt);
 	}
 
 }

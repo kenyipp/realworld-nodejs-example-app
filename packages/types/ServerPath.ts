@@ -1,5 +1,6 @@
 export enum ServerPath {
 	HealthCheck = "/api/health-check",
+	ResetServer = "/api/reset",
 	Login = "/api/users/login",
 	Registration = "/api/users",
 	GetCurrentUser = "/api/user",

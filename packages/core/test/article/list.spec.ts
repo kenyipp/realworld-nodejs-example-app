@@ -54,10 +54,10 @@ describe("Article - List Articles", () => {
 			user
 		} = await setup();
 		let articles: DbDtoArticle[] = [];
-		articles = await articleService.getArticlesByFilters({ offset: 0, limit: 10, favorited: user.id });
+		articles = await articleService.getArticlesByFilters({ offset: 0, limit: 10, favorited: user.username });
 		expect(articles).have.lengthOf(0);
 		await articleService.favorite({ userId: user.id, articleId: articleA.id });
-		articles = await articleService.getArticlesByFilters({ offset: 0, limit: 10, favorited: user.id });
+		articles = await articleService.getArticlesByFilters({ offset: 0, limit: 10, favorited: user.username });
 		expect(articles).have.lengthOf(1);
 	});
 

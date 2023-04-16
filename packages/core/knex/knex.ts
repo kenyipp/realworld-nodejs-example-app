@@ -13,7 +13,7 @@ export const knex = Knex(config[process.env.NODE_ENV || Environments.Development
  *
  */
 export const dangerouslyResetDb = async () => {
-	if (process.env.NODE_ENV !== Environments.Testing) {
+	if (![Environments.Development, Environments.CI, Environments.Testing].includes(process.env.NODE_ENV)) {
 		throw new Error("You cannot reset the database using this function in a non-testing environment");
 	}
 	await knex.migrate.rollback(null, true);

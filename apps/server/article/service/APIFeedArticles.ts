@@ -7,6 +7,7 @@ import {
 import type { ArticleService, UserService } from "@conduit/core/service";
 import pAll from "p-all";
 import { Environments } from "@conduit/types/Environments";
+import { logger } from "@conduit/utils";
 import {
 	DtoArticle,
 	type DtoInputGetArticleFeed
@@ -88,6 +89,7 @@ export class APIFeedArticles {
 		if (error instanceof APIError) {
 			return error;
 		}
+		logger.error(error);
 		return new APIErrorInternalServerError({});
 	}
 

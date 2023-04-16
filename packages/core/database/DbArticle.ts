@@ -352,7 +352,14 @@ export class DbArticle {
 					.select("article_id")
 					.from(Tables.ArticleFavorite)
 					.where("rec_status", RecStatus.Normal)
-					.where("user_id", filters.favorited)
+					.whereIn(
+						"user_id",
+						knex
+							.select("user_id")
+							.from(Tables.User)
+							.where("username", filters.favorited)
+							.where("status_id", UserStatus.Normal)
+					)
 			);
 		}
 

@@ -19,8 +19,8 @@
 	"keywords": [],
 	"license": "ISC",
 	"dependencies": {
-		"eslint": "^8.27.0",
-		"turbo": "^1.6.3"
+		"eslint": "^8.38.0",
+		"turbo": "^1.9.1"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",

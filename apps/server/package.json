@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-		"dev": "ts-node-dev --no-notify --exit-child -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ./local.ts",
+		"dev": "NODE_ENV=development ts-node-dev --no-notify --exit-child -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ./local.ts",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
 		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
