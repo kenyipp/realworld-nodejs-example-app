@@ -1,0 +1,35 @@
+{
+	"name": "@conduit/utils",
+	"scripts": {
+		"lint": "eslint --ext .ts --ext .ts .",
+		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
+		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+	},
+	"dependencies": {
+		"@colors/colors": "^1.5.0",
+		"@conduit/config": "*",
+		"@conduit/types": "*",
+		"@types/aws-sdk": "^2.7.0",
+		"@types/sqlstring": "^2.3.0",
+		"aws-sdk": "^2.1353.0",
+		"chai": "^4.3.6",
+		"clean-stack": "3.0.1",
+		"fast-json-stable-stringify": "^2.1.0",
+		"knex": "^2.3.0",
+		"lodash": "^4.17.21",
+		"moment": "^2.29.4",
+		"safe-stable-stringify": "2.4.1",
+		"serialize-error": "8.1.0",
+		"sqlstring": "^2.3.3",
+		"triple-beam": "1.3.0",
+		"winston": "^3.8.2",
+		"winston-transport": "^4.5.0"
+	},
+	"devDependencies": {
+		"@types/bcrypt": "^5.0.0",
+		"@types/json-schema": "^7.0.11",
+		"@types/lodash": "^4.14.192",
+		"@types/semver": "^7.3.13",
+		"@types/triple-beam": "^1.3.2"
+	}
+}

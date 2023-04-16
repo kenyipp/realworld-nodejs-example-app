@@ -1,0 +1,12 @@
+favorited
+favoriting
+jwtid
+realworld
+signin
+sqlstring
+uncategorized
+unfavorited
+unfavoriting
+unfollow
+unfollowed
+unfollows

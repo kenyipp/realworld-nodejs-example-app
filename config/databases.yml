@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  #
+  redis:
+    container_name: conduit-redis
+    image: redis:alpine
+    command: redis-server
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+
+  #
+  mysql:
+    image: mysql:8.0.27
+    container_name: conduit-mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+    ports:
+      - 3306:3306

@@ -1,0 +1,30 @@
+aarch64
+autosize
+birthdate
+colorfied
+colorify
+domcontentloaded
+middlewares
+millis
+prefs
+reportingpolicy
+vendia
+
+# Postman
+prerequest
+APIURL
+
+# Amazon
+cloudwatchlogs
+
+# knex
+knexfile
+logform
+longtext
+mediumtext
+tinytext
+
+# Node.js Package Terms
+luxon
+sinonjs
+reduxjs

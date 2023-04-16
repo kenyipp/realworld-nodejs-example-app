@@ -1,0 +1,5 @@
+server:
+    appSignature: testing
+
+auth:
+    saltRounds: 1
