@@ -239,3 +239,34 @@ jobs:
       - name: Run Integration Test
         working-directory: ./test/integration
         run: ./api-test.sh
+
+  codecov:
+    name: Code Coverage Test
+    runs-on: ubuntu-latest
+    needs: ["integration-test"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: "pnpm"
+      - name: Restore the PNPM Store Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run the Coverage Test
+        run: pnpm run coverage
+      - name: Upload Coverage Reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
