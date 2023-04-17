@@ -16,5 +16,6 @@ if (process.env.NODE_ENV === Environments.CI || process.env.NODE_ENV === Environ
 	});
 }
 
-router.use(userRouter);
-router.use(articleRouter);
+router
+	.use(userRouter)
+	.use(articleRouter);

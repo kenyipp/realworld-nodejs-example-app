@@ -12,6 +12,8 @@
 		"start": "turbo run start",
 		"test": "turbo run test --parallel",
 		"lint": "turbo run lint --parallel",
+		"lint:fix": "turbo run lint:fix --parallel",
+		"check-types": "turbo run check-types --parallel",
 		"spell-check": "cspell \"**\" --no-progress",
 		"coverage": "nyc turbo run test",
 		"prepare": "husky install"

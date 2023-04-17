@@ -56,12 +56,16 @@ export const config: { [key: string]: Knex.Config } = {
 
 };
 
+const loadExtensions = process.env.NODE_ENV === Environments.CI || process.env.NODE_ENV === Environments.Production ? [".js"] : [".ts"];
+
 const defaultConfig: Partial<Knex.Config> = {
 	migrations: {
-		directory: path.join(__dirname, "./knex/migrations")
+		directory: path.join(__dirname, "./knex/migrations"),
+		loadExtensions
 	},
 	seeds: {
-		directory: path.join(__dirname, "./knex/seeds")
+		directory: path.join(__dirname, "./knex/seeds"),
+		loadExtensions
 	},
 	useNullAsDefault: true
 };

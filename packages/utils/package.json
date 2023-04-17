@@ -1,9 +1,11 @@
 {
 	"name": "@conduit/utils",
 	"scripts": {
+		"build": "tsc",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts",
+		"check-types": "tsc --skipLibCheck --noEmit"
 	},
 	"dependencies": {
 		"@colors/colors": "^1.5.0",
@@ -29,6 +31,7 @@
 		"@types/bcrypt": "^5.0.0",
 		"@types/json-schema": "^7.0.11",
 		"@types/lodash": "^4.14.194",
+		"@types/mocha": "^10.0.1",
 		"@types/node": "^18.15.11",
 		"@types/semver": "^7.3.13",
 		"@types/triple-beam": "^1.3.2",

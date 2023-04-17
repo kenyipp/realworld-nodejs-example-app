@@ -1,5 +1,6 @@
 import path from "path";
 import flat, { unflatten } from "flat";
+import type { AnyObject } from "@conduit/types";
 import {
 	fromPairs,
 	upperCase
@@ -37,10 +38,10 @@ export class AppConfig {
 	}
 
 	private updateAppConfigFromEnvs() {
-		const flattedAppConfig = flat(this);
+		const flattedAppConfig: AnyObject = flat(this);
 		const flattedKeys = Object.keys(flattedAppConfig);
 		const envKeyToFlattedKey = fromPairs(flattedKeys.map(key => [upperCase(key).replace(/ /g, "_"), key]));
-		const appConfig = unflatten(
+		const appConfig: AnyObject = unflatten(
 			fromPairs(
 				Object
 					.keys(envKeyToFlattedKey)

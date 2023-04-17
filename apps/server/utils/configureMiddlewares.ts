@@ -56,7 +56,7 @@ export const configureMiddlewares = ({ app }: { app: Express }): void => {
  */
 const logger: morgan.FormatFn<Request, Response> = (tokens, req, res) => {
 	// Extract tokens and response time
-	const status = tokens.status(req, res);
+	const status = tokens?.status?.(req, res);
 	const responseTimeInString = tokens["response-time"](req, res);
 	const responseTime = parseInt(responseTimeInString ?? "", 10);
 

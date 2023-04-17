@@ -5,9 +5,6 @@ import {
 	isUndefined,
 	sortBy
 } from "lodash";
-import {
-
-} from "async";
 import { v4 as Uuid } from "uuid";
 import { RecStatus, Tables, UserStatus } from "@conduit/types";
 import { DbDtoUser } from "./dto";
@@ -238,6 +235,7 @@ export class DbUser {
 	async followUser({ followerId, followingId }: FollowUserInput): Promise<void> {
 		await knex
 			.insert({
+				user_follow_id: Uuid(),
 				follower_id: followerId,
 				following_id: followingId,
 				rec_status: "A"

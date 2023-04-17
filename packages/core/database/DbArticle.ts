@@ -52,8 +52,8 @@ export class DbArticle {
 				description,
 				body,
 				user_id: userId,
-				created_at: Date.now(),
-				updated_at: Date.now()
+				created_at: new Date(),
+				updated_at: new Date()
 			})
 			.into(Tables.Article);
 		return articleId;

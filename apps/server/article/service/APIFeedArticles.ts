@@ -50,7 +50,7 @@ export class APIFeedArticles {
 		}
 	}
 
-	private async getArticles({ articles, user }: { articles: DbDtoArticle[], user: DbDtoUser }) {
+	private async getArticles({ articles, user }: { articles: DbDtoArticle[], user: DbDtoUser }): Promise<DtoArticle[]> {
 		const articleIds = articles.map((article) => article.id);
 		const authorIds = articles.map((article) => article.userId);
 		const articleIdToArticle = indexToDoc(articles, "id");
@@ -74,15 +74,20 @@ export class APIFeedArticles {
 		], {
 			concurrency: process.env.NODE_ENV === Environments.Testing ? 1 : Infinity
 		});
-		return articleIds.map((id) => {
-			const article = articleIdToArticle[id];
-			const author = authorIdToAuthor[article.userId];
-			const tag = articleIdToTags[id];
-			const meta = articleIdToMeta[id];
-			return new DtoArticle({
-				article, author, meta, tag
-			});
-		});
+		return articleIds
+			.map((id) => {
+				const article = articleIdToArticle[id];
+				const author = authorIdToAuthor[(article && article.userId) ?? ""];
+				const tag = articleIdToTags[id];
+				const meta = articleIdToMeta[id];
+				if (!article || !author || !meta || !tag) {
+					return null;
+				}
+				return new DtoArticle({
+					article, author, meta, tag
+				});
+			})
+			.filter((article) => article !== null);
 	}
 
 	private convertErrorToAPIError(error: any) {

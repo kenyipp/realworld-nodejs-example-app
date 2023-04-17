@@ -53,7 +53,9 @@
 		// Using rootDirs, you can inform the compiler that there are many “virtual” directories acting as a single root.
 		// This allows the compiler to resolve relative module imports within these “virtual” directories,
 		// as if they were merged in to one directory.
-		"rootDirs": ["."],
+		"rootDirs": [
+			"."
+		],
 		// Generate .d.ts files for every TypeScript or JavaScript file inside your project
 		"declaration": false,
 		// Offers a way to configure the root directory for where declaration files are emitted.
@@ -67,8 +69,6 @@
 		// Read the documentation for more explanation
 		// https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
 		"importsNotUsedAsValues": "preserve",
-		// If specified, .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory.
-		"outDir": "build",
 		// Do not erase const enum declarations in generated code.
 		"preserveConstEnums": true,
 		// Enables the generation of sourcemap files.
@@ -84,7 +84,9 @@
 		"emitDecoratorMetadata": true,
 		// Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
 		"experimentalDecorators": true,
-		"lib": ["ES2022"],
+		"lib": [
+			"ES2022"
+		],
 		"generateCpuProfile": "profile.cpuprofile",
 		"target": "ES2022",
 		"moduleResolution": "node",
@@ -94,5 +96,14 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"exclude": ["node_modules", "build", ".next", "dist", "test.ts", "output", "coverage"]
+	"exclude": [
+		"node_modules",
+		"build",
+		".next",
+		"dist",
+		"test.ts",
+		"output",
+		"coverage",
+		"*.spec.ts"
+	]
 }

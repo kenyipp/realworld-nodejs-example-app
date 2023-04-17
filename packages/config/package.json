@@ -3,13 +3,18 @@
 	"version": "0.1.0",
 	"private": true,
 	"author": "Ken Yip",
-	"scripts": {},
+	"main": "./output/index.js",
+	"scripts": {
+		"build": "tsc && ./scripts/post-build.sh",
+		"check-types": "tsc --skipLibCheck --noEmit"
+	},
 	"dependencies": {
 		"config": "^3.3.9",
 		"flat": "^5.0.2",
 		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
+		"@conduit/types": "workspace:*",
 		"@types/bcrypt": "^5.0.0",
 		"@types/config": "^3.3.0",
 		"@types/flat": "^5.0.2",

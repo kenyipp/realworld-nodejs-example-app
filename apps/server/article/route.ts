@@ -2,6 +2,7 @@ import Router from "express-promise-router";
 import { Factory } from "@conduit/core";
 import { ServerPath } from "@conduit/types";
 import { type Handler } from "express";
+import { APIErrorInternalServerError } from "@conduit/utils";
 import {
 	APIAddComments,
 	APICreateArticle,
@@ -56,6 +57,9 @@ const apiUpdateArticle = new APIUpdateArticle({ articleService });
 
 const getFeedArticles: Handler = async (req, res) => {
 	const { user } = req;
+	if (!user) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const input = req.query as unknown as DtoInputGetArticleFeed;
 	const response = await apiFeedArticles.execute({ input, user });
 	res.json(response);
@@ -70,6 +74,9 @@ const getArticles: Handler = async (req, res) => {
 
 const createArticle: Handler = async (req, res) => {
 	const { user } = req;
+	if (!user) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const input: DtoInputCreateArticle = req.body.article;
 	const response = await apiCreateArticle.execute({ input, user });
 	res.json(response);
@@ -78,6 +85,9 @@ const createArticle: Handler = async (req, res) => {
 const getArticle: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiGetArticle.execute({ slug, user });
 	res.json(response);
 };
@@ -85,6 +95,9 @@ const getArticle: Handler = async (req, res) => {
 const updateArticle: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!user || !slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const input: DtoInputUpdateArticle = req.body.article;
 	const response = await apiUpdateArticle.execute({ slug, user, input });
 	return res.json(response);
@@ -93,6 +106,9 @@ const updateArticle: Handler = async (req, res) => {
 const deleteArticle: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!user || !slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiDeleteArticle.execute({ slug, user });
 	return res.json(response);
 };
@@ -100,6 +116,9 @@ const deleteArticle: Handler = async (req, res) => {
 const getComments: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiGetComments.execute({ slug, user });
 	return res.json(response);
 };
@@ -108,6 +127,9 @@ const addComment: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
 	const input: DtoInputAddComment = req.body.comment;
+	if (!user || !slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiAddComments.execute({ slug, user, input });
 	return res.json(response);
 };
@@ -115,6 +137,9 @@ const addComment: Handler = async (req, res) => {
 const deleteComment: Handler = async (req, res) => {
 	const { user } = req;
 	const { id: commentId } = req.params;
+	if (!user || !commentId) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiDeleteComment.execute({ commentId, user });
 	return res.json(response);
 };
@@ -122,6 +147,9 @@ const deleteComment: Handler = async (req, res) => {
 const favoriteArticle: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!user || !slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiFavoriteArticle.execute({ slug, user });
 	return res.json(response);
 };
@@ -129,6 +157,9 @@ const favoriteArticle: Handler = async (req, res) => {
 const unfavoriteArticle: Handler = async (req, res) => {
 	const { user } = req;
 	const { slug } = req.params;
+	if (!user || !slug) {
+		throw new APIErrorInternalServerError({ cause: new Error("Missing required parameters. Check router settings.") });
+	}
 	const response = await apiUnfavoriteArticle.execute({ slug, user });
 	return res.json(response);
 };

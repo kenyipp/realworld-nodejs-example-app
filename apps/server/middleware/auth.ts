@@ -28,20 +28,20 @@ const userService = Factory
 export const auth = async (req: Request, _res: Response, next: NextFunction) => {
 	const { authorization } = req.headers;
 
-	if (isNil(authorization)) {
+	if (authorization === null || authorization === undefined) {
 		return next();
 	}
 
 	const [policy, accessToken] = authorization.split(" ");
 
 	APIErrorUnauthorized.assert({
-		condition: policy.toLowerCase() === "bearer",
+		condition: !isNil(policy) && policy.toLowerCase() === "bearer",
 		errorCode: ErrorCodes.InvalidAuthenticationScheme,
 		message: "The provided authentication scheme is not supported. Please use a bearer token."
 	});
 
 	try {
-		const decoded = verifyJsonWebToken({ accessToken });
+		const decoded = verifyJsonWebToken({ accessToken: accessToken ?? "" });
 		const user = await userService.getUserById({ id: decoded.userId });
 		if (decoded.hash !== hashDbDtoUser({ dbDtoUser: user })) {
 			throw new TokenExpiredError(
@@ -56,6 +56,9 @@ export const auth = async (req: Request, _res: Response, next: NextFunction) => 
 		req.user = user;
 		return next();
 	} catch (error) {
+		if (!(error instanceof Error)) {
+			return next(error);
+		}
 		if (error instanceof TokenExpiredError) {
 			throw new APIErrorUnauthorized({
 				errorCode: ErrorCodes.ExpiredToken,

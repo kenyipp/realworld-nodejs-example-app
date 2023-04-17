@@ -7,6 +7,12 @@
 		"lint": {
 			"outputs": []
 		},
+		"lint:fix": {
+			"outputs": []
+		},
+		"check-types": {
+			"outputs": []
+		},
 		"start": {
 			"cache": false
 		},
@@ -17,8 +23,7 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^clean"],
-			"outputs": ["build/**", "dist/**", ".next/**"]
+			"cache": false
 		}
 	}
 }

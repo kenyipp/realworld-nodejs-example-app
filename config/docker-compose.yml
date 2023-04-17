@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  #
+#   redis:
+#     container_name: conduit-redis
+#     image: redis:alpine
+#     command: redis-server
+#     restart: unless-stopped
+#     ports:
+#       - 6379:6379
+
+  #
+  mysql:
+    image: mysql
+    container_name: conduit-mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=conduit
+    ports:
+      - 3306:3306

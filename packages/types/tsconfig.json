@@ -1,0 +1,9 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"sourceMap": false
+	},
+	"exclude": [
+		"node_modules"
+	]
+}
