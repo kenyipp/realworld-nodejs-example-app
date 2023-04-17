@@ -123,16 +123,24 @@ importers:
     specifiers:
       '@types/bcrypt': ^5.0.0
       '@types/config': ^3.3.0
+      '@types/flat': ^5.0.2
       '@types/json-schema': ^7.0.11
+      '@types/lodash': ^4.14.194
       '@types/semver': ^7.3.13
-      chai: ^4.3.6
+      chai: ^4.3.7
       config: ^3.3.9
+      flat: ^5.0.2
+      lodash: ^4.17.21
     dependencies:
       config: 3.3.9
+      flat: 5.0.2
+      lodash: 4.17.21
     devDependencies:
       '@types/bcrypt': 5.0.0
       '@types/config': 3.3.0
+      '@types/flat': 5.0.2
       '@types/json-schema': 7.0.11
+      '@types/lodash': 4.14.194
       '@types/semver': 7.3.13
       chai: 4.3.7
 
@@ -1186,6 +1194,10 @@ packages:
       '@types/express-serve-static-core': 4.17.33
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.1
+
+  /@types/flat/5.0.2:
+    resolution: {integrity: sha512-3zsplnP2djeps5P9OyarTxwRpMLoe5Ash8aL9iprw0JxB+FAHjY+ifn4yZUuW4/9hqtnmor6uvjSRzJhiVbrEQ==}
+    dev: true
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}

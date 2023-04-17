@@ -28,3 +28,4 @@ tinytext
 luxon
 sinonjs
 reduxjs
+unflatten

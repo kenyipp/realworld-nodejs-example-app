@@ -5,7 +5,8 @@
 	"scripts": {
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts",
+		"migrate-db": "knex migrate:latest"
 	},
 	"dependencies": {
 		"@conduit/config": "*",

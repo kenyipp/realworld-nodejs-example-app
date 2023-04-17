@@ -1,4 +1,10 @@
 import path from "path";
+import flat, { unflatten } from "flat";
+import {
+	fromPairs,
+	upperCase
+} from "lodash";
+
 process.env.NODE_CONFIG_DIR = path.join(__dirname, "./config");
 
 import config from "config";
@@ -17,9 +23,36 @@ export class AppConfig {
 		saltRounds: number;
 	}
 
+	database: {
+		host: string;
+		user: string;
+		password: string;
+		port: number;
+		database: string;
+	}
+
 	constructor() {
 		SESSIONS.forEach(session => this[session] = config.get(session));
+		this.updateAppConfigFromEnvs();
 	}
+
+	private updateAppConfigFromEnvs() {
+		const flattedAppConfig = flat(this);
+		const flattedKeys = Object.keys(flattedAppConfig);
+		const envKeyToFlattedKey = fromPairs(flattedKeys.map(key => [upperCase(key).replace(/ /g, "_"), key]));
+		const appConfig = unflatten(
+			fromPairs(
+				Object
+					.keys(envKeyToFlattedKey)
+					.map(envKey => [
+						envKeyToFlattedKey[envKey],
+						process.env[envKey] || flattedAppConfig[envKeyToFlattedKey[envKey]]
+					])
+			)
+		);
+		SESSIONS.forEach(session => this[session] = appConfig[session]);
+	}
+
 }
 
 export const appConfig = new AppConfig();

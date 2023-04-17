@@ -1,7 +1,7 @@
 server:
-    port: 3100
-    appSignature: APP_SIGNATURE
-    tokenExpiresIn: 7 days
+  port: 3100
+  appSignature: APP_SIGNATURE
+  tokenExpiresIn: 7 days
 
 auth:
-    saltRounds: 1
+  saltRounds: 1

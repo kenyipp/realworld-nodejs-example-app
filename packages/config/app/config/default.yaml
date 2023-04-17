@@ -1,9 +1,16 @@
 server:
-    port: 3100
-    # The app signature that is used for encrypting the JSON Web Token.
-    appSignature:
-    tokenExpiresIn: 7 days
+  port: 3100
+  # The app signature that is used for encrypting the JSON Web Token.
+  appSignature:
+  tokenExpiresIn: 7 days
 
 auth:
-    # The number of iterations used to generate the salt value that is added to the password before it is hashed
-    saltRounds: 10
+  # The number of iterations used to generate the salt value that is added to the password before it is hashed
+  saltRounds: 10
+
+database:
+  host:
+  user:
+  password:
+  port: 3306
+  database: conduit
