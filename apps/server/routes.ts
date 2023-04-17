@@ -9,7 +9,7 @@ export const router = Router();
 
 router.get(ServerPath.HealthCheck, (_req, res) => res.send("Ok"));
 
-if ([Environments.CI, Environments.Testing, Environments.Development].includes(process.env.NODE_ENV)) {
+if (process.env.NODE_ENV === Environments.CI || process.env.NODE_ENV === Environments.Development) {
 	router.post(ServerPath.ResetServer, async (_req, res) => {
 		await dangerouslyResetDb();
 		res.send("Ok");
