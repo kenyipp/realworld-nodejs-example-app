@@ -18,13 +18,12 @@
 	},
 	"keywords": [],
 	"license": "ISC",
-	"dependencies": {
-		"eslint": "^8.38.0",
-		"turbo": "^1.9.1"
-	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
+		"cspell": "^6.31.1",
+		"eslint": "^8.38.0",
 		"husky": "^8.0.3",
-		"nyc": "^15.1.0"
+		"nyc": "^15.1.0",
+		"turbo": "^1.9.1"
 	}
 }
