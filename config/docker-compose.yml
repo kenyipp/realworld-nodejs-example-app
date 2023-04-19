@@ -1,14 +1,23 @@
 version: "3"
 
 services:
+
   #
-#   redis:
-#     container_name: conduit-redis
-#     image: redis:alpine
-#     command: redis-server
-#     restart: unless-stopped
-#     ports:
-#       - 6379:6379
+  localstack:
+    container_name: conduit-localstack
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4510-4559:4510-4559"
+
+  #
+  redis:
+    container_name: conduit-redis
+    image: redis:alpine
+    command: redis-server
+    restart: unless-stopped
+    ports:
+      - 6379:6379
 
   #
   mysql:

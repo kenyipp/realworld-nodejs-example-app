@@ -34,7 +34,7 @@ export const config: { [key: string]: Knex.Config } = {
 	[Environments.Development]: {
 		client: "better-sqlite3",
 		connection: {
-			filename: ":memory:"
+			filename: "./db.sqlite"
 		}
 	},
 

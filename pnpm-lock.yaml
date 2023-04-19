@@ -31,7 +31,6 @@ importers:
       '@types/bcrypt': ^5.0.0
       '@types/body-parser': ^1.19.2
       '@types/compression': ^1.7.2
-      '@types/cors': ^2.8.13
       '@types/express': ^4.17.14
       '@types/json-schema': ^7.0.11
       '@types/lodash': ^4.14.192
@@ -46,7 +45,6 @@ importers:
       chai: ^4.3.7
       chalk: 4.1.2
       compression: ^1.7.4
-      cors: ^2.8.5
       dotenv: ^16.0.3
       dotenv-expand: ^10.0.0
       express: ^4.18.2
@@ -81,7 +79,6 @@ importers:
       body-parser: 1.20.2
       chalk: 4.1.2
       compression: 1.7.4
-      cors: 2.8.5
       dotenv: 16.0.3
       dotenv-expand: 10.0.0
       express: 4.18.2
@@ -102,7 +99,6 @@ importers:
       '@types/bcrypt': 5.0.0
       '@types/body-parser': 1.19.2
       '@types/compression': 1.7.2
-      '@types/cors': 2.8.13
       '@types/express': 4.17.17
       '@types/json-schema': 7.0.11
       '@types/lodash': 4.14.192
@@ -1302,12 +1298,6 @@ packages:
     resolution: {integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==}
     dev: true
 
-  /@types/cors/2.8.13:
-    resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
-    dependencies:
-      '@types/node': 18.15.10
-    dev: true
-
   /@types/express-serve-static-core/4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
@@ -2444,14 +2434,6 @@ packages:
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
-
-  /cors/2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
-    engines: {node: '>= 0.10'}
-    dependencies:
-      object-assign: 4.1.1
-      vary: 1.1.2
-    dev: false
 
   /cosmiconfig/8.0.0:
     resolution: {integrity: sha512-da1EafcpH6b/TD8vDRaWV7xFINlHlF6zKsGwS1TsuVJTZRkquaS5HTMq7uq6h31619QjbsYl21gVDOm32KM1vQ==}

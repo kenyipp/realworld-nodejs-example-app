@@ -1,21 +1,17 @@
-aarch64
-autosize
-birthdate
-colorfied
-colorify
-domcontentloaded
-middlewares
-millis
-prefs
-reportingpolicy
-vendia
-
 # Postman
 prerequest
 APIURL
 
 # Amazon
 cloudwatchlogs
+localstack
+
+# Node.js Packages
+luxon
+sinonjs
+reduxjs
+unflatten
+vendia
 
 # knex
 knexfile
@@ -23,9 +19,12 @@ logform
 longtext
 mediumtext
 tinytext
+millis
+sqlstring
 
-# Node.js Package Terms
-luxon
-sinonjs
-reduxjs
-unflatten
+# Winston
+colorify
+colorfied
+
+# Express
+middlewares

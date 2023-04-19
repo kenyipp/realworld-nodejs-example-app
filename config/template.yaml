@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Transform: AWS::Serverless-2016-10-31
+
+Description: >
+  The AWS SAM application for Conduit consists of multiple deployment templates that define the resources and services used by the application
+
+Globals:
+  Function:
+    Runtime: nodejs16.x
+    MemorySize: 512
+    Timeout: 30
+
+Parameters:
+  Domain:
+    Type: String
+    Default: api.conduit.kenyip.cc
+  CorsAllowedDomain:
+    Type: String
+    Default: https://conduit.kenyip.cc
+
+Resources:
+  Conduit:
+    Type: AWS::Serverless::HttpApi
+    Domain:
+        CertificateArn: !Ref Certificate
+        DomainName: !Ref Domain
+    Properties:
+      CorsConfiguration:
+        # Setting the values of the Access-Control-Allow-Credentials header.
+        AllowCredentials: true
+        # Setting the values of the Access-Control-Allow-Headers header.
+        AllowHeaders:
+          - Authorization
+          - Content-Type
+          - Accept
+          - User-Agent
+          - Referer
+        # Setting the values of the Access-Control-Allow-Methods header
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+        AllowOrigins:
+          - !Ref CorsAllowedDomain
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: api.conduit.kenyip.cc
+      ValidationMethod: DNS
+
+  User:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./user
+      Handler: lambda.handler
+      Events:
+        UserLogin:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/users/login
+            Method: post
+    Tracing: Active

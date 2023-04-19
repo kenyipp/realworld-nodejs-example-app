@@ -9,14 +9,16 @@
 	],
 	"scripts": {
 		"build": "turbo run build",
-		"start": "turbo run start",
-		"test": "turbo run test --parallel",
+		"build:packages": "turbo run build --filter='./packages/*'",
+		"check-types": "turbo run check-types --parallel",
+		"coverage": "nyc turbo run test",
+		"dev": "trubo run dev",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",
-		"check-types": "turbo run check-types --parallel",
+		"prepare": "husky install",
 		"spell-check": "cspell \"**\" --no-progress",
-		"coverage": "nyc turbo run test",
-		"prepare": "husky install"
+		"start": "turbo run start",
+		"test": "turbo run test --parallel"
 	},
 	"keywords": [],
 	"license": "ISC",

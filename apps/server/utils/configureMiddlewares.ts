@@ -1,4 +1,3 @@
-import cors from "cors";
 import chalk from "chalk";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -22,9 +21,6 @@ import { Environments } from "@conduit/types";
  *
  */
 export const configureMiddlewares = ({ app }: { app: Express }): void => {
-	// Enable Cross-Origin Resource Sharing (CORS)
-	app.use(cors());
-
 	// Add security-related HTTP headers to the response
 	app.use(helmet());
 
