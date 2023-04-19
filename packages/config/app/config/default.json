@@ -1,0 +1,17 @@
+{
+	"server": {
+		"port": 3100,
+		"appSignature": null,
+		"tokenExpiresIn": "7 days"
+	},
+	"auth": {
+		"saltRounds": 10
+	},
+	"database": {
+		"host": null,
+		"user": null,
+		"password": null,
+		"port": 3306,
+		"database": "conduit"
+	}
+}

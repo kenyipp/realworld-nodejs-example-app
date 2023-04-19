@@ -1,7 +1,0 @@
-server:
-  port: 3100
-  appSignature: HOW_DO_YOU_TURN_IT_ON
-  tokenExpiresIn: 7 days
-
-auth:
-  saltRounds: 1

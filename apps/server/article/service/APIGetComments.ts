@@ -1,4 +1,4 @@
-import { indexToDoc } from "@conduit/utils/lodash";
+import { indexToDoc } from "@conduit/utils";
 import type { ArticleService, UserService } from "@conduit/core/service";
 import { DbDtoUser } from "@conduit/core/database/dto";
 import { APIError, APIErrorInternalServerError, APIErrorNotFound } from "@conduit/utils/error";

@@ -1,5 +1,0 @@
-server:
-  appSignature: HOW_DO_YOU_TURN_IT_ON
-
-auth:
-  saltRounds: 1

@@ -1,2 +1,1 @@
 import "./knex";
-import "./lodash";

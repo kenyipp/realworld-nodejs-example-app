@@ -1,21 +1,28 @@
 {
 	"name": "@conduit/server",
 	"version": "1.0.0",
+	"private": true,
 	"description": "",
+	"keywords": [],
+	"license": "MIT",
+	"author": "Ken Yip",
 	"main": "index.js",
+	"workspaces": [
+		"../../packages/config",
+		"../../packages/core",
+		"../../packages/types",
+		"../../packages/utils"
+	],
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-		"build:deploy": "tsc -p tsconfig.deploy.json && tsc-alias -p tsconfig.build.json",
+		"build": "tsc && tsc-alias",
+		"build:deploy": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"check-types": "tsc --skipLibCheck --noEmit",
 		"dev": "NODE_ENV=development ts-node-dev --no-notify --exit-child -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ./local.ts",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts",
 		"start:ci": "NODE_ENV=ci pm2 start ./local.js",
-		"check-types": "tsc --skipLibCheck --noEmit"
+		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"dependencies": {
 		"@conduit/config": "*",
 		"@conduit/core": "*",

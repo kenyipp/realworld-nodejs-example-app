@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import { compareSync, hashSync, genSaltSync } from "bcryptjs";
 import { appConfig } from "@conduit/config";
 import {
 	PasswordNotMatchError,
@@ -20,8 +20,8 @@ export class PasswordHandler {
 	 */
 	encryptPassword({ password }: EncryptPasswordInput): string {
 		this.validatePassword({ password });
-		const salt = bcrypt.genSaltSync(appConfig.auth.saltRounds);
-		const hash = bcrypt.hashSync(password, salt);
+		const salt = genSaltSync(appConfig.auth.saltRounds);
+		const hash = hashSync(password, salt);
 		return hash;
 	}
 
@@ -37,7 +37,7 @@ export class PasswordHandler {
 	 *
 	 */
 	comparePassword({ password, encryptedPassword }: ComparePasswordInput): void {
-		const matched = bcrypt.compareSync(password, encryptedPassword);
+		const matched = compareSync(password, encryptedPassword);
 		if (!matched) {
 			throw new PasswordNotMatchError();
 		}

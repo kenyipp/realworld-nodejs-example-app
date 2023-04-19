@@ -1,4 +1,5 @@
-import { indexToDoc, omit } from "@conduit/utils/lodash";
+import { indexToDoc, logger } from "@conduit/utils";
+import { omit } from "lodash";
 import { DbDtoArticle, DbDtoUser } from "@conduit/core/database/dto";
 import {
 	APIError,
@@ -7,7 +8,6 @@ import {
 import type { ArticleService, UserService } from "@conduit/core/service";
 import pAll from "p-all";
 import { Environments } from "@conduit/types/Environments";
-import { logger } from "@conduit/utils";
 import {
 	DtoArticle,
 	type DtoInputGetArticleFeed

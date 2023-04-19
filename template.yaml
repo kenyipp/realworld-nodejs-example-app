@@ -23,8 +23,8 @@ Resources:
   Conduit:
     Type: AWS::Serverless::HttpApi
     Domain:
-        CertificateArn: !Ref Certificate
-        DomainName: !Ref Domain
+      CertificateArn: !Ref Certificate
+      DomainName: !Ref Domain
     Properties:
       CorsConfiguration:
         # Setting the values of the Access-Control-Allow-Credentials header.
@@ -56,7 +56,10 @@ Resources:
   User:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
+      Environment:
+        Variables:
+          NODE_ENV: production
+      CodeUri: ./apps/server
       Handler: lambda.handler
       Events:
         UserLogin:

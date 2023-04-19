@@ -1,14 +1,11 @@
-import path from "path";
+import { defaultsDeep } from "lodash";
 import flat, { unflatten } from "flat";
 import type { AnyObject } from "@conduit/types";
 import {
 	fromPairs,
 	upperCase
 } from "lodash";
-
-process.env.NODE_CONFIG_DIR = path.join(__dirname, "./config");
-
-import config from "config";
+import { config } from "./config";
 
 const SESSIONS = ["server", "auth"];
 
@@ -33,8 +30,16 @@ export class AppConfig {
 	}
 
 	constructor() {
-		SESSIONS.forEach(session => this[session] = config.get(session));
+		this.updaterAppConfigFromJsonConfig();
 		this.updateAppConfigFromEnvs();
+	}
+
+	private updaterAppConfigFromJsonConfig() {
+		let baseConfig = config.default;
+		if (config[process.env.NODE_ENV]) {
+			baseConfig = defaultsDeep({}, config[process.env.NODE_ENV], baseConfig);
+		}
+		defaultsDeep(this, baseConfig);
 	}
 
 	private updateAppConfigFromEnvs() {
