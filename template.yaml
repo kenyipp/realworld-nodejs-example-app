@@ -12,6 +12,7 @@ Globals:
     Timeout: 30
     Environment:
       Variables:
+        NODE_ENV: !Ref Stage
         SERVER_APP_SIGNATURE: !Ref AppSignature
         SERVER_TOKEN_EXPIRES_IN: !Ref AppTokenExpiresIn
         AUTH_SALT_ROUNDS: !Ref AuthSaltRounds
@@ -51,7 +52,6 @@ Parameters:
     Type: Number
     Default: 10
     Description: The number of rounds used to generate the salt
-
   # Database Configs
   DatabaseHost:
     Type: String
@@ -129,16 +129,13 @@ Resources:
 
   # Lambda functions - API handlers
 
-  HealthCheck:
+  Server:
     Type: AWS::Serverless::Function
     Properties:
-      Environment:
-        Variables:
-          NODE_ENV: production
       CodeUri: ./apps/server
       Handler: lambda.handler
       Events:
-        UserLogin:
+        HealthCheck:
           Type: HttpApi
           Properties:
             ApiId: !Ref Conduit
@@ -146,12 +143,29 @@ Resources:
             Method: GET
       Tracing: Active
 
+  Assets:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./apps/server
+      Handler: lambda.handler
+      Events:
+        Documentation:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /
+            Method: GET
+        Swagger:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /assets/swagger.json
+            Method: GET
+      Tracing: Active
+
   User:
     Type: AWS::Serverless::Function
     Properties:
-      Environment:
-        Variables:
-          NODE_ENV: production
       CodeUri: ./apps/server
       Handler: lambda.handler
       Events:
@@ -161,4 +175,120 @@ Resources:
             ApiId: !Ref Conduit
             Path: /api/users/login
             Method: post
+        CreateUser:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/users
+            Method: post
+        GetCurrentUser:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/user
+            Method: get
+        UpdateCurrentUser:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/user
+            Method: put
+        GetProfile:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/profiles/{username}
+            Method: get
+        FollowUser:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/profiles/{username}/follow
+            Method: post
+        UnfollowUser:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/profiles/{username}/follow
+            Method: delete
+    Tracing: Active
+
+  Article:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./apps/server
+      Handler: lambda.handler
+      Events:
+        ArticleFeed:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/feed
+            Method: get
+        RecentArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles
+            Method: get
+        CreateArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles
+            Method: post
+        GetArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}
+            Method: get
+        UpdateArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}
+            Method: put
+        DeleteArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}
+            Method: delete
+        GetTags:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/tags
+            Method: get
+        GetComment:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}/comments
+            Method: get
+        CreateComment:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}/comments
+            Method: post
+        DeleteComment:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}/comments/{id}
+            Method: delete
+        FavoriteArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}/favorite
+            Method: post
+        UnfavoriteArticle:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/articles/{slug}/favorite
+            Method: delete
     Tracing: Active

@@ -19,5 +19,7 @@ export enum ServerPath {
 	DeleteComment = "/api/articles/:slug/comments/:id",
 	FavoriteArticle = "/api/articles/:slug/favorite",
 	UnfavoriteArticle = "/api/articles/:slug/favorite",
-	GetTags = "/api/tags"
+	GetTags = "/api/tags",
+	GetSwaggerJson = "/assets/swagger.json",
+	Documentation = "/"
 }

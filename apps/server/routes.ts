@@ -4,6 +4,7 @@ import { dangerouslyResetDb } from "@conduit/core";
 
 import { router as userRouter } from "./user/route";
 import { router as articleRouter } from "./article/route";
+import { router as assetsRouter } from "./assets/route";
 
 export const router = Router();
 
@@ -18,4 +19,5 @@ if (process.env.NODE_ENV === Environments.CI || process.env.NODE_ENV === Environ
 
 router
 	.use(userRouter)
-	.use(articleRouter);
+	.use(articleRouter)
+	.use(assetsRouter);

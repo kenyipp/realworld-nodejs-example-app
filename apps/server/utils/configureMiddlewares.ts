@@ -8,7 +8,7 @@ import {
 	type Request,
 	type Response
 } from "express";
-import { Environments } from "@conduit/types";
+import { Environments, ServerPath } from "@conduit/types";
 
 /**
  *
@@ -22,7 +22,12 @@ import { Environments } from "@conduit/types";
  */
 export const configureMiddlewares = ({ app }: { app: Express }): void => {
 	// Add security-related HTTP headers to the response
-	app.use(helmet());
+	app.use((req, res, next) => {
+		if (req.path === ServerPath.Documentation) {
+			return next();
+		}
+		return helmet()(req, res, next);
+	});
 
 	// Enable gzip compression of HTTP responses
 	app.use(compression());
