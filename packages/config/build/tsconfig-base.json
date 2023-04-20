@@ -66,9 +66,6 @@
 		"emitDeclarationOnly": false,
 		// Helper functions are instead imported from the tslib module.
 		"importHelpers": false,
-		// Read the documentation for more explanation
-		// https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
-		"importsNotUsedAsValues": "preserve",
 		// Do not erase const enum declarations in generated code.
 		"preserveConstEnums": true,
 		// Enables the generation of sourcemap files.

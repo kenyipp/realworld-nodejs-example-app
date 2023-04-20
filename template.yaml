@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: "2010-09-09"
 
 Transform: AWS::Serverless-2016-10-31
 
@@ -10,18 +10,84 @@ Globals:
     Runtime: nodejs16.x
     MemorySize: 512
     Timeout: 30
+    Environment:
+      Variables:
+        SERVER_APP_SIGNATURE: !Ref AppSignature
+        SERVER_TOKEN_EXPIRES_IN: !Ref AppTokenExpiresIn
+        AUTH_SALT_ROUNDS: !Ref AuthSaltRounds
+        DATABASE_HOST: !Ref DatabaseHost
+        DATABASE_USER: !Ref DatabaseUser
+        DATABASE_PASSWORD: !Ref DatabasePassword
+        DATABASE_PORT: !Ref DatabasePort
+        DATABASE_DATABASE: !Ref DatabaseDb
 
 Parameters:
+  # App Configs
   Domain:
     Type: String
-    Default: api.conduit.kenyip.cc
+    Description: Specifies the domain of the API server
   CorsAllowedDomain:
+    Type: List<String>
+    Description: Specifies a list of the origins allowed in the CORS
+  Stage:
     Type: String
-    Default: https://conduit.kenyip.cc
+    Description: Specifies the stage of the application
+    AllowedValues:
+      - development
+      - qa
+      - staging
+      - production
+    Default: production
+  # Environment variables that will be passed to Lambda functions
+  # Server Configs
+  AppSignature:
+    Type: String
+    Description: The string used to sign the user token's signature
+  AppTokenExpiresIn:
+    Type: Number
+    Description: The expiration time of the app token is measured in seconds
+    Default: 86400 # 1 Week
+  AuthSaltRounds:
+    Type: Number
+    Default: 10
+    Description: The number of rounds used to generate the salt
+
+  # Database Configs
+  DatabaseHost:
+    Type: String
+    Description: The hostname or IP address of the database server
+    Default: root
+  DatabaseUser:
+    Type: String
+    Description: The username to use when connecting to the database
+    Default: root
+  DatabasePassword:
+    Type: String
+    Description: The password to use when connecting to the database
+    Default: root
+  DatabaseDb:
+    Type: String
+    Description: The name of the database to use
+    Default: conduit
+  DatabasePort:
+    Type: Number
+    Description: The port number to use when connecting to the database
+    Default: 3306
 
 Resources:
+  # Certificate Manager Settings
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref Domain
+      ValidationMethod: DNS
+
+  # API Gateway Settings
+
   Conduit:
     Type: AWS::Serverless::HttpApi
+    Stage: !Ref Stage
     Domain:
       CertificateArn: !Ref Certificate
       DomainName: !Ref Domain
@@ -44,14 +110,41 @@ Resources:
           - PATCH
           - DELETE
           - OPTIONS
-        AllowOrigins:
-          - !Ref CorsAllowedDomain
+        AllowOrigins: !Ref CorsAllowedDomain
 
-  Certificate:
-    Type: AWS::CertificateManager::Certificate
+  DomainName:
+    Type: AWS::ApiGatewayV2::DomainName
     Properties:
-      DomainName: api.conduit.kenyip.cc
-      ValidationMethod: DNS
+      DomainName: !Ref Domain
+      DomainNameConfigurations:
+        - EndpointType: REGIONAL
+          CertificateArn: !Ref Certificate
+
+  APIMapping:
+    Type: AWS::ApiGatewayV2::ApiMapping
+    Properties:
+      ApiId: !Ref Conduit
+      DomainName: !Ref DomainName
+      Stage: $default
+
+  # Lambda functions - API handlers
+
+  HealthCheck:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          NODE_ENV: production
+      CodeUri: ./apps/server
+      Handler: lambda.handler
+      Events:
+        UserLogin:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /api/health-check
+            Method: GET
+      Tracing: Active
 
   User:
     Type: AWS::Serverless::Function
