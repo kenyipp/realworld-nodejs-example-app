@@ -1,16 +1,10 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorLocked extends APIError {
-
 	static Config = HttpError[423];
 
-	constructor({
-		message,
-		errorCode,
-		cause,
-		payload
-	}: APIErrorLockedInput) {
+	constructor({ message, errorCode, cause, payload }: APIErrorLockedInput) {
 		super({
 			code: 423,
 			message: message || APIErrorLocked.Config.message,
@@ -37,7 +31,6 @@ export class APIErrorLocked extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorLockedInput {

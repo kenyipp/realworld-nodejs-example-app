@@ -1,13 +1,13 @@
-import type {
+import {
 	DbDtoArticle,
-	DbDtoUser,
 	DbDtoArticleMeta,
-	DbDtoArticleTag
+	DbDtoArticleTag,
+	DbDtoUser
 } from "@conduit/core/database/dto";
+
 import { DtoProfile } from "../../user/dto";
 
 export class DtoArticle {
-
 	slug: string;
 	title: string;
 	description: string;
@@ -19,10 +19,11 @@ export class DtoArticle {
 	author: DtoProfile;
 	tagList: string[];
 
-	constructor({
-		article, author, meta, tag
-	}: DtoArticleConstructor) {
-		this.author = new DtoProfile({ dbDtoUser: author, following: meta.following });
+	constructor({ article, author, meta, tag }: DtoArticleConstructor) {
+		this.author = new DtoProfile({
+			dbDtoUser: author,
+			following: meta.following
+		});
 		this.favorited = meta.favorited;
 		this.favoritesCount = meta.favoritesCount;
 		this.tagList = tag.tags;
@@ -34,7 +35,6 @@ export class DtoArticle {
 		this.createdAt = new Date(article.createdAt);
 		this.updatedAt = new Date(article.updatedAt);
 	}
-
 }
 
 interface DtoArticleConstructor {

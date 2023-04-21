@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorUnsupportedMediaType extends APIError {
-
 	static Config = HttpError[415];
 
 	constructor({
@@ -37,7 +36,6 @@ export class APIErrorUnsupportedMediaType extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorUnsupportedMediaTypeInput {

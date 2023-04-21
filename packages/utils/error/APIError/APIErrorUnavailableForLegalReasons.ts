@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorUnavailableForLegalReasons extends APIError {
-
 	static Config = HttpError[451];
 
 	constructor({
@@ -13,7 +12,8 @@ export class APIErrorUnavailableForLegalReasons extends APIError {
 	}: APIErrorUnavailableForLegalReasonsInput) {
 		super({
 			code: 451,
-			message: message || APIErrorUnavailableForLegalReasons.Config.message,
+			message:
+				message || APIErrorUnavailableForLegalReasons.Config.message,
 			errorCode,
 			errorType: APIErrorUnavailableForLegalReasons.Config.type,
 			cause,
@@ -37,7 +37,6 @@ export class APIErrorUnavailableForLegalReasons extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorUnavailableForLegalReasonsInput {

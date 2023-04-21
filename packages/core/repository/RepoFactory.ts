@@ -8,7 +8,6 @@ import { RepoUser } from "./RepoUser";
  *
  */
 export class RepoFactory {
-
 	private dbFactory: DbFactory = new DbFactory();
 
 	newRepoArticle(): RepoArticle {
@@ -20,5 +19,4 @@ export class RepoFactory {
 		const dbUser = this.dbFactory.newDbUser();
 		return new RepoUser({ dbUser });
 	}
-
 }

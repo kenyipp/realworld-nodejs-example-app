@@ -1,5 +1,4 @@
 export class APIError extends Error {
-
 	code: number;
 	errorType: string;
 	errorCode?: string;
@@ -29,7 +28,6 @@ export class APIError extends Error {
 		this.cause = cause;
 		this.payload = payload;
 	}
-
 }
 
 interface APIErrorInput {

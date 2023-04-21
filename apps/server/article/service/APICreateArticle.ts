@@ -1,30 +1,39 @@
 import {
-	DbDtoUser,
 	DbDtoArticleMeta,
-	DbDtoArticleTag
+	DbDtoArticleTag,
+	DbDtoUser
 } from "@conduit/core/database/dto";
+import { ArticleService } from "@conduit/core/service";
 import { ArticleTitleAlreadyTakenError } from "@conduit/core/service/article/error";
 import {
 	APIErrorConflict,
 	APIErrorInternalServerError,
 	logger
 } from "@conduit/utils";
-import type { ArticleService } from "@conduit/core/service";
+
 import { DtoInputCreateArticle } from "../dto";
 import { DtoArticle } from "../dto/DtoArticle";
 
 export class APICreateArticle {
-
 	private articleService: ArticleService;
 
 	constructor({ articleService }: APICreateArticleConstructor) {
 		this.articleService = articleService;
 	}
 
-	async execute({ input, user }: APICreateArticleInput): Promise<APICreateArticleOutput> {
+	async execute({
+		input,
+		user
+	}: APICreateArticleInput): Promise<APICreateArticleOutput> {
 		try {
-			const article = await this.articleService.createArticle({ ...input, userId: user.id });
-			await this.articleService.createArticleTag({ articleId: article.id, tagList: input.tagList });
+			const article = await this.articleService.createArticle({
+				...input,
+				userId: user.id
+			});
+			await this.articleService.createArticleTag({
+				articleId: article.id,
+				tagList: input.tagList
+			});
 			const meta: DbDtoArticleMeta = {
 				id: article.id,
 				favorited: false,
@@ -49,12 +58,14 @@ export class APICreateArticle {
 
 	private convertErrorToAPIError(error: any) {
 		if (error instanceof ArticleTitleAlreadyTakenError) {
-			return new APIErrorConflict({ message: error.message, cause: error });
+			return new APIErrorConflict({
+				message: error.message,
+				cause: error
+			});
 		}
 		logger.error(error);
 		return new APIErrorInternalServerError({});
 	}
-
 }
 
 interface APICreateArticleConstructor {

@@ -1,13 +1,10 @@
+import bodyParser from "body-parser";
 import chalk from "chalk";
+import compression from "compression";
+import { Express, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import bodyParser from "body-parser";
-import compression from "compression";
-import {
-	type Express,
-	type Request,
-	type Response
-} from "express";
+
 import { Environments, ServerPath } from "@conduit/types";
 
 /**
@@ -66,7 +63,8 @@ const logger: morgan.FormatFn<Request, Response> = (tokens, req, res) => {
 		chalk.yellow(tokens.method(req, res)),
 		tokens.url(req, res),
 		status && chalk[parseInt(status[0], 10) <= 3 ? "green" : "red"](status),
-		responseTime && chalk[responseTime > 500 ? "red" : "green"](`${responseTime}ms`)
+		responseTime &&
+			chalk[responseTime > 500 ? "red" : "green"](`${responseTime}ms`)
 	]
 		.filter(Boolean)
 		.join(" - ");

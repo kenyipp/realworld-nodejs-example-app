@@ -1,11 +1,10 @@
 import {
-	type RepoArticle,
-	type CreateTagsForArticleInput as CreateArticleTagInput
+	type CreateTagsForArticleInput as CreateArticleTagInput,
+	type RepoArticle
 } from "../../../repository/RepoArticle";
 import { ArticleNotFoundError } from "../error";
 
 export class CreateArticleTagHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: CreateArticleTagHandlerConstructor) {
@@ -31,13 +30,18 @@ export class CreateArticleTagHandler {
 		await this.repoArticle.createTagsForArticle({ articleId, tagList });
 	}
 
-	private async validateArticle({ articleId }: { articleId: string }): Promise<void> {
-		const article = await this.repoArticle.getArticleById({ id: articleId });
+	private async validateArticle({
+		articleId
+	}: {
+		articleId: string;
+	}): Promise<void> {
+		const article = await this.repoArticle.getArticleById({
+			id: articleId
+		});
 		if (!article) {
 			throw new ArticleNotFoundError({});
 		}
 	}
-
 }
 
 interface CreateArticleTagHandlerConstructor {

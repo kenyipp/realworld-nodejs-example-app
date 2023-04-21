@@ -1,10 +1,9 @@
 import { DbDtoUser } from "../../../database/dto";
-import { UserExistError } from "../error";
 import { type RepoUser } from "../../../repository/RepoUser";
 import { type AuthService } from "../../auth/AuthService";
+import { UserExistError } from "../error";
 
 export class CreateUserHandler {
-
 	private authService: AuthService;
 	private repoUser: RepoUser;
 
@@ -34,10 +33,17 @@ export class CreateUserHandler {
 	 *
 	 */
 	async execute({
-		email, username, password, image, bio
+		email,
+		username,
+		password,
+		image,
+		bio
 	}: CreateUserInput): Promise<DbDtoUser> {
 		const encrypted = this.authService.encryptPassword({ password });
-		const isUserExist = await this.repoUser.isUserExist({ email, username });
+		const isUserExist = await this.repoUser.isUserExist({
+			email,
+			username
+		});
 		if (isUserExist) {
 			throw new UserExistError({});
 		}
@@ -51,7 +57,6 @@ export class CreateUserHandler {
 		const user = await this.repoUser.getUserById({ id: userId });
 		return user;
 	}
-
 }
 
 export interface CreateUserHandlerConstructor {
@@ -62,7 +67,7 @@ export interface CreateUserHandlerConstructor {
 export interface CreateUserInput {
 	email: string;
 	username: string;
-	password: string,
+	password: string;
 	image?: string;
 	bio?: string;
 }

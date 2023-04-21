@@ -1,29 +1,28 @@
 import { DbDtoUser } from "../../database/dto";
 import {
-	RepoUser,
+	type GetIsUsersFollowingByUserIdsInput,
+	type GetIsUsersFollowingByUserIdsOutput,
+	type GetUserByEmailInput,
 	type GetUserByIdInput,
 	type GetUserByIdsInput,
 	type GetUserByUsernameInput,
-	type GetUserByEmailInput,
-	type GetIsUsersFollowingByUserIdsInput,
-	type GetIsUsersFollowingByUserIdsOutput
+	RepoUser
 } from "../../repository/RepoUser";
 import { AuthService } from "../auth/AuthService";
 import {
+	type BanUserByIdInput,
+	BanUserHandler,
 	CreateUserHandler,
 	type CreateUserInput,
-	UpdateUserHandler,
-	type UpdateUserInput,
 	FollowUserHandler,
 	type FollowUserInput,
-	type UnfollowUserInput,
 	type IsFollowingInput,
-	BanUserHandler,
-	type BanUserByIdInput
+	type UnfollowUserInput,
+	UpdateUserHandler,
+	type UpdateUserInput
 } from "./implementation";
 
 export class UserService {
-
 	private repoUser: RepoUser;
 	private createUserHandler: CreateUserHandler;
 	private updateUserHandler: UpdateUserHandler;
@@ -32,8 +31,14 @@ export class UserService {
 
 	constructor({ repoUser, authService }: UserServiceConstructor) {
 		this.repoUser = repoUser;
-		this.createUserHandler = new CreateUserHandler({ authService, repoUser });
-		this.updateUserHandler = new UpdateUserHandler({ authService, repoUser });
+		this.createUserHandler = new CreateUserHandler({
+			authService,
+			repoUser
+		});
+		this.updateUserHandler = new UpdateUserHandler({
+			authService,
+			repoUser
+		});
 		this.followUserHandler = new FollowUserHandler({ repoUser });
 		this.banUserHandler = new BanUserHandler({ repoUser });
 	}
@@ -113,7 +118,9 @@ export class UserService {
 	 * @returns {Promise<DbDtoUser|null>} - A promise that resolves to the user object if found, or null if not found.
 	 *
 	 */
-	async getUserByUsername({ username }: GetUserByUsernameInput): Promise<DbDtoUser> {
+	async getUserByUsername({
+		username
+	}: GetUserByUsernameInput): Promise<DbDtoUser> {
 		const user = await this.repoUser.getUserByUsername({ username });
 		return user;
 	}
@@ -151,8 +158,15 @@ export class UserService {
 	 * @throws {Error} If the database query fails for any reason.
 	 *
 	 */
-	async getIsUsersFollowingByUserId({ followerId, followingIds }: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
-		const isUsersFollowingByUserId = await this.repoUser.getIsUserFollowingByUserIds({ followerId, followingIds });
+	async getIsUsersFollowingByUserId({
+		followerId,
+		followingIds
+	}: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
+		const isUsersFollowingByUserId =
+			await this.repoUser.getIsUserFollowingByUserIds({
+				followerId,
+				followingIds
+			});
 		return isUsersFollowingByUserId;
 	}
 
@@ -191,7 +205,10 @@ export class UserService {
 	 * @throws {UserNotFoundError} - If the user to follow is not found in the database.
 	 *
 	 */
-	async followUser({ followerId, followingId }: FollowUserInput): Promise<void> {
+	async followUser({
+		followerId,
+		followingId
+	}: FollowUserInput): Promise<void> {
 		await this.followUserHandler.followUser({ followerId, followingId });
 	}
 
@@ -212,7 +229,10 @@ export class UserService {
 	 * the follower is not following the targeted user, or if there is an issue with the validation.
 	 *
 	 */
-	async unfollowUser({ followerId, followingId }: UnfollowUserInput): Promise<void> {
+	async unfollowUser({
+		followerId,
+		followingId
+	}: UnfollowUserInput): Promise<void> {
 		await this.followUserHandler.unfollowUser({ followerId, followingId });
 	}
 
@@ -231,8 +251,14 @@ export class UserService {
 	 * @throws {Error} - If the database query fails.
 	 *
 	 */
-	async isFollowing({ followerId, followingId }: IsFollowingInput): Promise<boolean> {
-		const isFollowing = await this.followUserHandler.isFollowing({ followerId, followingId });
+	async isFollowing({
+		followerId,
+		followingId
+	}: IsFollowingInput): Promise<boolean> {
+		const isFollowing = await this.followUserHandler.isFollowing({
+			followerId,
+			followingId
+		});
 		return isFollowing;
 	}
 
@@ -250,7 +276,6 @@ export class UserService {
 	async banUserById({ id }: BanUserByIdInput): Promise<void> {
 		await this.banUserHandler.execute({ id });
 	}
-
 }
 
 interface UserServiceConstructor {

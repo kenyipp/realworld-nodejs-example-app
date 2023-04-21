@@ -1,17 +1,17 @@
 import { isNil } from "lodash";
-import { ArticleNotFoundError } from "../error";
+
+import { type DbDtoArticle } from "../../../database/dto";
 import {
-	type RepoArticle,
+	type CountArticlesByFiltersInput,
 	type GetArticleByIdInput,
 	type GetArticleBySlugInput,
-	type GetArticlesByIdsInput,
 	type GetArticleIdsByFiltersInput,
-	type CountArticlesByFiltersInput
+	type GetArticlesByIdsInput,
+	type RepoArticle
 } from "../../../repository/RepoArticle";
-import { type DbDtoArticle } from "../../../database/dto";
+import { ArticleNotFoundError } from "../error";
 
 export class GetArticleHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: GetArticleHandlerConstructor) {
@@ -40,7 +40,9 @@ export class GetArticleHandler {
 		return article;
 	}
 
-	async getArticleBySlug({ slug }: GetArticleBySlugInput): Promise<DbDtoArticle> {
+	async getArticleBySlug({
+		slug
+	}: GetArticleBySlugInput): Promise<DbDtoArticle> {
 		const article = await this.repoArticle.getArticleBySlug({ slug });
 		if (isNil(article)) {
 			throw new ArticleNotFoundError({ slug });
@@ -61,7 +63,9 @@ export class GetArticleHandler {
 	 * @returns {Promise<object[]>} A Promise that resolves to an array of retrieved article objects.
 	 *
 	 */
-	async getArticlesByIds({ ids }: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
+	async getArticlesByIds({
+		ids
+	}: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
 		const articles = await this.repoArticle.getArticlesByIds({ ids });
 		return articles;
 	}
@@ -78,7 +82,9 @@ export class GetArticleHandler {
 	 * @returns {Promise<DbDtoArticle[]>} A Promise that resolves with an array of articles that match the specified filters.
 	 *
 	 */
-	async getArticlesByFilters(input: GetArticleIdsByFiltersInput): Promise<DbDtoArticle[]> {
+	async getArticlesByFilters(
+		input: GetArticleIdsByFiltersInput
+	): Promise<DbDtoArticle[]> {
 		const ids = await this.repoArticle.getArticleIdsByFilters(input);
 		const articles = this.getArticlesByIds({ ids });
 		return articles;
@@ -100,7 +106,6 @@ export class GetArticleHandler {
 		const count = await this.repoArticle.countArticlesByFilters(filters);
 		return count;
 	}
-
 }
 
 interface GetArticleHandlerConstructor {

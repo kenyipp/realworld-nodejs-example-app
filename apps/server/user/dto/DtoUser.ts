@@ -1,8 +1,8 @@
-import { type DbDtoUser } from "@conduit/core/database/dto";
+import { DbDtoUser } from "@conduit/core/database/dto";
+
 import { signJsonWebToken } from "../../utils";
 
 export class DtoUser {
-
 	username: string;
 	email: string;
 	bio?: string;
@@ -21,7 +21,6 @@ export class DtoUser {
 		const token = signJsonWebToken({ dbDtoUser }).accessToken;
 		return token;
 	}
-
 }
 
 interface DtoUserConstructor {

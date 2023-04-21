@@ -1,10 +1,10 @@
 import slugify from "slugify";
-import { ArticleTitleAlreadyTakenError } from "../error";
+
 import { type DbDtoArticle } from "../../../database/dto";
 import { type RepoArticle } from "../../../repository/RepoArticle";
+import { ArticleTitleAlreadyTakenError } from "../error";
 
 export class CreateArticleHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: CreateArticleHandlerConstructor) {
@@ -43,7 +43,9 @@ export class CreateArticleHandler {
 			body,
 			userId
 		});
-		const article = await this.repoArticle.getArticleById({ id: articleId });
+		const article = await this.repoArticle.getArticleById({
+			id: articleId
+		});
 		return article;
 	}
 
@@ -60,14 +62,15 @@ export class CreateArticleHandler {
 	 * @throws {ArticleTitleAlreadyTakenError} - If an article with the same title already exists.
 	 *
 	 */
-	private async validateIfArticleExist({ title }: ValidateIfArticleExistInput) {
+	private async validateIfArticleExist({
+		title
+	}: ValidateIfArticleExistInput) {
 		const slug = slugify(title);
 		const article = await this.repoArticle.getArticleBySlug({ slug });
 		if (article) {
 			throw new ArticleTitleAlreadyTakenError({ title });
 		}
 	}
-
 }
 
 interface CreateArticleHandlerConstructor {

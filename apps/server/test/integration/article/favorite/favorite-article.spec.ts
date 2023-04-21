@@ -1,21 +1,23 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
-import { signJsonWebToken } from "../../../../utils";
 import { DtoArticle } from "../../../../article/dto";
+import { signJsonWebToken } from "../../../../utils";
 
 const factory = new Factory();
 const request = supertest(app);
 
 describe("Article - Favorite Article", () => {
 	it("should able to favorite an article", async () => {
-		const {
-			userService,
-			article
-		} = await setup();
+		const { userService, article } = await setup();
 
 		const user = await userService.createUser(getCreateUserInput({}));
 		const { accessToken } = signJsonWebToken({ dbDtoUser: user });
@@ -35,16 +37,15 @@ describe("Article - Favorite Article", () => {
 	});
 
 	it("should return a status code of 400 - Bad Request if the client has already favorited the targeted article", async () => {
-		const {
-			articleService,
-			userService,
-			article
-		} = await setup();
+		const { articleService, userService, article } = await setup();
 
 		const user = await userService.createUser(getCreateUserInput({}));
 		const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 
-		await articleService.favorite({ userId: user.id, articleId: article.id });
+		await articleService.favorite({
+			userId: user.id,
+			articleId: article.id
+		});
 
 		const response = await request
 			.post(ServerPath.FavoriteArticle.replace(":slug", article.slug))
@@ -85,7 +86,9 @@ const setup = async () => {
 	const userService = factory.newUserService();
 	const articleService = factory.newArticleService();
 	const user = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: user.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: user.id })
+	);
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 	return {
 		userService,

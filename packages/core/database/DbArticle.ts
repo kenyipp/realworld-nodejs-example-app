@@ -1,15 +1,17 @@
+import { type Knex } from "knex";
 import {
-	sortBy,
+	fromPairs,
+	groupBy,
 	indexOf,
 	isNil,
 	isNull,
-	groupBy,
 	map,
-	fromPairs
+	sortBy
 } from "lodash";
 import { v4 as Uuid } from "uuid";
+
 import { RecStatus, Tables, UserStatus } from "@conduit/types";
-import { type Knex } from "knex";
+
 import { knex } from "../knex";
 import type {
 	DbDtoArticle,
@@ -19,7 +21,6 @@ import type {
 } from "./dto";
 
 export class DbArticle {
-
 	/**
 	 *
 	 * Creates an article in the database.
@@ -146,8 +147,12 @@ export class DbArticle {
 	 * @returns {Promise<DbDtoArticleTag>} A promise that resolves to a DbDtoArticleTag object containing the article ID and its associated tags.
 	 *
 	 */
-	async getTagsByArticleId({ articleId }: GetTagsByArticleIdInput): Promise<DbDtoArticleTag> {
-		const dbDtoArticleTag = await this.getTagsByArticleIds({ articleIds: [articleId] }).then((docs) => docs[0]);
+	async getTagsByArticleId({
+		articleId
+	}: GetTagsByArticleIdInput): Promise<DbDtoArticleTag> {
+		const dbDtoArticleTag = await this.getTagsByArticleIds({
+			articleIds: [articleId]
+		}).then((docs) => docs[0]);
 		return dbDtoArticleTag;
 	}
 
@@ -164,21 +169,31 @@ export class DbArticle {
 	 * @returns {Promise<DbDtoArticleTag[]>} A promise that resolves to an array of DbDtoArticleTag objects, each containing an article ID and its associated tags.
 	 *
 	 */
-	async getTagsByArticleIds({ articleIds }: GetTagsByArticleIdsInput): Promise<DbDtoArticleTag[]> {
+	async getTagsByArticleIds({
+		articleIds
+	}: GetTagsByArticleIdsInput): Promise<DbDtoArticleTag[]> {
 		if (articleIds.length < 1) {
 			return [];
 		}
 		const tags = await knex
-			.select<{ tag: string, articleId: string }[]>({
-			articleId: "article_id",
-			tag: "tag"
-		})
+			.select<{ tag: string; articleId: string }[]>({
+				articleId: "article_id",
+				tag: "tag"
+			})
 			.from(Tables.ArticleTag)
 			.whereIn("article_id", articleIds)
 			.where("rec_status", RecStatus.Normal);
 
-		const articleIdToTags = fromPairs(map(groupBy(tags, "articleId"), (values, key) => [key, values.map((doc) => doc.tag)]));
-		return articleIds.map((id) => ({ articleId: id, tags: (articleIdToTags[id] || []).sort() }));
+		const articleIdToTags = fromPairs(
+			map(groupBy(tags, "articleId"), (values, key) => [
+				key,
+				values.map((doc) => doc.tag)
+			])
+		);
+		return articleIds.map((id) => ({
+			articleId: id,
+			tags: (articleIdToTags[id] || []).sort()
+		}));
 	}
 
 	/**
@@ -216,7 +231,9 @@ export class DbArticle {
 	 * @returns {Promise<DbDtoArticle>} - The article object corresponding to the given slug.
 	 *
 	 */
-	async getArticleBySlug({ slug }: GetArticleBySlugInput): Promise<DbDtoArticle> {
+	async getArticleBySlug({
+		slug
+	}: GetArticleBySlugInput): Promise<DbDtoArticle> {
 		const articleId = await knex
 			.first<{ id: string }>({ id: "article_id" })
 			.from(Tables.Article)
@@ -240,7 +257,9 @@ export class DbArticle {
 	 * @returns {Promise<object[]>} A Promise that resolves to an array of retrieved article objects.
 	 *
 	 */
-	async getArticlesByIds({ ids }: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
+	async getArticlesByIds({
+		ids
+	}: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
 		// If no article IDs are provided, an empty array is returned.
 		if (ids.length < 1) {
 			return [];
@@ -277,9 +296,10 @@ export class DbArticle {
 	 * @returns {Promise<string[]>} - An array of article IDs that match the filters.
 	 *
 	 */
-	async getArticleIdsByFilters(filters: GetArticleIdsByFiltersInput): Promise<string[]> {
-		const ids = await this
-			.getQueryByFilters(filters)
+	async getArticleIdsByFilters(
+		filters: GetArticleIdsByFiltersInput
+	): Promise<string[]> {
+		const ids = await this.getQueryByFilters(filters)
 			.select<{ id: string }[]>({ id: "article_id" })
 			.offset(filters.limit * filters.offset)
 			.limit(filters.limit)
@@ -300,9 +320,10 @@ export class DbArticle {
 	 * @returns {Promise<number>} - The number of articles that match the filters.
 	 *
 	 */
-	async countArticlesByFilters(filters: CountArticlesByFiltersInput): Promise<number> {
-		const count = await this
-			.getQueryByFilters(filters)
+	async countArticlesByFilters(
+		filters: CountArticlesByFiltersInput
+	): Promise<number> {
+		const count = await this.getQueryByFilters(filters)
 			.count<{ count: number }[]>("*", { as: "count" })
 			.then((response) => response[0].count);
 		return count;
@@ -411,16 +432,18 @@ export class DbArticle {
 	 * @returns {Promise<string>} A Promise that resolves to the ID of the newly created comment.
 	 *
 	 */
-	async createArticleComment({ articleId, body, userId }: CreateArticleCommentInput): Promise<string> {
+	async createArticleComment({
+		articleId,
+		body,
+		userId
+	}: CreateArticleCommentInput): Promise<string> {
 		const articleCommentId = Uuid();
-		await knex
-			.table(Tables.ArticleComment)
-			.insert({
-				article_comment_id: articleCommentId,
-				article_id: articleId,
-				body,
-				user_id: userId
-			});
+		await knex.table(Tables.ArticleComment).insert({
+			article_comment_id: articleCommentId,
+			article_id: articleId,
+			body,
+			user_id: userId
+		});
 		return articleCommentId;
 	}
 
@@ -438,16 +461,18 @@ export class DbArticle {
 	 * @throws {Error} If the database query fails for any reason.
 	 *
 	 */
-	async getArticleCommentsByArticleId({ articleId }: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+	async getArticleCommentsByArticleId({
+		articleId
+	}: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
 		const comments = await knex
 			.select<DbDtoArticleComment[]>({
-			id: "article_comment_id",
-			body: "body",
-			userId: "user_id",
-			recStatus: "rec_status",
-			createdAt: "created_at",
-			updatedAt: "updated_at"
-		})
+				id: "article_comment_id",
+				body: "body",
+				userId: "user_id",
+				recStatus: "rec_status",
+				createdAt: "created_at",
+				updatedAt: "updated_at"
+			})
 			.from(Tables.ArticleComment)
 			.where("rec_status", RecStatus.Normal)
 			.where("article_id", articleId);
@@ -467,7 +492,9 @@ export class DbArticle {
 	 * @returns {Promise<string[]>} A Promise that resolves to an array of comment IDs.
 	 *
 	 */
-	async getArticleCommentIdsByArticleId({ articleId }: GetArticleCommentIdsByArticleIdInput): Promise<string[]> {
+	async getArticleCommentIdsByArticleId({
+		articleId
+	}: GetArticleCommentIdsByArticleIdInput): Promise<string[]> {
 		const ids = await knex
 			.select<{ id: string }[]>({ id: "article_comment_id" })
 			.from(Tables.ArticleComment)
@@ -491,7 +518,9 @@ export class DbArticle {
 	 * @returns {Promise<number>} A Promise that resolves to the number of comments for the given article ID.
 	 *
 	 */
-	async countArticleCommentsByArticleId({ articleId }: CountArticleCommentsByArticleIdInput): Promise<number> {
+	async countArticleCommentsByArticleId({
+		articleId
+	}: CountArticleCommentsByArticleIdInput): Promise<number> {
 		const count = await knex
 			.count<{ count: number }[]>("*", { as: "count" })
 			.from(Tables.ArticleComment)
@@ -514,16 +543,18 @@ export class DbArticle {
 	 * @returns {Promise<DbDtoArticleComment[]>} A Promise that resolves to an array of article comment objects.
 	 *
 	 */
-	async getArticleCommentsByIds({ ids }: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
+	async getArticleCommentsByIds({
+		ids
+	}: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
 		const comments = await knex
 			.select<DbDtoArticleComment[]>({
-			id: "article_comment_id",
-			body: "body",
-			userId: "user_id",
-			recStatus: "rec_status",
-			createdAt: "created_at",
-			updatedAt: "updated_at"
-		})
+				id: "article_comment_id",
+				body: "body",
+				userId: "user_id",
+				recStatus: "rec_status",
+				createdAt: "created_at",
+				updatedAt: "updated_at"
+			})
 			.from(Tables.ArticleComment)
 			.where("rec_status", RecStatus.Normal)
 			.whereIn("article_comment_id", ids);
@@ -543,10 +574,12 @@ export class DbArticle {
 	 * @returns {Promise<DbDtoArticleComment>} A Promise that resolves to an article comment object.
 	 *
 	 */
-	async getArticleCommentById({ id }: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
-		const comment = await this
-			.getArticleCommentsByIds({ ids: [id] })
-			.then((comments) => comments[0]);
+	async getArticleCommentById({
+		id
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+		const comment = await this.getArticleCommentsByIds({ ids: [id] }).then(
+			(comments) => comments[0]
+		);
 		return comment;
 	}
 
@@ -563,7 +596,9 @@ export class DbArticle {
 	 * @returns {Promise<void>} A Promise that resolves when the article comment has been deleted.
 	 *
 	 */
-	async deleteArticleCommentById({ id }: DeleteArticleCommentByIdInput): Promise<void> {
+	async deleteArticleCommentById({
+		id
+	}: DeleteArticleCommentByIdInput): Promise<void> {
 		await knex
 			.table(Tables.ArticleComment)
 			.update({ rec_status: RecStatus.Deleted })
@@ -584,7 +619,10 @@ export class DbArticle {
 	 * @returns {Promise<void>} Promise object representing the completion of the database operation.
 	 *
 	 */
-	async favoriteArticle({ articleId, userId }: FavoriteArticleInput): Promise<void> {
+	async favoriteArticle({
+		articleId,
+		userId
+	}: FavoriteArticleInput): Promise<void> {
 		await knex
 			.insert({
 				article_favorite_id: Uuid(),
@@ -610,7 +648,10 @@ export class DbArticle {
 	 * @returns {Promise<void>} Promise object representing the completion of the database operation.
 	 *
 	 */
-	async unfavoriteArticle({ articleId, userId }: UnfavoriteArticleInput): Promise<void> {
+	async unfavoriteArticle({
+		articleId,
+		userId
+	}: UnfavoriteArticleInput): Promise<void> {
 		await knex
 			.table(Tables.ArticleFavorite)
 			.update({ rec_status: RecStatus.Deleted })
@@ -632,7 +673,10 @@ export class DbArticle {
 	 * @returns {Promise<boolean>} Promise object representing whether the user has favorited the article or not.
 	 *
 	 */
-	async isArticleFavorited({ articleId, userId }: IsArticleFavoritedInput): Promise<boolean> {
+	async isArticleFavorited({
+		articleId,
+		userId
+	}: IsArticleFavoritedInput): Promise<boolean> {
 		const isFavorited = await knex
 			.first<{ id: string }>({ id: "article_favorite_id" })
 			.from(Tables.ArticleFavorite)
@@ -658,10 +702,13 @@ export class DbArticle {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaById({ id, userId }: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
-		const meta = await this
-			.getArticleMetaByIds({ ids: [id], userId })
-			.then((docs) => docs[0]);
+	async getArticleMetaById({
+		id,
+		userId
+	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
+		const meta = await this.getArticleMetaByIds({ ids: [id], userId }).then(
+			(docs) => docs[0]
+		);
 		return meta;
 	}
 
@@ -680,7 +727,10 @@ export class DbArticle {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaByIds({ ids, userId }: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
+	async getArticleMetaByIds({
+		ids,
+		userId
+	}: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
 		if (ids.length < 1) {
 			return [];
 		}
@@ -691,19 +741,34 @@ export class DbArticle {
 				favorited: knex
 					.select("user_id")
 					.from(Tables.ArticleFavorite)
-					.where(`${Tables.ArticleFavorite}.user_id`, userId || Uuid())
-					.whereRaw(`${Tables.ArticleFavorite}.article_id = ${Tables.Article}.article_id`)
-					.where(`${Tables.ArticleFavorite}.rec_status`, RecStatus.Normal),
+					.where(
+						`${Tables.ArticleFavorite}.user_id`,
+						userId || Uuid()
+					)
+					.whereRaw(
+						`${Tables.ArticleFavorite}.article_id = ${Tables.Article}.article_id`
+					)
+					.where(
+						`${Tables.ArticleFavorite}.rec_status`,
+						RecStatus.Normal
+					),
 				favoritesCount: knex
 					.count()
 					.from(Tables.ArticleFavorite)
-					.whereRaw(`${Tables.ArticleFavorite}.article_id = ${Tables.Article}.article_id`)
-					.where(`${Tables.ArticleFavorite}.rec_status`, RecStatus.Normal),
+					.whereRaw(
+						`${Tables.ArticleFavorite}.article_id = ${Tables.Article}.article_id`
+					)
+					.where(
+						`${Tables.ArticleFavorite}.rec_status`,
+						RecStatus.Normal
+					),
 				following: knex
 					.select(`${Tables.UserFollow}.follower_id`)
 					.from(Tables.UserFollow)
 					.where(`${Tables.UserFollow}.follower_id`, userId || Uuid())
-					.whereRaw(`${Tables.UserFollow}.following_id = ${Tables.Article}.user_id`)
+					.whereRaw(
+						`${Tables.UserFollow}.following_id = ${Tables.Article}.user_id`
+					)
 					.where(`${Tables.UserFollow}.rec_status`, RecStatus.Normal)
 			})
 			.from(Tables.Article)
@@ -713,11 +778,13 @@ export class DbArticle {
 				`${Tables.ArticleFavorite}.article_id`
 			)
 			.whereIn(`${Tables.Article}.article_id`, ids)
-			.then((rows) => rows.map((row) => {
-				row.favorited = !isNull(row.favorited);
-				row.following = !isNull(row.following);
-				return row;
-			}));
+			.then((rows) =>
+				rows.map((row) => {
+					row.favorited = !isNull(row.favorited);
+					row.following = !isNull(row.following);
+					return row;
+				})
+			);
 		return meta;
 	}
 
@@ -745,7 +812,6 @@ export class DbArticle {
 			.then((rows) => rows.map((row) => row.tag));
 		return tags;
 	}
-
 }
 
 export interface CreateArticleInput {

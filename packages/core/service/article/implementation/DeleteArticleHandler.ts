@@ -1,8 +1,7 @@
-import { ArticleNotFoundError } from "../error";
 import { type RepoArticle } from "../../../repository/RepoArticle";
+import { ArticleNotFoundError } from "../error";
 
 export class DeleteArticleHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: DeleteArticleHandlerConstructor) {
@@ -23,14 +22,15 @@ export class DeleteArticleHandler {
 	 * @returns {Promise<void>} - A Promise that resolves with no value upon successful deletion of the article.
 	 *
 	 */
-	async deleteArticleBySlug({ slug }: DeleteArticleBySlugInput): Promise<void> {
+	async deleteArticleBySlug({
+		slug
+	}: DeleteArticleBySlugInput): Promise<void> {
 		const article = await this.repoArticle.getArticleBySlug({ slug });
 		if (!article) {
 			throw new ArticleNotFoundError({ slug });
 		}
 		await this.repoArticle.deleteArticleById({ id: article.id });
 	}
-
 }
 
 interface DeleteArticleHandlerConstructor {

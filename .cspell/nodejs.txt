@@ -6,6 +6,7 @@
 # Winston
 APIURL
 cloudwatchlogs
+codegen
 colorfied
 colorify
 knexfile
@@ -17,10 +18,14 @@ mediumtext
 middlewares
 millis
 openapi
+packagejson
 prerequest
+redoc
 reduxjs
 sinonjs
+Snyk
 sqlstring
 tinytext
+trivago
 unflatten
 vendia

@@ -1,16 +1,15 @@
+import { type DbDtoArticleComment } from "../../../database/dto";
 import {
-	type RepoArticle,
-	type GetArticleCommentByIdInput,
-	type GetArticleCommentsByIdsInput,
-	type GetArticleCommentIdsByArticleIdInput,
 	type CountArticleCommentsByArticleIdInput,
-	type GetArticleCommentsByArticleIdInput
+	type GetArticleCommentByIdInput,
+	type GetArticleCommentIdsByArticleIdInput,
+	type GetArticleCommentsByArticleIdInput,
+	type GetArticleCommentsByIdsInput,
+	type RepoArticle
 } from "../../../repository/RepoArticle";
 import { ArticleNotFoundError } from "../error";
-import { type DbDtoArticleComment } from "../../../database/dto";
 
 export class GetArticleCommentsHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: GetArticleCommentsHandlerConstructor) {
@@ -31,8 +30,12 @@ export class GetArticleCommentsHandler {
 	 * @throws {Error} If the database query fails for any reason.
 	 *
 	 */
-	async getArticleCommentsById({ articleId }: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
-		const comments = await this.repoArticle.getArticleCommentsByArticleId({ articleId });
+	async getArticleCommentsById({
+		articleId
+	}: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+		const comments = await this.repoArticle.getArticleCommentsByArticleId({
+			articleId
+		});
 		return comments;
 	}
 
@@ -49,7 +52,9 @@ export class GetArticleCommentsHandler {
 	 * @returns {Promise<DbDtoArticleComment>} A Promise that resolves to an article comment object.
 	 *
 	 */
-	async getArticleCommentById({ id }: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+	async getArticleCommentById({
+		id
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
 		const comment = await this.repoArticle.getArticleCommentById({ id });
 		return comment;
 	}
@@ -67,8 +72,12 @@ export class GetArticleCommentsHandler {
 	 * @returns {Promise<DbDtoArticleComment[]>} A Promise that resolves to an array of article comment objects.
 	 *
 	 */
-	async getArticleCommentsByIds({ ids }: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
-		const comments = await this.repoArticle.getArticleCommentsByIds({ ids });
+	async getArticleCommentsByIds({
+		ids
+	}: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
+		const comments = await this.repoArticle.getArticleCommentsByIds({
+			ids
+		});
 		return comments;
 	}
 
@@ -86,9 +95,13 @@ export class GetArticleCommentsHandler {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	async getArticleComments({ articleId }: GetArticleCommentIdsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+	async getArticleComments({
+		articleId
+	}: GetArticleCommentIdsByArticleIdInput): Promise<DbDtoArticleComment[]> {
 		await this.validateArticle({ articleId });
-		const comments = await this.repoArticle.getArticleCommentsByArticleId({ articleId });
+		const comments = await this.repoArticle.getArticleCommentsByArticleId({
+			articleId
+		});
 		return comments;
 	}
 
@@ -105,9 +118,13 @@ export class GetArticleCommentsHandler {
 	 * @returns {Promise<number>} A Promise that resolves to the number of comments for the given article ID.
 	 *
 	 */
-	async countArticleCommentsByArticleId({ articleId }: CountArticleCommentsByArticleIdInput): Promise<number> {
+	async countArticleCommentsByArticleId({
+		articleId
+	}: CountArticleCommentsByArticleIdInput): Promise<number> {
 		await this.validateArticle({ articleId });
-		const count = await this.repoArticle.countArticleCommentsByArticleId({ articleId });
+		const count = await this.repoArticle.countArticleCommentsByArticleId({
+			articleId
+		});
 		return count;
 	}
 
@@ -126,13 +143,18 @@ export class GetArticleCommentsHandler {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	private async validateArticle({ articleId }: { articleId: string }): Promise<void> {
-		const article = await this.repoArticle.getArticleById({ id: articleId });
+	private async validateArticle({
+		articleId
+	}: {
+		articleId: string;
+	}): Promise<void> {
+		const article = await this.repoArticle.getArticleById({
+			id: articleId
+		});
 		if (!article) {
 			throw new ArticleNotFoundError({});
 		}
 	}
-
 }
 
 interface GetArticleCommentsHandlerConstructor {

@@ -1,11 +1,16 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
-import { signJsonWebToken } from "../../../../utils";
 import { DtoArticle } from "../../../../article/dto";
+import { signJsonWebToken } from "../../../../utils";
 
 const factory = new Factory();
 const request = supertest(app);
@@ -23,10 +28,7 @@ describe("Article - Get Article", () => {
 	});
 
 	it("should return a status code of 404 - Not Found if the author of the targeted article had been deleted", async () => {
-		const {
-			articleService,
-			article
-		} = await setup();
+		const { articleService, article } = await setup();
 		await articleService.deleteArticleBySlug({ slug: article.slug });
 		const response = await request
 			.get(ServerPath.GetArticle.replace(":slug", article.slug))
@@ -50,7 +52,9 @@ const setup = async () => {
 	const articleService = factory.newArticleService();
 	const author = await userService.createUser(getCreateUserInput({}));
 	const user = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: author.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: author.id })
+	);
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 	return {
 		userService,

@@ -1,9 +1,7 @@
 import { expect } from "chai";
+
+import { APIError, APIErrorBadRequest } from "../../../error/APIError";
 import { BaseError } from "../../../error/BaseError";
-import {
-	APIError,
-	APIErrorBadRequest
-} from "../../../error/APIError";
 
 describe("Error module", () => {
 	it("should able to assert the error", () => {

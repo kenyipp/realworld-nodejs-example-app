@@ -1,8 +1,8 @@
 import { BaseError } from "@conduit/utils";
+
 import { ErrorCodes } from "../ArticleConstants";
 
 export class ArticleCommentNotFoundError extends BaseError {
-
 	constructor({ id }: ArticleCommentNotFoundErrorConstructor) {
 		super({
 			code: ErrorCodes.ArticleCommentNotFound,
@@ -10,7 +10,6 @@ export class ArticleCommentNotFoundError extends BaseError {
 			details: [id]
 		});
 	}
-
 }
 
 interface ArticleCommentNotFoundErrorConstructor {

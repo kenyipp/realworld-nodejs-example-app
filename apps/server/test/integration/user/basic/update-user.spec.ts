@@ -1,8 +1,10 @@
-import supertest, { type Response } from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+import supertest, { Response } from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -11,10 +13,7 @@ const request = supertest(app);
 
 describe("User - Update", () => {
 	it("should be able to update the user account", async () => {
-		const {
-			user,
-			accessToken
-		} = await setup();
+		const { user, accessToken } = await setup();
 		const response = await request
 			.put(ServerPath.UpdateUser)
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -47,14 +46,12 @@ describe("User - Update", () => {
 				}
 			});
 		expect(response.status).equals(200);
-		response = await request
-			.post(ServerPath.Login)
-			.send({
-				user: {
-					email: user.email,
-					password: "abc94340634"
-				}
-			});
+		response = await request.post(ServerPath.Login).send({
+			user: {
+				email: user.email,
+				password: "abc94340634"
+			}
+		});
 		expect(response.status).equals(200);
 	});
 

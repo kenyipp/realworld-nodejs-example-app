@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorNetworkAuthenticationRequired extends APIError {
-
 	static Config = HttpError[511];
 
 	constructor({
@@ -13,7 +12,8 @@ export class APIErrorNetworkAuthenticationRequired extends APIError {
 	}: APIErrorNetworkAuthenticationRequiredInput) {
 		super({
 			code: 511,
-			message: message || APIErrorNetworkAuthenticationRequired.Config.message,
+			message:
+				message || APIErrorNetworkAuthenticationRequired.Config.message,
 			errorCode,
 			errorType: APIErrorNetworkAuthenticationRequired.Config.type,
 			cause,
@@ -37,7 +37,6 @@ export class APIErrorNetworkAuthenticationRequired extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorNetworkAuthenticationRequiredInput {

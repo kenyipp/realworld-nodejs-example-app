@@ -1,12 +1,13 @@
 import { isNil } from "lodash";
+
+import { DbDtoUser } from "@conduit/core/database/dto";
+import { UserService } from "@conduit/core/service";
 import { APIErrorNotFound } from "@conduit/utils";
-import type { DbDtoUser } from "@conduit/core/database/dto";
-import type { UserService } from "@conduit/core/service";
+
 import { ErrorCodes } from "../../constants";
 import { DtoProfile } from "../dto";
 
 export class APIGetProfile {
-
 	private userService: UserService;
 
 	constructor({ userService }: APIGetProfileConstructor) {
@@ -23,18 +24,25 @@ export class APIGetProfile {
 	 * @throws {APIErrorNotFound} If the targeted user cannot be found.
 	 *
 	 */
-	async execute({ user, username }: APIGetProfileInput): Promise<APIGetProfileOutput> {
+	async execute({
+		user,
+		username
+	}: APIGetProfileInput): Promise<APIGetProfileOutput> {
 		const targeted = await this.userService.getUserByUsername({ username });
 		APIErrorNotFound.assert({
 			condition: !isNil(targeted),
 			errorCode: ErrorCodes.NotFound,
 			message: "Sorry, we could not find the user you are looking for."
 		});
-		const following = user ? await this.userService.isFollowing({ followerId: user.id, followingId: targeted.id }) : false;
+		const following = user
+			? await this.userService.isFollowing({
+					followerId: user.id,
+					followingId: targeted.id
+			  })
+			: false;
 		const profile = new DtoProfile({ dbDtoUser: targeted, following });
 		return { profile };
 	}
-
 }
 
 interface APIGetProfileConstructor {

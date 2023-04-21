@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorRequestedRangeNotSatisfiable extends APIError {
-
 	static Config = HttpError[416];
 
 	constructor({
@@ -13,7 +12,8 @@ export class APIErrorRequestedRangeNotSatisfiable extends APIError {
 	}: APIErrorRequestedRangeNotSatisfiableInput) {
 		super({
 			code: 416,
-			message: message || APIErrorRequestedRangeNotSatisfiable.Config.message,
+			message:
+				message || APIErrorRequestedRangeNotSatisfiable.Config.message,
 			errorCode,
 			errorType: APIErrorRequestedRangeNotSatisfiable.Config.type,
 			cause,
@@ -37,7 +37,6 @@ export class APIErrorRequestedRangeNotSatisfiable extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorRequestedRangeNotSatisfiableInput {

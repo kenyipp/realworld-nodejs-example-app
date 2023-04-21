@@ -1,21 +1,23 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
-import { signJsonWebToken } from "../../../../utils";
 import { DtoArticle } from "../../../../article/dto";
+import { signJsonWebToken } from "../../../../utils";
 
 const factory = new Factory();
 const request = supertest(app);
 
 describe("Article - Unfavorite Article", () => {
 	it("should able to unfavorite an article", async () => {
-		const {
-			article,
-			accessToken
-		} = await setup();
+		const { article, accessToken } = await setup();
 		const response = await request
 			.delete(ServerPath.UnfavoriteArticle.replace(":slug", article.slug))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -31,12 +33,10 @@ describe("Article - Unfavorite Article", () => {
 	});
 
 	it("should return a status code of 400 - Bad Request if the client does not favorite the targeted article", async () => {
-		const {
-			articleService,
-			author,
-			accessToken
-		} = await setup();
-		const article = await articleService.createArticle(getCreateArticleInput({ userId: author.id }));
+		const { articleService, author, accessToken } = await setup();
+		const article = await articleService.createArticle(
+			getCreateArticleInput({ userId: author.id })
+		);
 		const response = await request
 			.delete(ServerPath.UnfavoriteArticle.replace(":slug", article.slug))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -58,7 +58,9 @@ describe("Article - Unfavorite Article", () => {
 		const { accessToken } = await setup();
 
 		const response = await request
-			.delete(ServerPath.UnfavoriteArticle.replace(":slug", "NON_EXIST_SLUG"))
+			.delete(
+				ServerPath.UnfavoriteArticle.replace(":slug", "NON_EXIST_SLUG")
+			)
 			.set("Authorization", `Bearer ${accessToken}`)
 			.send();
 
@@ -73,7 +75,9 @@ const setup = async () => {
 	const articleService = factory.newArticleService();
 	const author = await userService.createUser(getCreateUserInput({}));
 	const user = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: author.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: author.id })
+	);
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 	await articleService.favorite({ userId: user.id, articleId: article.id });
 	return {

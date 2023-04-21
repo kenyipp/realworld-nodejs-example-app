@@ -1,9 +1,7 @@
-<h1 align="center">Conduit</h1>
-
-![Node.js / Express / Typescript / MySql / Knex Example App](./.github/images/logo.png)
+# ![Node.js / Express / Typescript / MySql / Knex Example App](./.github/images/logo.png)
 
 <p align="center">
-  Example Node (Express + MySql) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the <a href="https://github.com/gothinkster/realworld-example-apps">RealWorld</a> API spec.
+  Example Node (Express + Knex) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the <a href="https://github.com/gothinkster/realworld-example-apps">RealWorld</a> API spec.
 </p>
 
 <!-- The badges section -->
@@ -20,11 +18,13 @@
 <p align="center"> This repository has complete functionality — pull requests and issues are welcome! </p>
 
 <p align="center">
-  <a href="#get_started">Get Started</a>
-  <span>|</span>
-  <a href="#contributing">Contributing</a>
-  <span>|</span>
-  <a href="#demo">Demo</a>
+	<a href="#get_started">Get Started</a>
+	<span>|</span>
+	<a href="#demo">Demo</a>
+	<span>|</span>
+	<a href="#architecture">Architecture</a>
+	<span>|</span>
+	<a href="#contributing">Contributing</a>
 </p>
 
 <a id="get_started"></a>
@@ -44,6 +44,14 @@ pnpm run dev
 Afterward, navigate to [http://localhost:3100/api/health-check](http://localhost:3100/api/health-check) to verify if the server is operating correctly.
 
 To initialize the database in a non-production environment, you can use the POST API at [http://localhost:3100/api/reset](http://localhost:3100/api/reset), which quickly resets the database.
+
+### Deployment
+
+This project uses the [Express-Serverless](https://github.com/vendia/serverless-express) framework and [Amazon SAM](https://aws.amazon.com/tw/serverless/sam) to deploy the server as a serverless structure. In the root directory, you'll find a [deployment template](./template.yaml) with hints to guide you through the deployment process.
+
+To deploy the application, run `sam deploy --guide` in the command line interface. You'll be prompted with questions to configure the deployment. If you need more detailed explanations on the techniques and application architecture, refer to the <a href="#architecture">architecture</a> section.
+
+For more information on deploying a serverless application with Amazon SAM, please visit the [AWS documentation](https://docs.aws.amazon.com/serverless-application-model/?icmpid=docs_homepage_compute).
 
 <a id="contributing"></a>
 

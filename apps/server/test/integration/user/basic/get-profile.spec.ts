@@ -1,8 +1,10 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -11,10 +13,7 @@ const request = supertest(app);
 
 describe("User - Get Profile", () => {
 	it("should be able to get the user profile", async () => {
-		const {
-			userB,
-			accessToken
-		} = await setup();
+		const { userB, accessToken } = await setup();
 		const response = await request
 			.get(ServerPath.GetProfile.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -32,20 +31,20 @@ describe("User - Get Profile", () => {
 	it("should return a status code of 404 - Not Found if the targeted user does not exist", async () => {
 		const { accessToken } = await setup();
 		const response = await request
-			.get(ServerPath.GetProfile.replace(":username", "UN_EXIST_USERNAME"))
+			.get(
+				ServerPath.GetProfile.replace(":username", "UN_EXIST_USERNAME")
+			)
 			.set("Authorization", `Bearer ${accessToken}`)
 			.send();
 		expect(response.status).equals(404);
 	});
 
 	it("should return a profile with the following attribute with a value of true if the requested user is following the targeted user", async () => {
-		const {
-			userService,
-			userA,
-			userB,
-			accessToken
-		} = await setup();
-		await userService.followUser({ followerId: userA.id, followingId: userB.id });
+		const { userService, userA, userB, accessToken } = await setup();
+		await userService.followUser({
+			followerId: userA.id,
+			followingId: userB.id
+		});
 		const response = await request
 			.get(ServerPath.GetProfile.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -62,10 +61,7 @@ describe("User - Get Profile", () => {
 	});
 
 	it("should return a profile with the following attribute with a value of false if the requested user is not following the targeted user", async () => {
-		const {
-			userB,
-			accessToken
-		} = await setup();
+		const { userB, accessToken } = await setup();
 		const response = await request
 			.get(ServerPath.GetProfile.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -98,10 +94,7 @@ describe("User - Get Profile", () => {
 	});
 
 	it("should return a status code of 401 - Unauthorized if the client provides an invalid auth header", async () => {
-		const {
-			userB,
-			accessToken
-		} = await setup();
+		const { userB, accessToken } = await setup();
 		const response = await request
 			.get(ServerPath.GetProfile.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}+InvalidToken`)

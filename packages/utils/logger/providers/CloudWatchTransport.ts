@@ -1,10 +1,8 @@
 import AWS from "aws-sdk";
 import moment from "moment";
-import {
-	Environments,
-	type AnyFunction
-} from "@conduit/types";
 import Transport, { TransportStreamOptions } from "winston-transport";
+
+import { type AnyFunction, Environments } from "@conduit/types";
 
 const client = new AWS.CloudWatchLogs({
 	credentials: {
@@ -16,7 +14,6 @@ const client = new AWS.CloudWatchLogs({
 const isProduction = process.env.NODE_ENV === Environments.Production;
 
 export class CloudWatchTransport extends Transport {
-
 	logGroup: string;
 	enabled: boolean;
 
@@ -40,7 +37,11 @@ export class CloudWatchTransport extends Transport {
 		const logStream = await client
 			.describeLogStreams({ logGroupName: this.logGroup })
 			.promise()
-			.then((response) => response.logStreams.find((stream) => stream.logStreamName === logStreamName));
+			.then((response) =>
+				response.logStreams.find(
+					(stream) => stream.logStreamName === logStreamName
+				)
+			);
 
 		let nextUploadSequenceToken = null;
 
@@ -71,7 +72,6 @@ export class CloudWatchTransport extends Transport {
 
 		callback();
 	}
-
 }
 
 type CloudWatchTransportOptions = TransportStreamOptions & {

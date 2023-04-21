@@ -1,8 +1,10 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -30,25 +32,19 @@ describe("Article - Create Article", () => {
 	});
 
 	it("should return a status code of 401 - Unauthorized if the client doesn't provide auth headers", async () => {
-		const response = await request
-			.post(ServerPath.CreateArticle)
-			.send({
-				article: {
-					title: "How to train your dragon",
-					description: "Ever wonder how?",
-					body: "You have to believe",
-					tagList: ["react.js", "angular.js", "dragons"]
-				}
-			});
+		const response = await request.post(ServerPath.CreateArticle).send({
+			article: {
+				title: "How to train your dragon",
+				description: "Ever wonder how?",
+				body: "You have to believe",
+				tagList: ["react.js", "angular.js", "dragons"]
+			}
+		});
 		expect(response.status).equals(401);
 	});
 
 	it("should return a status code of 403 - Forbidden if the user has been banned", async () => {
-		const {
-			user,
-			userService,
-			accessToken
-		} = await setup();
+		const { user, userService, accessToken } = await setup();
 		await userService.banUserById({ id: user.id });
 		const response = await request
 			.post(ServerPath.CreateArticle)

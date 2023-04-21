@@ -1,13 +1,16 @@
-import md5 from "md5";
 import jsonwebtoken from "jsonwebtoken";
-import { v4 as Uuid } from "uuid";
-import { appConfig } from "@conduit/config";
-import { type DbDtoUser } from "@conduit/core/database/dto";
 import { pick } from "lodash";
+import md5 from "md5";
+import { v4 as Uuid } from "uuid";
+
+import { appConfig } from "@conduit/config";
+import { DbDtoUser } from "@conduit/core/database/dto";
 
 const signature = appConfig.server.appSignature;
 
-export const signJsonWebToken = ({ dbDtoUser }: SignJsonWebTokenInput): SignJsonWebTokenOutput => {
+export const signJsonWebToken = ({
+	dbDtoUser
+}: SignJsonWebTokenInput): SignJsonWebTokenOutput => {
 	const hash = hashDbDtoUser({ dbDtoUser });
 	const accessToken = jsonwebtoken.sign(
 		{
@@ -24,7 +27,9 @@ export const signJsonWebToken = ({ dbDtoUser }: SignJsonWebTokenInput): SignJson
 	return { accessToken };
 };
 
-export const verifyJsonWebToken = ({ accessToken }: VerifyJsonWebTokenInput): VerifyJsonWebTokenOutput => {
+export const verifyJsonWebToken = ({
+	accessToken
+}: VerifyJsonWebTokenInput): VerifyJsonWebTokenOutput => {
 	const decoded = jsonwebtoken.verify(accessToken, signature);
 	if (typeof decoded === "object" && decoded.userId && decoded.hash) {
 		return {
@@ -44,7 +49,11 @@ export const verifyJsonWebToken = ({ accessToken }: VerifyJsonWebTokenInput): Ve
  * @returns {string} - The hash of the selected user keys.
  *
  */
-export const hashDbDtoUser = ({ dbDtoUser }: { dbDtoUser: DbDtoUser }): string => {
+export const hashDbDtoUser = ({
+	dbDtoUser
+}: {
+	dbDtoUser: DbDtoUser;
+}): string => {
 	const hash = md5(JSON.stringify(pick(dbDtoUser, KEYS_TO_CHECK)));
 	return hash;
 };
@@ -67,8 +76,4 @@ interface VerifyJsonWebTokenOutput {
 }
 
 // If one of the keys has changed, the JSON Web Token for the user should be expired
-const KEYS_TO_CHECK = [
-	"id",
-	"email",
-	"hash"
-];
+const KEYS_TO_CHECK = ["id", "email", "hash"];

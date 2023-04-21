@@ -1,18 +1,17 @@
 module.exports = {
 	extends: [
 		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
 		"eslint-config-airbnb-base",
-		"airbnb-typescript"
+		"airbnb-typescript",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
 	],
 	env: {
 		es2021: true,
 		node: true
 	},
 	parser: "@typescript-eslint/parser",
-	plugins: [
-		"@typescript-eslint"
-	],
+	plugins: ["@typescript-eslint", "prettier"],
 	rules: {
 		"import/prefer-default-export": "off",
 		"no-tabs": ["off"],
@@ -21,10 +20,8 @@ module.exports = {
 		"react/jsx-filename-extension": "off",
 		"class-methods-use-this": "off",
 		"no-param-reassign": "off",
-		"padded-blocks": ["error", { "switches": "never", "classes": "always", "blocks": "never" }],
 
 		"@typescript-eslint/quotes": ["error", "double"],
-		"@typescript-eslint/indent": ["error", "tab"],
 		"@typescript-eslint/comma-dangle": ["error", "never"],
 		"@typescript-eslint/no-namespace": "off",
 		// A better practice is to define all needed variables and test data towards the end of the test suite,
@@ -33,20 +30,31 @@ module.exports = {
 		// scroll down and search within the file.
 		"@typescript-eslint/no-use-before-define": "off",
 		"@typescript-eslint/no-explicit-any": "off",
-		"@typescript-eslint/lines-between-class-members": ["error", "always", { exceptAfterSingleLine: true }]
+		"@typescript-eslint/lines-between-class-members": [
+			"error",
+			"always",
+			{ exceptAfterSingleLine: true }
+		],
+		"prettier/prettier": [
+			//or whatever plugin that is causing the clash
+			"error",
+			{
+				tabWidth: 4
+			}
+		]
 	},
 	overrides: [
 		{
 			files: ["*.spec.{js,ts}"],
 			env: {
 				mocha: true,
-				node: true,
+				node: true
 			},
 			rules: {
 				"no-unused-expressions": "off",
 				"@typescript-eslint/no-unused-expressions": "off",
 				"@typescript-eslint/no-throw-literal": "off"
-			},
-		},
+			}
+		}
 	]
 };

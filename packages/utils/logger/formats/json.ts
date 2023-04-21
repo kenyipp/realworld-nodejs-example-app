@@ -1,10 +1,14 @@
-import { format } from "winston";
-import { MESSAGE } from "triple-beam";
 import stringify from "safe-stable-stringify";
+import { MESSAGE } from "triple-beam";
+import { format } from "winston";
 
 export const json = format((info, options) => {
 	const jsonStringify = stringify.configure(options);
-	const stringified = jsonStringify(info, options.replacer || replacer, options.space);
+	const stringified = jsonStringify(
+		info,
+		options.replacer || replacer,
+		options.space
+	);
 	info[MESSAGE] = stringified;
 	return info;
 });

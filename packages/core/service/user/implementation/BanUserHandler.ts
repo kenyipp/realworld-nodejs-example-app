@@ -1,12 +1,12 @@
 import { isNil } from "lodash";
+
 import {
-	type RepoUser,
-	type BanUserByIdInput
+	type BanUserByIdInput,
+	type RepoUser
 } from "../../../repository/RepoUser";
 import { UserNotFoundError } from "../error";
 
 export class BanUserHandler {
-
 	private repoUser: RepoUser;
 
 	constructor({ repoUser }: BanUserHandlerConstructor) {
@@ -52,7 +52,6 @@ export class BanUserHandler {
 			throw new UserNotFoundError();
 		}
 	}
-
 }
 
 interface BanUserHandlerConstructor {

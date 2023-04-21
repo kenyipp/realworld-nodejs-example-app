@@ -1,8 +1,10 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -11,10 +13,7 @@ const request = supertest(app);
 
 describe("User - Following", () => {
 	it("should be able to follow a user", async () => {
-		const {
-			userB,
-			accessToken
-		} = await setup();
+		const { userB, accessToken } = await setup();
 		const response = await request
 			.post(ServerPath.FollowUser.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -39,12 +38,7 @@ describe("User - Following", () => {
 	});
 
 	it("should return a status code of 403 - Forbidden if the user has been banned", async () => {
-		const {
-			userService,
-			userA,
-			userB,
-			accessToken
-		} = await setup();
+		const { userService, userA, userB, accessToken } = await setup();
 		await userService.banUserById({ id: userA.id });
 		const response = await request
 			.post(ServerPath.FollowUser.replace(":username", userB.username))
@@ -54,13 +48,11 @@ describe("User - Following", () => {
 	});
 
 	it("should return a status code of 400 - Bad Request if the user has already followed the targeted user", async () => {
-		const {
-			userService,
-			userA,
-			userB,
-			accessToken
-		} = await setup();
-		await userService.followUser({ followerId: userA.id, followingId: userB.id });
+		const { userService, userA, userB, accessToken } = await setup();
+		await userService.followUser({
+			followerId: userA.id,
+			followingId: userB.id
+		});
 		const response = await request
 			.post(ServerPath.FollowUser.replace(":username", userB.username))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -69,10 +61,7 @@ describe("User - Following", () => {
 	});
 
 	it("should return a status code of 400 - Bad Request if the user tries to follow themselves", async () => {
-		const {
-			userA,
-			accessToken
-		} = await setup();
+		const { userA, accessToken } = await setup();
 		const response = await request
 			.post(ServerPath.FollowUser.replace(":username", userA.username))
 			.set("Authorization", `Bearer ${accessToken}`)

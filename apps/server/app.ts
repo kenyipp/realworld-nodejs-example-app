@@ -1,9 +1,7 @@
 import express from "express";
-import {
-	configureMiddlewares,
-	configureGlobalExceptionHandler
-} from "./utils";
+
 import { router } from "./routes";
+import { configureGlobalExceptionHandler, configureMiddlewares } from "./utils";
 
 export const app = express();
 

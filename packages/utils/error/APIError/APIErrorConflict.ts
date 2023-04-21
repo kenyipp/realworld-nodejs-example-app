@@ -1,16 +1,10 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorConflict extends APIError {
-
 	static Config = HttpError[409];
 
-	constructor({
-		message,
-		errorCode,
-		cause,
-		payload
-	}: APIErrorConflictInput) {
+	constructor({ message, errorCode, cause, payload }: APIErrorConflictInput) {
 		super({
 			code: 409,
 			message: message || APIErrorConflict.Config.message,
@@ -37,7 +31,6 @@ export class APIErrorConflict extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorConflictInput {

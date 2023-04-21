@@ -7,7 +7,6 @@ import { DbUser } from "./DbUser";
  *
  */
 export class DbFactory {
-
 	newDbArticle(): DbArticle {
 		const dbArticle = new DbArticle();
 		return dbArticle;
@@ -17,5 +16,4 @@ export class DbFactory {
 		const dbUser = new DbUser();
 		return dbUser;
 	}
-
 }

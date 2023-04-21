@@ -1,8 +1,13 @@
-import supertest, { Response } from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest, { Response } from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -14,9 +19,7 @@ describe("Article - List Articles", () => {
 		const { articles } = await setup();
 		const totalArticleCount = Object.keys(articles).length;
 
-		const response = await request
-			.get(ServerPath.ListArticles)
-			.send();
+		const response = await request.get(ServerPath.ListArticles).send();
 
 		expect(response.status).equals(200);
 		expect(response.body).is.not.null;
@@ -28,7 +31,9 @@ describe("Article - List Articles", () => {
 	it("should be able to retrieve a list of all articles with access token", async () => {
 		const { authors, articles } = await setup();
 		const totalArticleCount = Object.keys(articles).length;
-		const { accessToken } = signJsonWebToken({ dbDtoUser: authors.authorA });
+		const { accessToken } = signJsonWebToken({
+			dbDtoUser: authors.authorA
+		});
 
 		const response: Response = await request
 			.get(ServerPath.ListArticles)
@@ -114,12 +119,26 @@ const setup = async () => {
 	const authorA = await userService.createUser(getCreateUserInput({}));
 	const authorB = await userService.createUser(getCreateUserInput({}));
 	const user = await userService.createUser(getCreateUserInput({}));
-	const articleAWithTagFromAuthorA = await articleService.createArticle(getCreateArticleInput({ userId: authorA.id }));
-	await articleService.createArticleTag({ articleId: articleAWithTagFromAuthorA.id, tagList: ["TAG_A", "TAG_B"] });
-	const articleBFromAuthorA = await articleService.createArticle(getCreateArticleInput({ userId: authorA.id }));
-	const articleCFromAuthorB = await articleService.createArticle(getCreateArticleInput({ userId: authorB.id }));
-	const articleDWithTagFromAuthorB = await articleService.createArticle(getCreateArticleInput({ userId: authorB.id }));
-	await articleService.createArticleTag({ articleId: articleDWithTagFromAuthorB.id, tagList: ["TAG_A"] });
+	const articleAWithTagFromAuthorA = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorA.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleAWithTagFromAuthorA.id,
+		tagList: ["TAG_A", "TAG_B"]
+	});
+	const articleBFromAuthorA = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorA.id })
+	);
+	const articleCFromAuthorB = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorB.id })
+	);
+	const articleDWithTagFromAuthorB = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorB.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleDWithTagFromAuthorB.id,
+		tagList: ["TAG_A"]
+	});
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 	return {
 		userService,

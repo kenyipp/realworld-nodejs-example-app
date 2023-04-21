@@ -2,7 +2,6 @@ import stringify from "fast-json-stable-stringify";
 import { serializeError } from "serialize-error";
 
 export class CustomKnexError extends Error {
-
 	constructor({ message }: CustomKnexErrorConstructor) {
 		super(message);
 		// Ensure the name of this error is the same as the class name
@@ -21,7 +20,6 @@ export class CustomKnexError extends Error {
 	toString() {
 		return stringify(serializeError(this));
 	}
-
 }
 
 export interface CustomKnexErrorConstructor {

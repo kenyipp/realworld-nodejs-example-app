@@ -1,21 +1,23 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
-import { signJsonWebToken } from "../../../../utils";
 import { DtoArticle } from "../../../../article/dto";
+import { signJsonWebToken } from "../../../../utils";
 
 const factory = new Factory();
 const request = supertest(app);
 
 describe("Article - Update Article", () => {
 	it("should be able to update the article", async () => {
-		const {
-			article,
-			accessToken
-		} = await setup();
+		const { article, accessToken } = await setup();
 		const response = await request
 			.put(ServerPath.UpdateArticle.replace(":slug", article.slug))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -27,10 +29,7 @@ describe("Article - Update Article", () => {
 	});
 
 	it("should update the slug to reflect the new title when the title of an article is updated using the API. ", async () => {
-		const {
-			article,
-			accessToken
-		} = await setup();
+		const { article, accessToken } = await setup();
 		const response = await request
 			.put(ServerPath.UpdateArticle.replace(":slug", article.slug))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -44,10 +43,7 @@ describe("Article - Update Article", () => {
 	});
 
 	it("should return a status code of 403 - Forbidden if the user tries to update an article that does not belong to them", async () => {
-		const {
-			user,
-			article
-		} = await setup();
+		const { user, article } = await setup();
 		const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 		const response = await request
 			.put(ServerPath.UpdateArticle.replace(":slug", article.slug))
@@ -74,10 +70,7 @@ describe("Article - Update Article", () => {
 	});
 
 	it("should return a status code of 422 - Unprocessable Entity if the client doesn't provide any data fields", async () => {
-		const {
-			article,
-			accessToken
-		} = await setup();
+		const { article, accessToken } = await setup();
 		const response = await request
 			.put(ServerPath.UpdateArticle.replace(":slug", article.slug))
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -93,7 +86,9 @@ const setup = async () => {
 	const articleService = factory.newArticleService();
 	const author = await userService.createUser(getCreateUserInput({}));
 	const user = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: author.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: author.id })
+	);
 	const { accessToken } = signJsonWebToken({ dbDtoUser: author });
 	return {
 		userService,

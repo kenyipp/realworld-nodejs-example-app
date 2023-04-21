@@ -1,12 +1,11 @@
+import { type DbDtoArticleComment } from "../../../database/dto";
 import {
-	type RepoArticle,
-	type CreateArticleCommentInput
+	type CreateArticleCommentInput,
+	type RepoArticle
 } from "../../../repository/RepoArticle";
 import { ArticleNotFoundError } from "../error";
-import { type DbDtoArticleComment } from "../../../database/dto";
 
 export class CreateArticleCommentHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: CreateArticleCommentHandlerConstructor) {
@@ -29,9 +28,17 @@ export class CreateArticleCommentHandler {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	async execute({ articleId, body, userId }: CreateArticleCommentInput): Promise<DbDtoArticleComment> {
+	async execute({
+		articleId,
+		body,
+		userId
+	}: CreateArticleCommentInput): Promise<DbDtoArticleComment> {
 		await this.validateArticle({ articleId });
-		const id = await this.repoArticle.createArticleComment({ articleId, body, userId });
+		const id = await this.repoArticle.createArticleComment({
+			articleId,
+			body,
+			userId
+		});
 		const comment = await this.repoArticle.getArticleCommentById({ id });
 		return comment;
 	}
@@ -51,13 +58,18 @@ export class CreateArticleCommentHandler {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	private async validateArticle({ articleId }: { articleId: string }): Promise<void> {
-		const article = await this.repoArticle.getArticleById({ id: articleId });
+	private async validateArticle({
+		articleId
+	}: {
+		articleId: string;
+	}): Promise<void> {
+		const article = await this.repoArticle.getArticleById({
+			id: articleId
+		});
 		if (!article) {
 			throw new ArticleNotFoundError({});
 		}
 	}
-
 }
 
 interface CreateArticleCommentHandlerConstructor {

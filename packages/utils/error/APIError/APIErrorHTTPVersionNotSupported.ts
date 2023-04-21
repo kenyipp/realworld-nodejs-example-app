@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorHTTPVersionNotSupported extends APIError {
-
 	static Config = HttpError[505];
 
 	constructor({
@@ -37,7 +36,6 @@ export class APIErrorHTTPVersionNotSupported extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorHTTPVersionNotSupportedInput {

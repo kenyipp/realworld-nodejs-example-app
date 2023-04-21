@@ -1,8 +1,13 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -19,10 +24,7 @@ describe("Article - Get Tags", () => {
 	});
 
 	it("should exclude tags from deleted articles", async () => {
-		const {
-			articleService,
-			articleA
-		} = await setup();
+		const { articleService, articleA } = await setup();
 		await articleService.deleteArticleBySlug({ slug: articleA.slug });
 		const response = await request.get(ServerPath.GetTags);
 		expect(response.status).equals(200);
@@ -31,10 +33,7 @@ describe("Article - Get Tags", () => {
 	});
 
 	it("should not display tags from articles authored by a banned author", async () => {
-		const {
-			userService,
-			articleA
-		} = await setup();
+		const { userService, articleA } = await setup();
 		await userService.banUserById({ id: articleA.userId });
 		const response = await request.get(ServerPath.GetTags);
 		expect(response.status).equals(200);
@@ -50,10 +49,20 @@ const setup = async () => {
 	const articleService = factory.newArticleService();
 	const user = await userService.createUser(getCreateUserInput({}));
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
-	const articleA = await articleService.createArticle(getCreateArticleInput({ userId: user.id }));
-	await articleService.createArticleTag({ articleId: articleA.id, tagList: ["Hello", "World"] });
-	const articleB = await articleService.createArticle(getCreateArticleInput({ userId: user.id }));
-	await articleService.createArticleTag({ articleId: articleB.id, tagList: ["Foo", "Bar"] });
+	const articleA = await articleService.createArticle(
+		getCreateArticleInput({ userId: user.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleA.id,
+		tagList: ["Hello", "World"]
+	});
+	const articleB = await articleService.createArticle(
+		getCreateArticleInput({ userId: user.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleB.id,
+		tagList: ["Foo", "Bar"]
+	});
 	return {
 		articleService,
 		userService,

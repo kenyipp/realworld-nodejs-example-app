@@ -1,17 +1,12 @@
-import {
-	fromPairs,
-	indexOf,
-	isNil,
-	isUndefined,
-	sortBy
-} from "lodash";
+import { fromPairs, indexOf, isNil, isUndefined, sortBy } from "lodash";
 import { v4 as Uuid } from "uuid";
+
 import { RecStatus, Tables, UserStatus } from "@conduit/types";
-import { DbDtoUser } from "./dto";
+
 import { knex } from "../knex";
+import { DbDtoUser } from "./dto";
 
 export class DbUser {
-
 	/**
 	 *
 	 * Retrieves user data for an array of user IDs.
@@ -32,16 +27,16 @@ export class DbUser {
 		}
 		const users = await knex
 			.select<DbDtoUser[]>({
-			id: "user_id",
-			username: "username",
-			email: "email",
-			bio: "bio",
-			image: "image",
-			hash: "hash",
-			statusId: "status_id",
-			createdAt: "created_at",
-			updatedAt: "updated_at"
-		})
+				id: "user_id",
+				username: "username",
+				email: "email",
+				bio: "bio",
+				image: "image",
+				hash: "hash",
+				statusId: "status_id",
+				createdAt: "created_at",
+				updatedAt: "updated_at"
+			})
 			.from(Tables.User)
 			.whereIn("user_id", ids);
 		return sortBy(users, (user) => indexOf(ids, user.id));
@@ -61,7 +56,9 @@ export class DbUser {
 	 *
 	 */
 	async getUserById({ id }: GetUserByIdInput): Promise<DbDtoUser> {
-		const user = await this.getUserByIds({ ids: [id] }).then((users) => users[0]);
+		const user = await this.getUserByIds({ ids: [id] }).then(
+			(users) => users[0]
+		);
 		return user;
 	}
 
@@ -101,7 +98,9 @@ export class DbUser {
 	 * @returns {Promise<DbDtoUser>} - A promise that resolves to the user object if found.
 	 *
 	 */
-	async getUserByUsername({ username }: GetUserByUsernameInput): Promise<DbDtoUser> {
+	async getUserByUsername({
+		username
+	}: GetUserByUsernameInput): Promise<DbDtoUser> {
 		const { id } = await knex
 			.first<{ id: string }>({ id: "user_id" })
 			.from(Tables.User)
@@ -129,7 +128,11 @@ export class DbUser {
 	 *
 	 */
 	async createUser({
-		username, email, bio, image, hash
+		username,
+		email,
+		bio,
+		image,
+		hash
 	}: CreateUserInput): Promise<string> {
 		const userId = Uuid();
 		await knex
@@ -159,7 +162,12 @@ export class DbUser {
 	 *
 	 */
 	async updateUser({
-		id, email, username, hash, image, bio
+		id,
+		email,
+		username,
+		hash,
+		image,
+		bio
 	}: UpdateUserInput): Promise<void> {
 		if (!email && !username && !hash && !image && !bio) {
 			return;
@@ -180,10 +188,7 @@ export class DbUser {
 		if (!isUndefined(bio)) {
 			updates.bio = bio;
 		}
-		await knex
-			.table(Tables.User)
-			.update(updates)
-			.where("user_id", id);
+		await knex.table(Tables.User).update(updates).where("user_id", id);
 	}
 
 	/**
@@ -214,7 +219,7 @@ export class DbUser {
 			query = query.orWhere("email", email);
 		}
 		const result = await query;
-		return !!(result);
+		return !!result;
 	}
 
 	/**
@@ -232,7 +237,10 @@ export class DbUser {
 	 * @throws {Error} - If the follow record cannot be inserted into the database.
 	 *
 	 */
-	async followUser({ followerId, followingId }: FollowUserInput): Promise<void> {
+	async followUser({
+		followerId,
+		followingId
+	}: FollowUserInput): Promise<void> {
 		await knex
 			.insert({
 				user_follow_id: Uuid(),
@@ -260,7 +268,10 @@ export class DbUser {
 	 * @throws {Error} - If the follow record cannot be deleted from the database.
 	 *
 	 */
-	async unfollowUser({ followerId, followingId }: UnfollowUserInput): Promise<void> {
+	async unfollowUser({
+		followerId,
+		followingId
+	}: UnfollowUserInput): Promise<void> {
 		await knex
 			.table(Tables.UserFollow)
 			.update({ rec_status: RecStatus.Deleted })
@@ -283,7 +294,10 @@ export class DbUser {
 	 * @throws {Error} - If the database query fails.
 	 *
 	 */
-	async isFollowing({ followerId, followingId }: IsFollowingInput): Promise<boolean> {
+	async isFollowing({
+		followerId,
+		followingId
+	}: IsFollowingInput): Promise<boolean> {
 		const id = await knex
 			.first<{ id: string }>({ id: "user_follow_id" })
 			.from(Tables.UserFollow)
@@ -308,7 +322,10 @@ export class DbUser {
 	 * @throws {Error} If the database query fails for any reason.
 	 *
 	 */
-	async getIsUsersFollowingByUserId({ followerId, followingIds }: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
+	async getIsUsersFollowingByUserId({
+		followerId,
+		followingIds
+	}: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
 		if (followingIds.length < 1 || isNil(followerId)) {
 			return fromPairs(followingIds.map((id) => [id, false]));
 		}
@@ -362,7 +379,6 @@ export class DbUser {
 			.update({ rec_status: RecStatus.Deleted })
 			.where("user_id", userId);
 	}
-
 }
 
 export interface CreateUserInput {
@@ -377,7 +393,7 @@ export interface UpdateUserInput {
 	id: string;
 	email?: string;
 	username?: string;
-	hash?: string,
+	hash?: string;
 	image?: string;
 	bio?: string;
 }

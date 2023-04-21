@@ -1,7 +1,7 @@
+import { RepoFactory } from "./repository/RepoFactory";
 import { ArticleService } from "./service/article/ArticleService";
 import { AuthService } from "./service/auth/AuthService";
 import { UserService } from "./service/user/UserService";
-import { RepoFactory } from "./repository/RepoFactory";
 
 /**
  *
@@ -9,7 +9,6 @@ import { RepoFactory } from "./repository/RepoFactory";
  *
  */
 export class Factory {
-
 	private repoFactory: RepoFactory;
 
 	constructor() {
@@ -35,5 +34,4 @@ export class Factory {
 		const authService = this.newAuthService();
 		return new UserService({ repoUser, authService });
 	}
-
 }

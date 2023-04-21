@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorUnauthorized extends APIError {
-
 	static Config = HttpError[401];
 
 	constructor({
@@ -37,7 +36,6 @@ export class APIErrorUnauthorized extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorUnauthorizedInput {

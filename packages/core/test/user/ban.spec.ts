@@ -1,15 +1,13 @@
 import { expect } from "chai";
-import { dangerouslyResetDb } from "../../knex";
+
 import { Factory } from "../../Factory";
-import { getCreateUserInput } from "../mockData";
+import { dangerouslyResetDb } from "../../knex";
 import { UserNotFoundError } from "../../service/user/error";
+import { getCreateUserInput } from "../mockData";
 
 describe("User - Ban User", () => {
 	it("should be able to ban an user", async () => {
-		const {
-			userService,
-			user
-		} = await setup();
+		const { userService, user } = await setup();
 		await userService.banUserById({ id: user.id });
 	});
 
@@ -23,10 +21,7 @@ describe("User - Ban User", () => {
 	});
 
 	it("should throw an error if the banned user has been banned", async () => {
-		const {
-			userService,
-			user
-		} = await setup();
+		const { userService, user } = await setup();
 		await userService.banUserById({ id: user.id });
 		try {
 			await userService.banUserById({ id: user.id });

@@ -13,6 +13,7 @@
 		"build:packages": "turbo run build --filter='./packages/*'",
 		"check-types": "turbo run check-types --parallel",
 		"coverage": "nyc turbo run test",
+		"format": "turbo run format",
 		"dev": "turbo run dev",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",

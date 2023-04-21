@@ -1,25 +1,18 @@
 import winston, { format, transports } from "winston";
+
 import { Environments } from "@conduit/types";
+
 import {
-	cleanStack,
 	capitalizeLevel,
-	label,
+	cleanStack,
 	customPrintf,
-	environment
+	environment,
+	label
 } from "./formats";
 
-const {
-	timestamp,
-	errors,
-	json,
-	combine,
-	colorize,
-	metadata
-} = format;
+const { timestamp, errors, json, combine, colorize, metadata } = format;
 
-const {
-	Console
-} = transports;
+const { Console } = transports;
 
 const isProduction = process.env.NODE_ENV === Environments.Production;
 

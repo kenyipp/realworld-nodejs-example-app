@@ -1,9 +1,14 @@
+import { Handler } from "express";
 import Router from "express-promise-router";
 import { isNil } from "lodash";
+
 import { Factory } from "@conduit/core";
 import { ServerPath } from "@conduit/types";
-import { type Handler } from "express";
 import { APIErrorInternalServerError } from "@conduit/utils";
+
+import { auth, authRequired, validate } from "../middleware";
+import { DtoInputLogin, DtoInputRegistration, DtoInputUpdateUser } from "./dto";
+import { loginSchema, registrationSchema, updateUserSchema } from "./schema";
 import {
 	APIFollowUser,
 	APIGetCurrentUser,
@@ -13,21 +18,6 @@ import {
 	APIUpdateUser,
 	APIUserLogin
 } from "./service";
-import {
-	auth,
-	authRequired,
-	validate
-} from "../middleware";
-import type {
-	DtoInputLogin,
-	DtoInputRegistration,
-	DtoInputUpdateUser
-} from "./dto";
-import {
-	loginSchema,
-	registrationSchema,
-	updateUserSchema
-} from "./schema";
 
 export const router = Router();
 const factory = new Factory();
@@ -78,7 +68,9 @@ const updateUser: Handler = async (req, res) => {
 
 	APIErrorInternalServerError.assert({
 		condition: !isNil(updates),
-		cause: new Error("Missing request parameters 'userId' and/or request body")
+		cause: new Error(
+			"Missing request parameters 'userId' and/or request body"
+		)
 	});
 
 	const response = await apiUpdateUser.execute({ user, updates });
@@ -114,8 +106,17 @@ const unfollowUser: Handler = async (req, res) => {
 
 router.post(ServerPath.Login, validate.body(loginSchema), login);
 router.get(ServerPath.GetCurrentUser, authRequired, getCurrentUser);
-router.put(ServerPath.UpdateUser, authRequired, validate.body(updateUserSchema), updateUser);
+router.put(
+	ServerPath.UpdateUser,
+	authRequired,
+	validate.body(updateUserSchema),
+	updateUser
+);
 router.get(ServerPath.GetProfile, auth, getProfile);
-router.post(ServerPath.Registration, validate.body(registrationSchema), registration);
+router.post(
+	ServerPath.Registration,
+	validate.body(registrationSchema),
+	registration
+);
 router.post(ServerPath.FollowUser, authRequired, followUser);
 router.delete(ServerPath.UnfollowUser, authRequired, unfollowUser);

@@ -2,7 +2,6 @@ import stringify from "fast-json-stable-stringify";
 import { serializeError } from "serialize-error";
 
 export class BaseError extends Error {
-
 	code?: string;
 	details: string[] = [];
 
@@ -17,9 +16,7 @@ export class BaseError extends Error {
 		Error.captureStackTrace(this, this.constructor);
 	}
 
-	static assert({
-		condition, code, details, message
-	}: AssertInput) {
+	static assert({ condition, code, details, message }: AssertInput) {
 		if (!condition) {
 			throw new BaseError({ message, code, details });
 		}
@@ -28,7 +25,6 @@ export class BaseError extends Error {
 	toString() {
 		return stringify(serializeError(this));
 	}
-
 }
 
 export interface BaseErrorConstructor {
@@ -38,5 +34,5 @@ export interface BaseErrorConstructor {
 }
 
 export type AssertInput = BaseErrorConstructor & {
-	condition: boolean
+	condition: boolean;
 };

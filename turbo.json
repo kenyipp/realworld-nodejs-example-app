@@ -1,8 +1,20 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
 	"pipeline": {
+		"build": {
+			"cache": false
+		},
+		"check-types": {
+			"outputs": []
+		},
 		"clean": {
 			"cache": false
+		},
+		"dev": {
+			"cache": false
+		},
+		"format": {
+			"outputs": []
 		},
 		"lint": {
 			"outputs": []
@@ -10,19 +22,10 @@
 		"lint:fix": {
 			"outputs": []
 		},
-		"check-types": {
-			"outputs": []
-		},
 		"start": {
 			"cache": false
 		},
-		"dev": {
-			"cache": false
-		},
 		"test": {
-			"cache": false
-		},
-		"build": {
 			"cache": false
 		}
 	}

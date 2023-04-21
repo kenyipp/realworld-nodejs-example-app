@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { CreateArticleInput, CreateArticleCommentInput } from "../../service/article/implementation";
+
+import {
+	CreateArticleCommentInput,
+	CreateArticleInput
+} from "../../service/article/implementation";
 
 /**
  *

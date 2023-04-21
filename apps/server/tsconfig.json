@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": "@conduit/config/build/tsconfig-base.json",
+	"extends": "@conduit/config/tsconfig.base.json",
 	"compilerOptions": {
 		"sourceMap": false,
 		"outDir": "./",

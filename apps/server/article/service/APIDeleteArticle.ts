@@ -1,16 +1,15 @@
+import { DbDtoUser } from "@conduit/core/database/dto";
+import { ArticleService } from "@conduit/core/service";
+import { ArticleNotFoundError } from "@conduit/core/service/article/error";
+import { logger } from "@conduit/utils";
 import {
 	APIError,
 	APIErrorForbidden,
-	APIErrorNotFound,
-	APIErrorInternalServerError
+	APIErrorInternalServerError,
+	APIErrorNotFound
 } from "@conduit/utils/error";
-import { logger } from "@conduit/utils";
-import { ArticleNotFoundError } from "@conduit/core/service/article/error";
-import type { DbDtoUser } from "@conduit/core/database/dto";
-import type { ArticleService } from "@conduit/core/service";
 
 export class APIDeleteArticle {
-
 	private articleService: ArticleService;
 
 	constructor({ articleService }: APIDeleteArticleConstructor) {
@@ -19,10 +18,13 @@ export class APIDeleteArticle {
 
 	async execute({ slug, user }: APIDeleteArticleInput): Promise<void> {
 		try {
-			const article = await this.articleService.getArticleBySlug({ slug });
+			const article = await this.articleService.getArticleBySlug({
+				slug
+			});
 			APIErrorForbidden.assert({
 				condition: article.userId === user.id,
-				message: "You are not able to delete article that do not belong to you."
+				message:
+					"You are not able to delete article that do not belong to you."
 			});
 			await this.articleService.deleteArticleBySlug({ slug });
 		} catch (error) {
@@ -35,12 +37,14 @@ export class APIDeleteArticle {
 			return error;
 		}
 		if (error instanceof ArticleNotFoundError) {
-			throw new APIErrorNotFound({ message: error.message, cause: error });
+			throw new APIErrorNotFound({
+				message: error.message,
+				cause: error
+			});
 		}
 		logger.error(error);
 		return new APIErrorInternalServerError({});
 	}
-
 }
 
 interface APIDeleteArticleConstructor {

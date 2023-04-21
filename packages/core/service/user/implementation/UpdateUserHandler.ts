@@ -4,7 +4,6 @@ import { type AuthService } from "../../auth/AuthService";
 import { UserExistError, UserNotFoundError } from "../error";
 
 export class UpdateUserHandler {
-
 	private authService: AuthService;
 	private repoUser: RepoUser;
 
@@ -30,22 +29,38 @@ export class UpdateUserHandler {
 	 *
 	 */
 	async execute({
-		id, email, username, password, image, bio
+		id,
+		email,
+		username,
+		password,
+		image,
+		bio
 	}: UpdateUserInput): Promise<DbDtoUser> {
 		let user = await this.repoUser.getUserById({ id });
 		if (!user) {
 			throw new UserNotFoundError();
 		}
 		await this.validateUserExist({ user, email, username });
-		const hash = password ? this.authService.encryptPassword({ password }) : undefined;
+		const hash = password
+			? this.authService.encryptPassword({ password })
+			: undefined;
 		await this.repoUser.updateUser({
-			id, email, username, hash, image, bio
+			id,
+			email,
+			username,
+			hash,
+			image,
+			bio
 		});
 		user = await this.repoUser.getUserById({ id });
 		return user;
 	}
 
-	private async validateUserExist({ user, email, username }: ValidateUserExistInput) {
+	private async validateUserExist({
+		user,
+		email,
+		username
+	}: ValidateUserExistInput) {
 		const details: string[] = [];
 		if (email && user.email !== email) {
 			const isEmailExist = await this.repoUser.isUserExist({ email });
@@ -54,7 +69,9 @@ export class UpdateUserHandler {
 			}
 		}
 		if (username && user.username !== username) {
-			const isUsernameExist = await this.repoUser.isUserExist({ username });
+			const isUsernameExist = await this.repoUser.isUserExist({
+				username
+			});
 			if (isUsernameExist) {
 				details.push("username");
 			}
@@ -63,7 +80,6 @@ export class UpdateUserHandler {
 			throw new UserExistError({ details });
 		}
 	}
-
 }
 
 export interface UpdateUserHandlerConstructor {
@@ -75,7 +91,7 @@ export interface UpdateUserInput {
 	id: string;
 	email?: string;
 	username?: string;
-	password?: string,
+	password?: string;
 	image?: string;
 	bio?: string;
 }

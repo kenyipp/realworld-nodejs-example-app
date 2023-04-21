@@ -1,11 +1,12 @@
 import { expect } from "chai";
-import { dangerouslyResetDb } from "../../knex";
+
 import { Factory } from "../../Factory";
+import { dangerouslyResetDb } from "../../knex";
+import { UserExistError } from "../../service/user/error";
 import {
 	type CreateUserInput,
 	type UpdateUserInput
 } from "../../service/user/implementation";
-import { UserExistError } from "../../service/user/error";
 
 describe("User - Update User", () => {
 	it("should be able to update the user", async () => {

@@ -1,25 +1,23 @@
 import {
-	DbUser,
-	type CreateUserInput,
-	type IsUserExistInput,
-	type GetUserByIdInput,
-	type GetUserByEmailInput,
-	type UpdateUserInput,
-	type FollowUserInput,
-	type UnfollowUserInput,
-	type IsFollowingInput,
 	type BanUserByIdInput,
-	type HiddenUserContentInput,
-	type GetUserByUsernameInput,
-	type GetUserByIdsInput,
+	type CreateUserInput,
+	DbUser,
+	type FollowUserInput,
 	type GetIsUsersFollowingByUserIdsInput,
-	type GetIsUsersFollowingByUserIdsOutput
+	type GetIsUsersFollowingByUserIdsOutput,
+	type GetUserByEmailInput,
+	type GetUserByIdInput,
+	type GetUserByIdsInput,
+	type GetUserByUsernameInput,
+	type HiddenUserContentInput,
+	type IsFollowingInput,
+	type IsUserExistInput,
+	type UnfollowUserInput,
+	type UpdateUserInput
 } from "../database/DbUser";
-
 import { DbDtoUser } from "../database/dto";
 
 export class RepoUser {
-
 	private dbUser: DbUser;
 
 	constructor({ dbUser }: RepoUserConstructor) {
@@ -41,7 +39,9 @@ export class RepoUser {
 		return user;
 	}
 
-	async getUserByUsername({ username }: GetUserByUsernameInput): Promise<DbDtoUser> {
+	async getUserByUsername({
+		username
+	}: GetUserByUsernameInput): Promise<DbDtoUser> {
 		const user = await this.dbUser.getUserByUsername({ username });
 		return user;
 	}
@@ -68,8 +68,14 @@ export class RepoUser {
 		await this.dbUser.unfollowUser(input);
 	}
 
-	async isFollowing({ followerId, followingId }: IsFollowingInput): Promise<boolean> {
-		const isFollowing = await this.dbUser.isFollowing({ followerId, followingId });
+	async isFollowing({
+		followerId,
+		followingId
+	}: IsFollowingInput): Promise<boolean> {
+		const isFollowing = await this.dbUser.isFollowing({
+			followerId,
+			followingId
+		});
 		return isFollowing;
 	}
 
@@ -81,15 +87,20 @@ export class RepoUser {
 		await this.dbUser.hiddenUserContent({ userId });
 	}
 
-	async getIsUserFollowingByUserIds({ followerId, followingIds }: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
-		const isUsersFollowing = await this.dbUser.getIsUsersFollowingByUserId({ followerId, followingIds });
+	async getIsUserFollowingByUserIds({
+		followerId,
+		followingIds
+	}: GetIsUsersFollowingByUserIdsInput): Promise<GetIsUsersFollowingByUserIdsOutput> {
+		const isUsersFollowing = await this.dbUser.getIsUsersFollowingByUserId({
+			followerId,
+			followingIds
+		});
 		return isUsersFollowing;
 	}
-
 }
 
 interface RepoUserConstructor {
-	dbUser: DbUser
+	dbUser: DbUser;
 }
 
 export {

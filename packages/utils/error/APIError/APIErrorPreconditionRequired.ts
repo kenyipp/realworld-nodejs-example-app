@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorPreconditionRequired extends APIError {
-
 	static Config = HttpError[428];
 
 	constructor({
@@ -37,7 +36,6 @@ export class APIErrorPreconditionRequired extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorPreconditionRequiredInput {

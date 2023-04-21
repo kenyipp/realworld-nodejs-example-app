@@ -1,23 +1,24 @@
-import { format } from "winston";
 import colors from "@colors/colors/safe";
+import { format } from "winston";
 
-const labelMiddleware = format((info, options: LabelOptions = DefaultLabelOptions) => {
-	const {
-		colorify = DefaultLabelOptions.colorify,
-		labelColor = DefaultLabelOptions.labelColor
-	} = options;
+const labelMiddleware = format(
+	(info, options: LabelOptions = DefaultLabelOptions) => {
+		const {
+			colorify = DefaultLabelOptions.colorify,
+			labelColor = DefaultLabelOptions.labelColor
+		} = options;
 
-	const {
-		label,
-		message
-	} = info;
+		const { label, message } = info;
 
-	if (label) {
-		info.message = `${colorify ? colors[labelColor](`[${label}]`) : `[${label}]`} ${message}`;
+		if (label) {
+			info.message = `${
+				colorify ? colors[labelColor](`[${label}]`) : `[${label}]`
+			} ${message}`;
+		}
+
+		return info;
 	}
-
-	return info;
-});
+);
 
 export interface LabelOptions {
 	colorify: boolean;

@@ -1,17 +1,14 @@
 import { isNil } from "lodash";
+
 import {
-	InvalidFollowError,
-	UserNotFoundError
-} from "../error";
-import {
-	type RepoUser,
 	type FollowUserInput,
-	type UnfollowUserInput,
-	type IsFollowingInput
+	type IsFollowingInput,
+	type RepoUser,
+	type UnfollowUserInput
 } from "../../../repository/RepoUser";
+import { InvalidFollowError, UserNotFoundError } from "../error";
 
 export class FollowUserHandler {
-
 	private repoUser: RepoUser;
 
 	constructor({ repoUser }: FollowUserHandlerConstructor) {
@@ -34,14 +31,24 @@ export class FollowUserHandler {
 	 * @throws {UserNotFoundError} - If the user to follow is not found in the database.
 	 *
 	 */
-	async followUser({ followerId, followingId }: FollowUserInput): Promise<void> {
+	async followUser({
+		followerId,
+		followingId
+	}: FollowUserInput): Promise<void> {
 		if (followerId === followingId) {
-			throw new InvalidFollowError({ message: "You cannot follow yourself" });
+			throw new InvalidFollowError({
+				message: "You cannot follow yourself"
+			});
 		}
 		await this.validateFollowingId({ followingId });
-		const isFollowing = await this.repoUser.isFollowing({ followerId, followingId });
+		const isFollowing = await this.repoUser.isFollowing({
+			followerId,
+			followingId
+		});
 		if (isFollowing) {
-			throw new InvalidFollowError({ message: "You are already following this user" });
+			throw new InvalidFollowError({
+				message: "You are already following this user"
+			});
 		}
 		await this.repoUser.followUser({ followerId, followingId });
 	}
@@ -63,14 +70,25 @@ export class FollowUserHandler {
 	 * the follower is not following the targeted user, or if there is an issue with the validation.
 	 *
 	 */
-	async unfollowUser({ followerId, followingId }: UnfollowUserInput): Promise<void> {
+	async unfollowUser({
+		followerId,
+		followingId
+	}: UnfollowUserInput): Promise<void> {
 		if (followerId === followingId) {
-			throw new InvalidFollowError({ message: "You cannot unfollow yourself" });
+			throw new InvalidFollowError({
+				message: "You cannot unfollow yourself"
+			});
 		}
 		await this.validateFollowingId({ followingId });
-		const isFollowing = await this.repoUser.isFollowing({ followerId, followingId });
+		const isFollowing = await this.repoUser.isFollowing({
+			followerId,
+			followingId
+		});
 		if (!isFollowing) {
-			throw new InvalidFollowError({ message: "You cannot unfollow this user because you are not currently following them" });
+			throw new InvalidFollowError({
+				message:
+					"You cannot unfollow this user because you are not currently following them"
+			});
 		}
 		await this.repoUser.unfollowUser({ followerId, followingId });
 	}
@@ -90,11 +108,17 @@ export class FollowUserHandler {
 	 * @throws {Error} - If the database query fails.
 	 *
 	 */
-	async isFollowing({ followerId, followingId }: IsFollowingInput): Promise<boolean> {
+	async isFollowing({
+		followerId,
+		followingId
+	}: IsFollowingInput): Promise<boolean> {
 		if (followerId === followingId) {
 			return false;
 		}
-		const isFollowing = await this.repoUser.isFollowing({ followerId, followingId });
+		const isFollowing = await this.repoUser.isFollowing({
+			followerId,
+			followingId
+		});
 		return isFollowing;
 	}
 
@@ -111,13 +135,14 @@ export class FollowUserHandler {
 	 * @throws {UserNotFoundError} - If the user to follow is not found in the database.
 	 *
 	 */
-	private async validateFollowingId({ followingId }: ValidateFollowingIdInput): Promise<void> {
+	private async validateFollowingId({
+		followingId
+	}: ValidateFollowingIdInput): Promise<void> {
 		const user = await this.repoUser.getUserById({ id: followingId });
 		if (isNil(user)) {
 			throw new UserNotFoundError();
 		}
 	}
-
 }
 
 export interface FollowUserHandlerConstructor {
@@ -128,8 +153,4 @@ export interface ValidateFollowingIdInput {
 	followingId: string;
 }
 
-export {
-	FollowUserInput,
-	UnfollowUserInput,
-	IsFollowingInput
-};
+export { FollowUserInput, UnfollowUserInput, IsFollowingInput };

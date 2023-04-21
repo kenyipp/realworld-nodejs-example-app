@@ -1,9 +1,11 @@
+import { expect } from "chai";
 import { pick } from "lodash";
 import supertest from "supertest";
-import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { CreateUserInput } from "@conduit/core/service/user/implementation";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 
 const factory = new Factory();
@@ -31,40 +33,34 @@ describe("User - Login", () => {
 	});
 
 	it("should throw an error if the password entered is incorrect", async () => {
-		const response = await request
-			.post(ServerPath.Login)
-			.send({
-				user: {
-					email: user.email,
-					password: "jake1234"
-				}
-			});
+		const response = await request.post(ServerPath.Login).send({
+			user: {
+				email: user.email,
+				password: "jake1234"
+			}
+		});
 		expect(response.status).equals(401);
 	});
 
 	it("should throw an error if the user does not exist", async () => {
-		const response = await request
-			.post(ServerPath.Login)
-			.send({
-				user: {
-					email: `${user.email}.jake`,
-					password: user.password
-				}
-			});
+		const response = await request.post(ServerPath.Login).send({
+			user: {
+				email: `${user.email}.jake`,
+				password: user.password
+			}
+		});
 		expect(response.status).equals(404);
 	});
 
 	it("should throw an error if the user has been banned", async () => {
 		const dbUser = await userService.getUserByEmail({ email: user.email });
 		await userService.banUserById({ id: dbUser.id });
-		const response = await request
-			.post(ServerPath.Login)
-			.send({
-				user: {
-					email: user.email,
-					password: user.password
-				}
-			});
+		const response = await request.post(ServerPath.Login).send({
+			user: {
+				email: user.email,
+				password: user.password
+			}
+		});
 		expect(response.status).equals(403);
 	});
 

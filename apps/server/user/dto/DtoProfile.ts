@@ -1,7 +1,6 @@
-import { type DbDtoUser } from "@conduit/core/database/dto";
+import { DbDtoUser } from "@conduit/core/database/dto";
 
 export class DtoProfile {
-
 	username: string;
 	email: string;
 	bio?: string;
@@ -15,7 +14,6 @@ export class DtoProfile {
 		this.image = dbDtoUser.image;
 		this.following = following;
 	}
-
 }
 
 interface DtoProfileConstructor {

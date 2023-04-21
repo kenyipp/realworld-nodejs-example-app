@@ -1,18 +1,19 @@
 import { isNil } from "lodash";
+
+import { DbDtoUser } from "@conduit/core/database/dto";
+import { UserService } from "@conduit/core/service";
+import { InvalidFollowError } from "@conduit/core/service/user/error";
 import {
 	APIErrorBadRequest,
 	APIErrorInternalServerError,
 	APIErrorNotFound,
 	logger
 } from "@conduit/utils";
-import type { UserService } from "@conduit/core/service";
-import { DbDtoUser } from "@conduit/core/database/dto";
-import { InvalidFollowError } from "@conduit/core/service/user/error";
-import { DtoProfile } from "../dto";
+
 import { ErrorCodes } from "../../constants";
+import { DtoProfile } from "../dto";
 
 export class APIUnfollowUser {
-
 	private userService: UserService;
 
 	constructor({ userService }: APIUnfollowUserConstructor) {
@@ -37,7 +38,10 @@ export class APIUnfollowUser {
 	 * @throws {APIErrorInternalServerError} If there is an internal server error.
 	 *
 	 */
-	async execute({ user, username }: APIUnfollowUserInput): Promise<APIUnfollowUserOutput> {
+	async execute({
+		user,
+		username
+	}: APIUnfollowUserInput): Promise<APIUnfollowUserOutput> {
 		const targeted = await this.userService.getUserByUsername({ username });
 		APIErrorNotFound.assert({
 			condition: !isNil(targeted),
@@ -45,18 +49,26 @@ export class APIUnfollowUser {
 			message: "Sorry, we could not find the user you are looking for."
 		});
 		try {
-			await this.userService.unfollowUser({ followerId: user.id, followingId: targeted.id });
-			const profile = new DtoProfile({ dbDtoUser: targeted, following: false });
+			await this.userService.unfollowUser({
+				followerId: user.id,
+				followingId: targeted.id
+			});
+			const profile = new DtoProfile({
+				dbDtoUser: targeted,
+				following: false
+			});
 			return { profile };
 		} catch (error) {
 			if (error instanceof InvalidFollowError) {
-				throw new APIErrorBadRequest({ message: error.message, cause: error });
+				throw new APIErrorBadRequest({
+					message: error.message,
+					cause: error
+				});
 			}
 			logger.error(error);
 			throw new APIErrorInternalServerError({});
 		}
 	}
-
 }
 
 interface APIUnfollowUserConstructor {

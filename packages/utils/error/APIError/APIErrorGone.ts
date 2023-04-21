@@ -1,16 +1,10 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorGone extends APIError {
-
 	static Config = HttpError[410];
 
-	constructor({
-		message,
-		errorCode,
-		cause,
-		payload
-	}: APIErrorGoneInput) {
+	constructor({ message, errorCode, cause, payload }: APIErrorGoneInput) {
 		super({
 			code: 410,
 			message: message || APIErrorGone.Config.message,
@@ -37,7 +31,6 @@ export class APIErrorGone extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorGoneInput {

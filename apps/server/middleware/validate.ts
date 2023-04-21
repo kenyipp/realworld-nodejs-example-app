@@ -1,7 +1,8 @@
+import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import { isNil } from "lodash";
+
 import { APIErrorUnprocessableEntity } from "@conduit/utils";
-import type { NextFunction, Request, Response } from "express";
 
 /**
  *
@@ -9,20 +10,26 @@ import type { NextFunction, Request, Response } from "express";
  * If validation fails, an APIErrorUnprocessableEntity will be thrown with a payload containing
  * an array of error messages describing the validation errors.
  *
- * @param {ValidationType} type - the type of the request data to be validated (query, body or params)
+ * @param {ValidationType} - the of the request data to be validated (query, body or params)
  *
  */
-const validate = (type: ValidationType) => (input: Joi.AnySchema) => (req: Request, _res: Response, next: NextFunction) => {
-	const { value, error } = input.validate(req[type], { abortEarly: false });
-	APIErrorUnprocessableEntity.assert({
-		condition: isNil(error),
-		message: "Invalid or missing data in the request body. Please ensure all required fields are included and in the correct format.",
-		cause: error,
-		payload: mapValidationError(error)
-	});
-	req[type] = value;
-	return next();
-};
+const validate =
+	(type: ValidationType) =>
+	(input: Joi.AnySchema) =>
+	(req: Request, _res: Response, next: NextFunction) => {
+		const { value, error } = input.validate(req[type], {
+			abortEarly: false
+		});
+		APIErrorUnprocessableEntity.assert({
+			condition: isNil(error),
+			message:
+				"Invalid or missing data in the request body. Please ensure all required fields are included and in the correct format.",
+			cause: error,
+			payload: mapValidationError(error)
+		});
+		req[type] = value;
+		return next();
+	};
 
 /**
  *
@@ -39,10 +46,14 @@ const mapValidationError = (error: Joi.ValidationError): string[] => {
 	}
 	const details = error.details.map((detail) => {
 		if (detail.type === "any.required") {
-			return `The '${detail.path.join(".")}' field is required but was not provided`;
+			return `The '${detail.path.join(
+				"."
+			)}' field is required but was not provided`;
 		}
 		if (detail.type.endsWith(".base")) {
-			return `Expected '${detail.path.join(".")}' to be a ${detail.type.split(".")[0]}, but received '${typeof detail.context.value}' instead`;
+			return `Expected '${detail.path.join(".")}' to be a ${
+				detail.type.split(".")[0]
+			}, but received '${typeof detail.context.value}' instead`;
 		}
 		return detail.message;
 	});
@@ -51,7 +62,7 @@ const mapValidationError = (error: Joi.ValidationError): string[] => {
 
 /**
  *
- * Enumeration for the type of data to validate.
+ * Enumeration for the of data to validate.
  *
  */
 enum ValidationType {

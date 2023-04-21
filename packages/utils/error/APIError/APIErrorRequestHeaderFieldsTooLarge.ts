@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorRequestHeaderFieldsTooLarge extends APIError {
-
 	static Config = HttpError[431];
 
 	constructor({
@@ -13,7 +12,8 @@ export class APIErrorRequestHeaderFieldsTooLarge extends APIError {
 	}: APIErrorRequestHeaderFieldsTooLargeInput) {
 		super({
 			code: 431,
-			message: message || APIErrorRequestHeaderFieldsTooLarge.Config.message,
+			message:
+				message || APIErrorRequestHeaderFieldsTooLarge.Config.message,
 			errorCode,
 			errorType: APIErrorRequestHeaderFieldsTooLarge.Config.type,
 			cause,
@@ -37,7 +37,6 @@ export class APIErrorRequestHeaderFieldsTooLarge extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorRequestHeaderFieldsTooLargeInput {

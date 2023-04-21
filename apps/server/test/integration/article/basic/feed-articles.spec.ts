@@ -1,8 +1,13 @@
-import supertest, { Response } from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
+import supertest, { Response } from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
+import {
+	getCreateArticleInput,
+	getCreateUserInput
+} from "@conduit/core/test/mockData";
 import { ServerPath } from "@conduit/types";
-import { getCreateArticleInput, getCreateUserInput } from "@conduit/core/test/mockData";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -26,14 +31,12 @@ describe("Article - Feed Articles", () => {
 	});
 
 	it("should be able to return multiple articles created by followed users, ordered by most recent first", async () => {
-		const {
-			userService,
-			authors,
-			user,
-			accessToken
-		} = await setup();
+		const { userService, authors, user, accessToken } = await setup();
 
-		await userService.followUser({ followerId: user.id, followingId: authors.authorA.id });
+		await userService.followUser({
+			followerId: user.id,
+			followingId: authors.authorA.id
+		});
 		let response: Response = null;
 
 		response = await request
@@ -47,7 +50,10 @@ describe("Article - Feed Articles", () => {
 		expect(response.body.articles).have.lengthOf(2);
 		expect(response.body.articlesCount).equals(2);
 
-		await userService.unfollowUser({ followerId: user.id, followingId: authors.authorA.id });
+		await userService.unfollowUser({
+			followerId: user.id,
+			followingId: authors.authorA.id
+		});
 
 		response = await request
 			.get(ServerPath.FeedArticles)
@@ -64,9 +70,7 @@ describe("Article - Feed Articles", () => {
 	it("should return a status code of 401 - Unauthorized if the client doesn't provide auth headers", async () => {
 		await setup();
 
-		const response = await request
-			.get(ServerPath.FeedArticles)
-			.send();
+		const response = await request.get(ServerPath.FeedArticles).send();
 
 		expect(response.status).equals(401);
 	});
@@ -80,12 +84,26 @@ const setup = async () => {
 	const authorA = await userService.createUser(getCreateUserInput({}));
 	const authorB = await userService.createUser(getCreateUserInput({}));
 	const user = await userService.createUser(getCreateUserInput({}));
-	const articleAWithTagFromAuthorA = await articleService.createArticle(getCreateArticleInput({ userId: authorA.id }));
-	await articleService.createArticleTag({ articleId: articleAWithTagFromAuthorA.id, tagList: ["TAG_A", "TAG_B"] });
-	const articleBFromAuthorA = await articleService.createArticle(getCreateArticleInput({ userId: authorA.id }));
-	const articleCFromAuthorB = await articleService.createArticle(getCreateArticleInput({ userId: authorB.id }));
-	const articleDWithTagFromAuthorB = await articleService.createArticle(getCreateArticleInput({ userId: authorB.id }));
-	await articleService.createArticleTag({ articleId: articleDWithTagFromAuthorB.id, tagList: ["TAG_A"] });
+	const articleAWithTagFromAuthorA = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorA.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleAWithTagFromAuthorA.id,
+		tagList: ["TAG_A", "TAG_B"]
+	});
+	const articleBFromAuthorA = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorA.id })
+	);
+	const articleCFromAuthorB = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorB.id })
+	);
+	const articleDWithTagFromAuthorB = await articleService.createArticle(
+		getCreateArticleInput({ userId: authorB.id })
+	);
+	await articleService.createArticleTag({
+		articleId: articleDWithTagFromAuthorB.id,
+		tagList: ["TAG_A"]
+	});
 	const { accessToken } = signJsonWebToken({ dbDtoUser: user });
 	return {
 		userService,

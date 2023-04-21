@@ -1,17 +1,17 @@
 import { isNil } from "lodash";
+
+import { DbDtoUser } from "@conduit/core/database/dto";
+import { ArticleService } from "@conduit/core/service";
 import { ArticleCommentNotFoundError } from "@conduit/core/service/article/error";
-import type { ArticleService } from "@conduit/core/service";
+import { logger } from "@conduit/utils";
 import {
 	APIError,
 	APIErrorForbidden,
 	APIErrorInternalServerError,
 	APIErrorNotFound
 } from "@conduit/utils/error";
-import { logger } from "@conduit/utils";
-import { DbDtoUser } from "@conduit/core/database/dto";
 
 export class APIDeleteComment {
-
 	private articleService: ArticleService;
 
 	constructor({ articleService }: APIDeleteCommentConstructor) {
@@ -20,14 +20,17 @@ export class APIDeleteComment {
 
 	async execute({ commentId, user }: APIDeleteCommentInput): Promise<void> {
 		try {
-			const comment = await this.articleService.getArticleCommentById({ id: commentId });
+			const comment = await this.articleService.getArticleCommentById({
+				id: commentId
+			});
 			APIErrorNotFound.assert({
 				condition: !isNil(comment),
 				message: "The requested article's comment was not found."
 			});
 			APIErrorForbidden.assert({
 				condition: user.id === comment.userId,
-				message: "You are not able to delete comments that do not belong to you."
+				message:
+					"You are not able to delete comments that do not belong to you."
 			});
 			await this.articleService.deleteArticleComment({ id: commentId });
 		} catch (error) {
@@ -40,12 +43,14 @@ export class APIDeleteComment {
 			return error;
 		}
 		if (error instanceof ArticleCommentNotFoundError) {
-			throw new APIErrorNotFound({ message: error.message, cause: error });
+			throw new APIErrorNotFound({
+				message: error.message,
+				cause: error
+			});
 		}
 		logger.error(error);
 		return new APIErrorInternalServerError({});
 	}
-
 }
 
 interface APIDeleteCommentConstructor {

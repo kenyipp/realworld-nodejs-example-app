@@ -3,5 +3,5 @@ export interface DtoInputUpdateUser {
 	email?: string;
 	bio?: string;
 	image?: string;
-	password?: string
+	password?: string;
 }

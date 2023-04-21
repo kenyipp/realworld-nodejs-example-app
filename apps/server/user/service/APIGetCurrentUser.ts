@@ -1,10 +1,10 @@
-import { type DbDtoUser } from "@conduit/core/database/dto";
+import { DbDtoUser } from "@conduit/core/database/dto";
 import { UserStatus } from "@conduit/types";
 import { APIErrorForbidden } from "@conduit/utils";
+
 import { DtoUser } from "../dto/DtoUser";
 
 export class APIGetCurrentUser {
-
 	/**
 	 * Generates a JSON Web Token for the provided user,
 	 * creates a new DtoUser instance with the user data and token, and returns it as part of a GetCurrentUserOutput object.
@@ -19,12 +19,12 @@ export class APIGetCurrentUser {
 	execute({ dbDtoUser }: GetCurrentUserInput): GetCurrentUserOutput {
 		APIErrorForbidden.assert({
 			condition: dbDtoUser.statusId !== UserStatus.Banned,
-			message: "Sorry, your account has been banned. You can no longer access our services. If you think this is a mistake, please contact our support team. Thank you."
+			message:
+				"Sorry, your account has been banned. You can no longer access our services. If you think this is a mistake, please contact our support team. Thank you."
 		});
 		const dtoUser = new DtoUser({ dbDtoUser });
 		return { user: dtoUser };
 	}
-
 }
 
 interface GetCurrentUserOutput {

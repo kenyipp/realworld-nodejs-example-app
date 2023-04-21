@@ -16,6 +16,7 @@
 	"scripts": {
 		"build": "tsc",
 		"check-types": "tsc --skipLibCheck --noEmit",
+		"format": "prettier --write .",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
 		"migrate-db": "knex migrate:latest",

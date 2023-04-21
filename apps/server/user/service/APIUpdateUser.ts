@@ -1,17 +1,13 @@
-import {
-	APIErrorUnprocessableEntity
-} from "@conduit/utils";
 import { isNil } from "lodash";
-import type { UserService } from "@conduit/core/service";
-import { type DbDtoUser } from "@conduit/core/database/dto";
+
+import { DbDtoUser } from "@conduit/core/database/dto";
+import { UserService } from "@conduit/core/service";
+import { APIErrorUnprocessableEntity } from "@conduit/utils";
+
 import { ErrorCodes } from "../../constants";
-import {
-	DtoUser,
-	type DtoInputUpdateUser
-} from "../dto";
+import { DtoInputUpdateUser, DtoUser } from "../dto";
 
 export class APIUpdateUser {
-
 	private userService: UserService;
 
 	constructor({ userService }: APIUpdateUserConstructor) {
@@ -27,7 +23,10 @@ export class APIUpdateUser {
 	 * @returns {Promise<UpdateUserOutput>} - A Promise that resolves to an object containing the updated user.
 	 *
 	 */
-	async execute({ updates, user }: APIUpdateUserInput): Promise<UpdateUserOutput> {
+	async execute({
+		updates,
+		user
+	}: APIUpdateUserInput): Promise<UpdateUserOutput> {
 		this.validateRequest({ updates, user });
 		await this.userService.updateUserById({ id: user.id, ...updates });
 		const updatedUser = await this.getUpdatedUser({ userId: user.id });
@@ -43,7 +42,11 @@ export class APIUpdateUser {
 	 * @returns {Promise<DtoUser>} - A Promise that resolves to a DTO object containing the updated user and token.
 	 *
 	 */
-	private async getUpdatedUser({ userId }: { userId: string }): Promise<DtoUser> {
+	private async getUpdatedUser({
+		userId
+	}: {
+		userId: string;
+	}): Promise<DtoUser> {
 		const updatedUser = await this.userService.getUserById({ id: userId });
 		const dtoUser = new DtoUser({ dbDtoUser: updatedUser });
 		return dtoUser;
@@ -61,12 +64,14 @@ export class APIUpdateUser {
 	 */
 	private validateRequest({ updates }: APIUpdateUserInput) {
 		APIErrorUnprocessableEntity.assert({
-			condition: ["bio", "email", "image", "password", "username"].some((key) => !isNil(updates[key])),
+			condition: ["bio", "email", "image", "password", "username"].some(
+				(key) => !isNil(updates[key])
+			),
 			errorCode: ErrorCodes.UnprocessableContent,
-			message: "No updates were provided. Please include at least one field to update."
+			message:
+				"No updates were provided. Please include at least one field to update."
 		});
 	}
-
 }
 
 interface APIUpdateUserConstructor {

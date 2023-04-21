@@ -1,17 +1,14 @@
-import {
-	each,
-	defaultsDeep
-} from "lodash";
-import path from "path";
 import dotenv from "dotenv";
 import type { Knex } from "knex";
-import { Environments } from "@conduit/types";
+import { defaultsDeep, each } from "lodash";
+import path from "path";
+
 import { appConfig } from "@conduit/config";
+import { Environments } from "@conduit/types";
 
 dotenv.config();
 
 export const config: { [key: string]: Knex.Config } = {
-
 	[Environments.Testing]: {
 		client: "better-sqlite3",
 		pool: {
@@ -53,10 +50,13 @@ export const config: { [key: string]: Knex.Config } = {
 		client: "mysql2",
 		connection: appConfig.database
 	}
-
 };
 
-const loadExtensions = process.env.NODE_ENV === Environments.CI || process.env.NODE_ENV === Environments.Production ? [".js"] : [".ts"];
+const loadExtensions =
+	process.env.NODE_ENV === Environments.CI ||
+	process.env.NODE_ENV === Environments.Production
+		? [".js"]
+		: [".ts"];
 
 const defaultConfig: Partial<Knex.Config> = {
 	migrations: {
@@ -70,11 +70,8 @@ const defaultConfig: Partial<Knex.Config> = {
 	useNullAsDefault: true
 };
 
-each(
-	config,
-	(knexConfig) => {
-		defaultsDeep(knexConfig, defaultConfig);
-	}
-);
+each(config, (knexConfig) => {
+	defaultsDeep(knexConfig, defaultConfig);
+});
 
 export default config;

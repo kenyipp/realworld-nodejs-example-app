@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { CreateUserInput } from "../../service/user/implementation";
 
 /**
@@ -35,7 +36,7 @@ export const getCreateUserInput = ({
 export interface GetCreateUserInput {
 	email?: string;
 	username?: string;
-	password?: string,
+	password?: string;
 	image?: string;
 	bio?: string;
 }

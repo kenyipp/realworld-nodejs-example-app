@@ -1,16 +1,10 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorNotFound extends APIError {
-
 	static Config = HttpError[404];
 
-	constructor({
-		message,
-		errorCode,
-		cause,
-		payload
-	}: APIErrorNotFoundInput) {
+	constructor({ message, errorCode, cause, payload }: APIErrorNotFoundInput) {
 		super({
 			code: 404,
 			message: message || APIErrorNotFound.Config.message,
@@ -37,7 +31,6 @@ export class APIErrorNotFound extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorNotFoundInput {

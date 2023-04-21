@@ -1,8 +1,10 @@
-import supertest from "supertest";
 import { expect } from "chai";
-import { dangerouslyResetDb, Factory } from "@conduit/core";
-import { ServerPath } from "@conduit/types";
+import supertest from "supertest";
+
+import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";
+import { ServerPath } from "@conduit/types";
+
 import { app } from "../../../../app";
 import { signJsonWebToken } from "../../../../utils";
 
@@ -11,10 +13,7 @@ const request = supertest(app);
 
 describe("User - Get Current User", () => {
 	it("should be able to get the current user", async () => {
-		const {
-			user,
-			accessToken
-		} = await setup();
+		const { user, accessToken } = await setup();
 		const response = await request
 			.get(ServerPath.GetCurrentUser)
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -28,11 +27,7 @@ describe("User - Get Current User", () => {
 	});
 
 	it("should return a status code of 403 - Forbidden if the user has been banned", async () => {
-		const {
-			user,
-			userService,
-			accessToken
-		} = await setup();
+		const { user, userService, accessToken } = await setup();
 		await userService.banUserById({ id: user.id });
 		const response = await request
 			.get(ServerPath.GetCurrentUser)
@@ -42,9 +37,7 @@ describe("User - Get Current User", () => {
 	});
 
 	it("should return a status code of 401 - Unauthorized if the client doesn't provide auth headers", async () => {
-		const response = await request
-			.get(ServerPath.GetCurrentUser)
-			.send();
+		const response = await request.get(ServerPath.GetCurrentUser).send();
 		expect(response.status).equals(401);
 	});
 

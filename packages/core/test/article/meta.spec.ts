@@ -1,15 +1,12 @@
 import { expect } from "chai";
+
+import { Factory } from "../../Factory";
 import { dangerouslyResetDb } from "../../knex";
 import { getCreateArticleInput, getCreateUserInput } from "../mockData";
-import { Factory } from "../../Factory";
 
 describe("Article - Get Meta", () => {
 	it("should be able to retrieve the metadata of an article", async () => {
-		const {
-			article,
-			userA,
-			articleService
-		} = await setup();
+		const { article, userA, articleService } = await setup();
 		const meta = await articleService.getArticleMetaById({
 			id: article.id,
 			userId: userA.id
@@ -21,10 +18,7 @@ describe("Article - Get Meta", () => {
 	});
 
 	it("should be able to retrieve the metadata of an article without user id", async () => {
-		const {
-			article,
-			articleService
-		} = await setup();
+		const { article, articleService } = await setup();
 		const meta = await articleService.getArticleMetaById({
 			id: article.id,
 			userId: null
@@ -36,14 +30,12 @@ describe("Article - Get Meta", () => {
 	});
 
 	it("should mark the following as true if the user is following the author of the article", async () => {
-		const {
-			article,
-			userA,
-			userB,
-			userService,
-			articleService
-		} = await setup();
-		await userService.followUser({ followerId: userA.id, followingId: userB.id });
+		const { article, userA, userB, userService, articleService } =
+			await setup();
+		await userService.followUser({
+			followerId: userA.id,
+			followingId: userB.id
+		});
 		const meta = await articleService.getArticleMetaById({
 			id: article.id,
 			userId: userA.id
@@ -55,12 +47,11 @@ describe("Article - Get Meta", () => {
 	});
 
 	it("should increment the count of favorites if the user has favorited the article", async () => {
-		const {
-			article,
-			userA,
-			articleService
-		} = await setup();
-		await articleService.favorite({ userId: userA.id, articleId: article.id });
+		const { article, userA, articleService } = await setup();
+		await articleService.favorite({
+			userId: userA.id,
+			articleId: article.id
+		});
 		const meta = await articleService.getArticleMetaById({
 			id: article.id,
 			userId: userA.id
@@ -80,7 +71,9 @@ const setup = async () => {
 	const articleService = factory.newArticleService();
 	const userA = await userService.createUser(getCreateUserInput({}));
 	const userB = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: userB.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: userB.id })
+	);
 	return {
 		userService,
 		articleService,

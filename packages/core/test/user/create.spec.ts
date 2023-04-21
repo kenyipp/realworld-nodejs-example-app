@@ -1,7 +1,9 @@
 import { expect } from "chai";
+
 import { UserStatus } from "@conduit/types";
-import { dangerouslyResetDb } from "../../knex";
+
 import { Factory } from "../../Factory";
+import { dangerouslyResetDb } from "../../knex";
 import { UserExistError } from "../../service/user/error";
 import { type CreateUserInput } from "../../service/user/implementation";
 

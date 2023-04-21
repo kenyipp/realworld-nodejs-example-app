@@ -1,8 +1,7 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorProxyAuthenticationRequired extends APIError {
-
 	static Config = HttpError[407];
 
 	constructor({
@@ -13,7 +12,8 @@ export class APIErrorProxyAuthenticationRequired extends APIError {
 	}: APIErrorProxyAuthenticationRequiredInput) {
 		super({
 			code: 407,
-			message: message || APIErrorProxyAuthenticationRequired.Config.message,
+			message:
+				message || APIErrorProxyAuthenticationRequired.Config.message,
 			errorCode,
 			errorType: APIErrorProxyAuthenticationRequired.Config.type,
 			cause,
@@ -37,7 +37,6 @@ export class APIErrorProxyAuthenticationRequired extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorProxyAuthenticationRequiredInput {

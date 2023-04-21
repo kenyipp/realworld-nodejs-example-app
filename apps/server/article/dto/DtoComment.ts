@@ -1,11 +1,8 @@
-import type {
-	DbDtoArticleComment,
-	DbDtoUser
-} from "@conduit/core/database/dto";
+import { DbDtoArticleComment, DbDtoUser } from "@conduit/core/database/dto";
+
 import { DtoProfile } from "../../user/dto";
 
 export class DtoComment {
-
 	id: string;
 	createdAt: Date;
 	updatedAt: Date;
@@ -19,7 +16,6 @@ export class DtoComment {
 		this.updatedAt = new Date(comment.updatedAt);
 		this.body = comment.body;
 	}
-
 }
 
 interface DtoCommentConstructor {

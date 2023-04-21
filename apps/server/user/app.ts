@@ -1,9 +1,10 @@
 import express from "express";
-import { router } from "./route";
+
 import {
-	configureMiddlewares,
-	configureGlobalExceptionHandler
+	configureGlobalExceptionHandler,
+	configureMiddlewares
 } from "../utils";
+import { router } from "./route";
 
 export const app = express();
 

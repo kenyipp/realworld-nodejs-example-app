@@ -1,15 +1,19 @@
+import { NextFunction, Request, Response } from "express";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { isNil } from "lodash";
-import { APIErrorForbidden, APIErrorInternalServerError, APIErrorUnauthorized } from "@conduit/utils";
-import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
-import { Factory } from "@conduit/core";
-import type { Request, Response, NextFunction } from "express";
-import { UserStatus } from "@conduit/types";
-import { hashDbDtoUser, verifyJsonWebToken } from "../utils/jsonWebTokenHelper";
-import { ErrorCodes } from "../constants";
 
-const userService = Factory
-	.getInstance()
-	.newUserService();
+import { Factory } from "@conduit/core";
+import { UserStatus } from "@conduit/types";
+import {
+	APIErrorForbidden,
+	APIErrorInternalServerError,
+	APIErrorUnauthorized
+} from "@conduit/utils";
+
+import { ErrorCodes } from "../constants";
+import { hashDbDtoUser, verifyJsonWebToken } from "../utils/jsonWebTokenHelper";
+
+const userService = Factory.getInstance().newUserService();
 
 /**
  *
@@ -25,7 +29,11 @@ const userService = Factory
  * provided token is invalid or expired.
  *
  */
-export const auth = async (req: Request, _res: Response, next: NextFunction) => {
+export const auth = async (
+	req: Request,
+	_res: Response,
+	next: NextFunction
+) => {
 	const { authorization } = req.headers;
 
 	if (authorization === null || authorization === undefined) {
@@ -37,7 +45,8 @@ export const auth = async (req: Request, _res: Response, next: NextFunction) => 
 	APIErrorUnauthorized.assert({
 		condition: !isNil(policy) && policy.toLowerCase() === "bearer",
 		errorCode: ErrorCodes.InvalidAuthenticationScheme,
-		message: "The provided authentication scheme is not supported. Please use a bearer token."
+		message:
+			"The provided authentication scheme is not supported. Please use a bearer token."
 	});
 
 	try {
@@ -51,7 +60,8 @@ export const auth = async (req: Request, _res: Response, next: NextFunction) => 
 		}
 		APIErrorForbidden.assert({
 			condition: user.statusId !== UserStatus.Banned,
-			message: "Sorry, your account has been banned. Please contact the support team for further information."
+			message:
+				"Sorry, your account has been banned. Please contact the support team for further information."
 		});
 		req.user = user;
 		return next();
@@ -62,14 +72,16 @@ export const auth = async (req: Request, _res: Response, next: NextFunction) => 
 		if (error instanceof TokenExpiredError) {
 			throw new APIErrorUnauthorized({
 				errorCode: ErrorCodes.ExpiredToken,
-				message: "The provided token has expired. Please obtain a new token.",
+				message:
+					"The provided token has expired. Please obtain a new token.",
 				cause: error
 			});
 		}
 		if (error instanceof JsonWebTokenError) {
 			throw new APIErrorUnauthorized({
 				errorCode: ErrorCodes.ExpiredToken,
-				message: "Sorry, your login is invalid. Please try again or contact support for help.",
+				message:
+					"Sorry, your login is invalid. Please try again or contact support for help.",
 				cause: error
 			});
 		}
@@ -77,12 +89,17 @@ export const auth = async (req: Request, _res: Response, next: NextFunction) => 
 	}
 };
 
-export const authRequired = (req: Request, res: Response, next: NextFunction) => {
+export const authRequired = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const { authorization } = req.headers;
 
 	APIErrorUnauthorized.assert({
 		condition: !isNil(authorization),
-		message: "Authentication required. Please provide valid credentials to access this resource."
+		message:
+			"Authentication required. Please provide valid credentials to access this resource."
 	});
 
 	return auth(req, res, (error: any) => {

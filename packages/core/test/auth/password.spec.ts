@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { Factory } from "../../Factory";
 import {
 	PasswordNotMatchError,

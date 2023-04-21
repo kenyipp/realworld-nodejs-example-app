@@ -1,16 +1,10 @@
-import { APIError } from "./APIError";
 import HttpError from "../constants/http-error.json";
+import { APIError } from "./APIError";
 
 export class APIErrorTooEarly extends APIError {
-
 	static Config = HttpError[425];
 
-	constructor({
-		message,
-		errorCode,
-		cause,
-		payload
-	}: APIErrorTooEarlyInput) {
+	constructor({ message, errorCode, cause, payload }: APIErrorTooEarlyInput) {
 		super({
 			code: 425,
 			message: message || APIErrorTooEarly.Config.message,
@@ -37,7 +31,6 @@ export class APIErrorTooEarly extends APIError {
 			});
 		}
 	}
-
 }
 
 interface APIErrorTooEarlyInput {

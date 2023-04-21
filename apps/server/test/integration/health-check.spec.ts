@@ -1,6 +1,8 @@
-import supertest from "supertest";
 import { expect } from "chai";
+import supertest from "supertest";
+
 import { ServerPath } from "@conduit/types";
+
 import { app } from "../../app";
 
 const request = supertest(app);

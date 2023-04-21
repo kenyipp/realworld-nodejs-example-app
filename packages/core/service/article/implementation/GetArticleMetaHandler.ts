@@ -1,13 +1,12 @@
 import {
-	type RepoArticle,
+	type DbDtoArticleMeta,
 	type GetArticleMetaByIdInput,
 	type GetArticleMetaByIdsInput,
-	type DbDtoArticleMeta
+	type RepoArticle
 } from "../../../repository/RepoArticle";
 import { ArticleNotFoundError } from "../error";
 
 export class GetArticleMetaHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: GetArticleMetaHandlerConstructor) {
@@ -29,7 +28,10 @@ export class GetArticleMetaHandler {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaById({ id, userId }: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
+	async getArticleMetaById({
+		id,
+		userId
+	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
 		const meta = await this.repoArticle.getArticleMetaById({ id, userId });
 		if (!meta) {
 			throw new ArticleNotFoundError({});
@@ -52,19 +54,20 @@ export class GetArticleMetaHandler {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaByIds({ ids, userId }: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
-		const meta = await this.repoArticle.getArticleMetaByIds({ ids, userId });
+	async getArticleMetaByIds({
+		ids,
+		userId
+	}: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
+		const meta = await this.repoArticle.getArticleMetaByIds({
+			ids,
+			userId
+		});
 		return meta;
 	}
-
 }
 
 interface GetArticleMetaHandlerConstructor {
 	repoArticle: RepoArticle;
 }
 
-export {
-	GetArticleMetaByIdInput,
-	GetArticleMetaByIdsInput,
-	DbDtoArticleMeta
-};
+export { GetArticleMetaByIdInput, GetArticleMetaByIdsInput, DbDtoArticleMeta };

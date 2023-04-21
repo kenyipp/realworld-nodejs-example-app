@@ -1,18 +1,18 @@
 import { expect } from "chai";
-import { dangerouslyResetDb } from "../../knex";
-import { getCreateArticleInput, getCreateUserInput } from "../mockData";
+
 import { Factory } from "../../Factory";
-import { ArticleNotFoundError, ArticleCommentNotFoundError } from "../../service/article/error";
 import { DbDtoArticleComment } from "../../database/dto";
+import { dangerouslyResetDb } from "../../knex";
+import {
+	ArticleCommentNotFoundError,
+	ArticleNotFoundError
+} from "../../service/article/error";
+import { getCreateArticleInput, getCreateUserInput } from "../mockData";
 
 describe("Article - Comment", () => {
 	describe("Add comment", () => {
 		it("should be able to add comment to an article", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			const comment = await articleService.createArticleComment({
 				articleId: article.id,
 				body: commentBody,
@@ -26,11 +26,7 @@ describe("Article - Comment", () => {
 		});
 
 		it("should throw an error when trying to add a comment to a deleted article", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			await articleService.deleteArticleBySlug({ slug: article.slug });
 			try {
 				await articleService.createArticleComment({
@@ -47,11 +43,7 @@ describe("Article - Comment", () => {
 
 	describe("Delete comment", () => {
 		it("should be able to delete the comment", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			const comment = await articleService.createArticleComment({
 				articleId: article.id,
 				body: commentBody,
@@ -60,21 +52,21 @@ describe("Article - Comment", () => {
 
 			let count: number;
 
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(1);
 
 			await articleService.deleteArticleComment({ id: comment.id });
 
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(0);
 		});
 
 		it("should throw an error if user tries to delete a comment that has already been deleted", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			const comment = await articleService.createArticleComment({
 				articleId: article.id,
 				body: commentBody,
@@ -91,33 +83,29 @@ describe("Article - Comment", () => {
 
 	describe("Retrieve comments", () => {
 		it("should be able to get comments from an article", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			const comment = await articleService.createArticleComment({
 				articleId: article.id,
 				body: commentBody,
 				userId: user.id
 			});
 
-			const comments = await articleService.getArticleComments({ articleId: article.id });
+			const comments = await articleService.getArticleComments({
+				articleId: article.id
+			});
 			expect(comments).have.lengthOf(1);
 			expect(comments[0].id).equals(comment.id);
 			expect(comments[0].userId).equals(comment.userId);
 			expect(comments[0].userId).equals(user.id);
 
-			const count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			const count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(1);
 		});
 
 		it("should not be possible to retrieve the deleted comments from an article", async () => {
-			const {
-				articleService,
-				article,
-				user
-			} = await setup();
+			const { articleService, article, user } = await setup();
 			const comment = await articleService.createArticleComment({
 				articleId: article.id,
 				body: commentBody,
@@ -127,33 +115,39 @@ describe("Article - Comment", () => {
 			let comments: DbDtoArticleComment[];
 			let count: number;
 
-			comments = await articleService.getArticleComments({ articleId: article.id });
+			comments = await articleService.getArticleComments({
+				articleId: article.id
+			});
 			expect(comments).have.lengthOf(1);
 			expect(comments[0].id).equals(comment.id);
 			expect(comments[0].userId).equals(comment.userId);
 			expect(comments[0].userId).equals(user.id);
 
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(1);
 
 			await articleService.deleteArticleComment({ id: comment.id });
 
-			comments = await articleService.getArticleComments({ articleId: article.id });
+			comments = await articleService.getArticleComments({
+				articleId: article.id
+			});
 			expect(comments).have.lengthOf(0);
 
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(0);
 		});
 
 		it("should hidden article's comments if the user who posted them has been banned", async () => {
-			const {
-				userService,
-				articleService,
-				user
-			} = await setup();
+			const { userService, articleService, user } = await setup();
 
 			const userB = await userService.createUser(getCreateUserInput({}));
-			const article = await articleService.createArticle(getCreateArticleInput({ userId: userB.id }));
+			const article = await articleService.createArticle(
+				getCreateArticleInput({ userId: userB.id })
+			);
 
 			await articleService.createArticleComment({
 				articleId: article.id,
@@ -164,16 +158,24 @@ describe("Article - Comment", () => {
 			let comments: DbDtoArticleComment[];
 			let count: number;
 
-			comments = await articleService.getArticleComments({ articleId: article.id });
+			comments = await articleService.getArticleComments({
+				articleId: article.id
+			});
 			expect(comments).have.lengthOf(1);
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(1);
 
 			await userService.banUserById({ id: user.id });
 
-			comments = await articleService.getArticleComments({ articleId: article.id });
+			comments = await articleService.getArticleComments({
+				articleId: article.id
+			});
 			expect(comments).have.lengthOf(0);
-			count = await articleService.countArticleCommentsByArticleId({ articleId: article.id });
+			count = await articleService.countArticleCommentsByArticleId({
+				articleId: article.id
+			});
 			expect(count).equals(0);
 		});
 	});
@@ -186,7 +188,9 @@ const setup = async () => {
 	const userService = factory.newUserService();
 	const articleService = factory.newArticleService();
 	const user = await userService.createUser(getCreateUserInput({}));
-	const article = await articleService.createArticle(getCreateArticleInput({ userId: user.id }));
+	const article = await articleService.createArticle(
+		getCreateArticleInput({ userId: user.id })
+	);
 	return {
 		userService,
 		articleService,

@@ -1,12 +1,9 @@
 import slugify from "slugify";
-import {
-	ArticleNotFoundError,
-	ArticleTitleAlreadyTakenError
-} from "../error";
+
 import { type RepoArticle } from "../../../repository/RepoArticle";
+import { ArticleNotFoundError, ArticleTitleAlreadyTakenError } from "../error";
 
 export class UpdateArticleHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: UpdateArticleHandlerConstructor) {
@@ -64,14 +61,15 @@ export class UpdateArticleHandler {
 	 * @throws {ArticleTitleAlreadyTakenError} - If an article with the same title already exists.
 	 *
 	 */
-	private async validateIfArticleExist({ title }: ValidateIfArticleExistInput) {
+	private async validateIfArticleExist({
+		title
+	}: ValidateIfArticleExistInput) {
 		const slug = slugify(title);
 		const article = await this.repoArticle.getArticleBySlug({ slug });
 		if (article) {
 			throw new ArticleTitleAlreadyTakenError({ title });
 		}
 	}
-
 }
 
 interface UpdateArticleHandlerConstructor {

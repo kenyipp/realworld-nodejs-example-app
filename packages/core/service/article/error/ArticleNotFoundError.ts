@@ -1,8 +1,8 @@
 import { BaseError } from "@conduit/utils";
+
 import { ErrorCodes } from "../ArticleConstants";
 
 export class ArticleNotFoundError extends BaseError {
-
 	constructor({ slug }: ArticleNotFoundErrorConstructor) {
 		super({
 			code: ErrorCodes.ArticleNotFound,
@@ -10,7 +10,6 @@ export class ArticleNotFoundError extends BaseError {
 			details: slug ? [slug] : []
 		});
 	}
-
 }
 
 interface ArticleNotFoundErrorConstructor {

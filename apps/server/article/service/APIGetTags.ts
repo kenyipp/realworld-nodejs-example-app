@@ -1,11 +1,7 @@
-import {
-	APIErrorInternalServerError,
-	logger
-} from "@conduit/utils";
-import type { ArticleService } from "@conduit/core/service";
+import { ArticleService } from "@conduit/core/service";
+import { APIErrorInternalServerError, logger } from "@conduit/utils";
 
 export class APIGetTags {
-
 	private articleService: ArticleService;
 
 	constructor({ articleService }: APIGetTagsConstructor) {
@@ -25,7 +21,6 @@ export class APIGetTags {
 		logger.error(error);
 		return new APIErrorInternalServerError({});
 	}
-
 }
 
 interface APIGetTagsConstructor {

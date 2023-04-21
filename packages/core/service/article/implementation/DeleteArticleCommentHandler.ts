@@ -1,9 +1,9 @@
 import { RecStatus } from "@conduit/types";
-import { ArticleCommentNotFoundError } from "../error";
+
 import { type RepoArticle } from "../../../repository/RepoArticle";
+import { ArticleCommentNotFoundError } from "../error";
 
 export class DeleteArticleCommentHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: DeleteArticleCommentHandlerConstructor) {
@@ -45,13 +45,16 @@ export class DeleteArticleCommentHandler {
 	 * @throws {ArticleCommentNotFoundError} If the article comment with the given ID does not exist.
 	 *
 	 */
-	private async validateArticleComment({ id }: { id: string }): Promise<void> {
+	private async validateArticleComment({
+		id
+	}: {
+		id: string;
+	}): Promise<void> {
 		const comment = await this.repoArticle.getArticleCommentById({ id });
 		if (!comment || comment.recStatus === RecStatus.Deleted) {
 			throw new ArticleCommentNotFoundError({ id });
 		}
 	}
-
 }
 
 interface DeleteArticleCommentHandlerConstructor {

@@ -1,11 +1,10 @@
 import {
-	PasswordHandler,
+	type ComparePasswordInput,
 	type EncryptPasswordInput,
-	type ComparePasswordInput
+	PasswordHandler
 } from "./implementation/PasswordHandler";
 
 export class AuthService {
-
 	private passwordHandler: PasswordHandler;
 
 	constructor() {
@@ -41,5 +40,4 @@ export class AuthService {
 	comparePassword({ password, encryptedPassword }: ComparePasswordInput) {
 		this.passwordHandler.comparePassword({ password, encryptedPassword });
 	}
-
 }

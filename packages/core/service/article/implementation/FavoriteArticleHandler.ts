@@ -1,15 +1,14 @@
 import {
+	type FavoriteArticleInput,
+	type RepoArticle,
+	type UnfavoriteArticleInput
+} from "../../../repository/RepoArticle";
+import {
 	ArticleAlreadyFavoritedError,
 	ArticleNotYetFavoritedError
 } from "../error";
-import {
-	type RepoArticle,
-	type FavoriteArticleInput,
-	type UnfavoriteArticleInput
-} from "../../../repository/RepoArticle";
 
 export class FavoriteArticleHandler {
-
 	private repoArticle: RepoArticle;
 
 	constructor({ repoArticle }: DeleteArticleHandlerConstructor) {
@@ -31,7 +30,10 @@ export class FavoriteArticleHandler {
 	 *
 	 */
 	async favorite({ userId, articleId }: FavoriteArticleInput): Promise<void> {
-		const isFavorited = await this.repoArticle.isArticleFavorited({ articleId, userId });
+		const isFavorited = await this.repoArticle.isArticleFavorited({
+			articleId,
+			userId
+		});
 		if (isFavorited) {
 			throw new ArticleAlreadyFavoritedError({ userId, articleId });
 		}
@@ -52,14 +54,19 @@ export class FavoriteArticleHandler {
 	 * @returns {Promise<void>} Promise object representing the completion of the database operation.
 	 *
 	 */
-	async unfavorite({ userId, articleId }: UnfavoriteArticleInput): Promise<void> {
-		const isFavorited = await this.repoArticle.isArticleFavorited({ articleId, userId });
+	async unfavorite({
+		userId,
+		articleId
+	}: UnfavoriteArticleInput): Promise<void> {
+		const isFavorited = await this.repoArticle.isArticleFavorited({
+			articleId,
+			userId
+		});
 		if (!isFavorited) {
 			throw new ArticleNotYetFavoritedError({ userId, articleId });
 		}
 		await this.repoArticle.unfavoriteArticle({ articleId, userId });
 	}
-
 }
 
 interface DeleteArticleHandlerConstructor {

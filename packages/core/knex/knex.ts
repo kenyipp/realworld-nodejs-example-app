@@ -1,8 +1,12 @@
 import Knex from "knex";
+
 import { Environments } from "@conduit/types";
+
 import { config } from "../knexfile";
 
-export const knex = Knex(config[process.env.NODE_ENV || Environments.Development]);
+export const knex = Knex(
+	config[process.env.NODE_ENV || Environments.Development]
+);
 
 /**
  *
@@ -14,11 +18,13 @@ export const knex = Knex(config[process.env.NODE_ENV || Environments.Development
  */
 export const dangerouslyResetDb = async () => {
 	if (
-		process.env.NODE_ENV !== Environments.CI
-		&& process.env.NODE_ENV !== Environments.Development
-		&& process.env.NODE_ENV !== Environments.Testing
+		process.env.NODE_ENV !== Environments.CI &&
+		process.env.NODE_ENV !== Environments.Development &&
+		process.env.NODE_ENV !== Environments.Testing
 	) {
-		throw new Error("You cannot reset the database using this function in a non-testing environment");
+		throw new Error(
+			"You cannot reset the database using this function in a non-testing environment"
+		);
 	}
 	await knex.migrate.rollback(null, true);
 	await knex.migrate.latest();

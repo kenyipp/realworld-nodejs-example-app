@@ -1,51 +1,50 @@
 import {
-	DbDtoArticleTag,
 	type DbDtoArticle,
 	type DbDtoArticleComment,
-	type DbDtoArticleMeta
+	type DbDtoArticleMeta,
+	DbDtoArticleTag
 } from "../../database/dto";
 import {
-	type RepoArticle,
+	GetArticleCommentsByArticleIdInput,
 	type IsArticleFavoritedInput,
-	GetArticleCommentsByArticleIdInput
+	type RepoArticle
 } from "../../repository/RepoArticle";
 import {
-	CreateArticleHandler,
-	type CreateArticleInput,
-	DeleteArticleHandler,
-	type DeleteArticleBySlugInput,
-	UpdateArticleHandler,
-	type UpdateArticleByIdInput,
-	CreateArticleTagHandler,
-	type CreateArticleTagInput,
-	GetArticleTagHandler,
-	type GetTagsByArticleIdInput,
-	type GetTagsByArticleIdsInput,
+	type CountArticleCommentsByArticleIdInput,
+	type CountArticlesByFiltersInput,
 	CreateArticleCommentHandler,
 	type CreateArticleCommentInput,
-	DeleteArticleCommentHandler,
+	CreateArticleHandler,
+	type CreateArticleInput,
+	CreateArticleTagHandler,
+	type CreateArticleTagInput,
+	type DeleteArticleBySlugInput,
 	type DeleteArticleCommentByIdInput,
-	GetArticleCommentsHandler,
-	type GetArticleCommentByIdInput,
-	type GetArticleCommentsByIdsInput,
-	type GetArticleCommentIdsByArticleIdInput,
-	type CountArticleCommentsByArticleIdInput,
-	GetArticleHandler,
-	type GetArticleByIdInput,
-	type GetArticleBySlugInput,
-	type GetArticlesByIdsInput,
-	type GetArticleIdsByFiltersInput,
-	type CountArticlesByFiltersInput,
+	DeleteArticleCommentHandler,
+	DeleteArticleHandler,
 	FavoriteArticleHandler,
 	type FavoriteArticleInput,
-	type UnfavoriteArticleInput,
-	GetArticleMetaHandler,
+	type GetArticleByIdInput,
+	type GetArticleBySlugInput,
+	type GetArticleCommentByIdInput,
+	type GetArticleCommentIdsByArticleIdInput,
+	type GetArticleCommentsByIdsInput,
+	GetArticleCommentsHandler,
+	GetArticleHandler,
+	type GetArticleIdsByFiltersInput,
 	type GetArticleMetaByIdInput,
-	type GetArticleMetaByIdsInput
+	type GetArticleMetaByIdsInput,
+	GetArticleMetaHandler,
+	GetArticleTagHandler,
+	type GetArticlesByIdsInput,
+	type GetTagsByArticleIdInput,
+	type GetTagsByArticleIdsInput,
+	type UnfavoriteArticleInput,
+	type UpdateArticleByIdInput,
+	UpdateArticleHandler
 } from "./implementation";
 
 export class ArticleService {
-
 	private repoArticle: RepoArticle;
 	private getArticleHandler: GetArticleHandler;
 	private createArticleHandler: CreateArticleHandler;
@@ -63,14 +62,24 @@ export class ArticleService {
 		this.repoArticle = repoArticle;
 		this.getArticleHandler = new GetArticleHandler({ repoArticle });
 		this.createArticleHandler = new CreateArticleHandler({ repoArticle });
-		this.createArticleTagHandler = new CreateArticleTagHandler({ repoArticle });
+		this.createArticleTagHandler = new CreateArticleTagHandler({
+			repoArticle
+		});
 		this.updateArticleHandler = new UpdateArticleHandler({ repoArticle });
 		this.deleteArticleHandler = new DeleteArticleHandler({ repoArticle });
 		this.getArticleTagHandler = new GetArticleTagHandler({ repoArticle });
-		this.createArticleCommentHandler = new CreateArticleCommentHandler({ repoArticle });
-		this.deleteArticleCommentHandler = new DeleteArticleCommentHandler({ repoArticle });
-		this.getArticleCommentsHandler = new GetArticleCommentsHandler({ repoArticle });
-		this.favoriteArticleHandler = new FavoriteArticleHandler({ repoArticle });
+		this.createArticleCommentHandler = new CreateArticleCommentHandler({
+			repoArticle
+		});
+		this.deleteArticleCommentHandler = new DeleteArticleCommentHandler({
+			repoArticle
+		});
+		this.getArticleCommentsHandler = new GetArticleCommentsHandler({
+			repoArticle
+		});
+		this.favoriteArticleHandler = new FavoriteArticleHandler({
+			repoArticle
+		});
 		this.getArticleMetaHandler = new GetArticleMetaHandler({ repoArticle });
 	}
 
@@ -125,7 +134,9 @@ export class ArticleService {
 	 * @returns {Promise<object>} A Promise that resolves to the retrieved article object.
 	 *
 	 */
-	async getTagsByArticleId(input: GetTagsByArticleIdInput): Promise<DbDtoArticleTag> {
+	async getTagsByArticleId(
+		input: GetTagsByArticleIdInput
+	): Promise<DbDtoArticleTag> {
 		const tag = await this.getArticleTagHandler.getTagsByArticleId(input);
 		return tag;
 	}
@@ -143,7 +154,9 @@ export class ArticleService {
 	 * @returns {Promise<DbDtoArticleTag[]>} A promise that resolves to an array of DbDtoArticleTag objects, each containing an article ID and its associated tags.
 	 *
 	 */
-	async getTagsByArticleIds(input: GetTagsByArticleIdsInput): Promise<DbDtoArticleTag[]> {
+	async getTagsByArticleIds(
+		input: GetTagsByArticleIdsInput
+	): Promise<DbDtoArticleTag[]> {
 		const tags = await this.getArticleTagHandler.getTagsByArticleIds(input);
 		return tags;
 	}
@@ -198,7 +211,9 @@ export class ArticleService {
 	 * @returns {Promise<object[]>} A Promise that resolves to an array of retrieved article objects.
 	 *
 	 */
-	async getArticlesByIds({ ids }: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
+	async getArticlesByIds({
+		ids
+	}: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
 		const articles = await this.getArticleHandler.getArticlesByIds({ ids });
 		return articles;
 	}
@@ -215,8 +230,12 @@ export class ArticleService {
 	 * @returns {Promise<DbDtoArticle[]>} A Promise that resolves with an array of articles that match the specified filters.
 	 *
 	 */
-	async getArticlesByFilters(input: GetArticleIdsByFiltersInput): Promise<DbDtoArticle[]> {
-		const articles = await this.getArticleHandler.getArticlesByFilters(input);
+	async getArticlesByFilters(
+		input: GetArticleIdsByFiltersInput
+	): Promise<DbDtoArticle[]> {
+		const articles = await this.getArticleHandler.getArticlesByFilters(
+			input
+		);
 		return articles;
 	}
 
@@ -248,7 +267,9 @@ export class ArticleService {
 	 * @throws {ArticleNotFoundError} - If no article with the given slug is found in the database.
 	 *
 	 */
-	async getArticleBySlug({ slug }: GetArticleBySlugInput): Promise<DbDtoArticle> {
+	async getArticleBySlug({
+		slug
+	}: GetArticleBySlugInput): Promise<DbDtoArticle> {
 		const article = await this.getArticleHandler.getArticleBySlug({ slug });
 		return article;
 	}
@@ -267,7 +288,9 @@ export class ArticleService {
 	 * @returns {Promise<void>} - A Promise that resolves with no value upon successful deletion of the article.
 	 *
 	 */
-	async deleteArticleBySlug({ slug }: DeleteArticleBySlugInput): Promise<void> {
+	async deleteArticleBySlug({
+		slug
+	}: DeleteArticleBySlugInput): Promise<void> {
 		await this.deleteArticleHandler.deleteArticleBySlug({ slug });
 	}
 
@@ -287,8 +310,16 @@ export class ArticleService {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	async createArticleComment({ articleId, body, userId }: CreateArticleCommentInput): Promise<DbDtoArticleComment> {
-		const comment = await this.createArticleCommentHandler.execute({ articleId, body, userId });
+	async createArticleComment({
+		articleId,
+		body,
+		userId
+	}: CreateArticleCommentInput): Promise<DbDtoArticleComment> {
+		const comment = await this.createArticleCommentHandler.execute({
+			articleId,
+			body,
+			userId
+		});
 		return comment;
 	}
 
@@ -305,26 +336,31 @@ export class ArticleService {
 	 * @returns {Promise<DbDtoArticleComment>} A Promise that resolves to an article comment object.
 	 *
 	 */
-	async getArticleCommentById({ id }: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
-		const comment = await this.getArticleCommentsHandler.getArticleCommentById({ id });
+	async getArticleCommentById({
+		id
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+		const comment =
+			await this.getArticleCommentsHandler.getArticleCommentById({ id });
 		return comment;
 	}
 
 	/**
-	  *
-	* Deletes an article comment with the given ID, after validating that the associated article exists.
-	*
-	* @async
-	* @function
-	*
-	* @param {Object} params - An object containing the ID of the article comment to delete and the ID of the associated article.
-	* @param {string} params.id - The ID of the article comment to delete.
-	*
-	* @returns {Promise<void>} A Promise that resolves with no value.
-	* @throws {ArticleCommentNotFoundError} If the article comment with the given ID does not exist.
-	*
-	*/
-	async deleteArticleComment({ id }: DeleteArticleCommentByIdInput): Promise<void> {
+	 *
+	 * Deletes an article comment with the given ID, after validating that the associated article exists.
+	 *
+	 * @async
+	 * @function
+	 *
+	 * @param {Object} params - An object containing the ID of the article comment to delete and the ID of the associated article.
+	 * @param {string} params.id - The ID of the article comment to delete.
+	 *
+	 * @returns {Promise<void>} A Promise that resolves with no value.
+	 * @throws {ArticleCommentNotFoundError} If the article comment with the given ID does not exist.
+	 *
+	 */
+	async deleteArticleComment({
+		id
+	}: DeleteArticleCommentByIdInput): Promise<void> {
 		await this.deleteArticleCommentHandler.execute({ id });
 	}
 
@@ -342,8 +378,13 @@ export class ArticleService {
 	 * @throws {Error} If the database query fails for any reason.
 	 *
 	 */
-	async getArticleCommentsById({ articleId }: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
-		const comments = await this.getArticleCommentsHandler.getArticleCommentsById({ articleId });
+	async getArticleCommentsById({
+		articleId
+	}: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+		const comments =
+			await this.getArticleCommentsHandler.getArticleCommentsById({
+				articleId
+			});
 		return comments;
 	}
 
@@ -360,8 +401,13 @@ export class ArticleService {
 	 * @returns {Promise<DbDtoArticleComment[]>} A Promise that resolves to an array of article comment objects.
 	 *
 	 */
-	async getArticleCommentsByIds({ ids }: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
-		const comments = await this.getArticleCommentsHandler.getArticleCommentsByIds({ ids });
+	async getArticleCommentsByIds({
+		ids
+	}: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
+		const comments =
+			await this.getArticleCommentsHandler.getArticleCommentsByIds({
+				ids
+			});
 		return comments;
 	}
 
@@ -379,8 +425,13 @@ export class ArticleService {
 	 * @throws {ArticleNotFoundError} If the article with the given ID does not exist.
 	 *
 	 */
-	async getArticleComments({ articleId }: GetArticleCommentIdsByArticleIdInput): Promise<DbDtoArticleComment[]> {
-		const comments = await this.getArticleCommentsHandler.getArticleComments({ articleId });
+	async getArticleComments({
+		articleId
+	}: GetArticleCommentIdsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+		const comments =
+			await this.getArticleCommentsHandler.getArticleComments({
+				articleId
+			});
 		return comments;
 	}
 
@@ -397,8 +448,13 @@ export class ArticleService {
 	 * @returns {Promise<number>} A Promise that resolves to the number of comments for the given article ID.
 	 *
 	 */
-	async countArticleCommentsByArticleId({ articleId }: CountArticleCommentsByArticleIdInput): Promise<number> {
-		const count = await this.getArticleCommentsHandler.countArticleCommentsByArticleId({ articleId });
+	async countArticleCommentsByArticleId({
+		articleId
+	}: CountArticleCommentsByArticleIdInput): Promise<number> {
+		const count =
+			await this.getArticleCommentsHandler.countArticleCommentsByArticleId(
+				{ articleId }
+			);
 		return count;
 	}
 
@@ -416,8 +472,14 @@ export class ArticleService {
 	 * @returns {Promise<boolean>} Promise object representing whether the user has favorited the article or not.
 	 *
 	 */
-	async isArticleFavorited({ articleId, userId }: IsArticleFavoritedInput): Promise<boolean> {
-		const isFavorited = await this.repoArticle.isArticleFavorited({ articleId, userId });
+	async isArticleFavorited({
+		articleId,
+		userId
+	}: IsArticleFavoritedInput): Promise<boolean> {
+		const isFavorited = await this.repoArticle.isArticleFavorited({
+			articleId,
+			userId
+		});
 		return isFavorited;
 	}
 
@@ -453,7 +515,10 @@ export class ArticleService {
 	 * @returns {Promise<void>} Promise object representing the completion of the database operation.
 	 *
 	 */
-	async unfavorite({ userId, articleId }: UnfavoriteArticleInput): Promise<void> {
+	async unfavorite({
+		userId,
+		articleId
+	}: UnfavoriteArticleInput): Promise<void> {
 		await this.favoriteArticleHandler.unfavorite({ userId, articleId });
 	}
 
@@ -472,8 +537,14 @@ export class ArticleService {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaById({ id, userId }: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
-		const meta = await this.getArticleMetaHandler.getArticleMetaById({ id, userId });
+	async getArticleMetaById({
+		id,
+		userId
+	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
+		const meta = await this.getArticleMetaHandler.getArticleMetaById({
+			id,
+			userId
+		});
 		return meta;
 	}
 
@@ -492,8 +563,14 @@ export class ArticleService {
 	 * @throws {Error} If an error occurs while retrieving the metadata
 	 *
 	 */
-	async getArticleMetaByIds({ ids, userId }: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
-		const meta = await this.getArticleMetaHandler.getArticleMetaByIds({ ids, userId });
+	async getArticleMetaByIds({
+		ids,
+		userId
+	}: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
+		const meta = await this.getArticleMetaHandler.getArticleMetaByIds({
+			ids,
+			userId
+		});
 		return meta;
 	}
 
@@ -511,7 +588,6 @@ export class ArticleService {
 		const tags = await this.repoArticle.getAllTags();
 		return tags;
 	}
-
 }
 
 interface ArticleServiceConstructor {

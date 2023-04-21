@@ -1,12 +1,13 @@
-import { compareSync, hashSync, genSaltSync } from "bcryptjs";
+import { compareSync, genSaltSync, hashSync } from "bcryptjs";
+
 import { appConfig } from "@conduit/config";
+
 import {
 	PasswordNotMatchError,
 	PasswordRequirementsNotMetError
 } from "../error";
 
 export class PasswordHandler {
-
 	/**
 	 *
 	 * Encrypts the given password using bcrypt algorithm and returns the encrypted password.
@@ -36,7 +37,10 @@ export class PasswordHandler {
 	 * @throws {PasswordNotMatchError} If the password does not match the encrypted password.
 	 *
 	 */
-	comparePassword({ password, encryptedPassword }: ComparePasswordInput): void {
+	comparePassword({
+		password,
+		encryptedPassword
+	}: ComparePasswordInput): void {
 		const matched = compareSync(password, encryptedPassword);
 		if (!matched) {
 			throw new PasswordNotMatchError();
@@ -62,13 +66,14 @@ export class PasswordHandler {
 		// Regular expression to match passwords with at least one letter and one digit
 		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 		if (!passwordRegex.test(password)) {
-			details.push("The password must contain at least one letter and one digit");
+			details.push(
+				"The password must contain at least one letter and one digit"
+			);
 		}
 		if (details.length > 0) {
 			throw new PasswordRequirementsNotMetError({ details });
 		}
 	}
-
 }
 
 export interface EncryptPasswordInput {

@@ -1,15 +1,13 @@
+import { ErrorRequestHandler, Express } from "express";
 import { v4 as Uuid } from "uuid";
+
+import { Environments } from "@conduit/types";
 import {
 	APIError,
-	logger,
+	APIErrorInternalServerError,
 	APIErrorUnprocessableEntity,
-	APIErrorInternalServerError
+	logger
 } from "@conduit/utils";
-import {
-	type Express,
-	type ErrorRequestHandler
-} from "express";
-import { Environments } from "@conduit/types";
 
 /**
  *
@@ -21,7 +19,11 @@ import { Environments } from "@conduit/types";
  * @returns {void}
  *
  */
-export const configureGlobalExceptionHandler = ({ app }: { app: Express }): void => {
+export const configureGlobalExceptionHandler = ({
+	app
+}: {
+	app: Express;
+}): void => {
 	app.use(handler);
 };
 
@@ -65,7 +67,10 @@ const handler: ErrorRequestHandler = (error, _req, res, _next): void => {
 		});
 	}
 
-	if (error instanceof APIErrorInternalServerError && process.env.NODE_ENV === Environments.Testing) {
+	if (
+		error instanceof APIErrorInternalServerError &&
+		process.env.NODE_ENV === Environments.Testing
+	) {
 		logger.error(error);
 	}
 
