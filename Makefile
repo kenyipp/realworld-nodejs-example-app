@@ -1,6 +1,7 @@
 pre-commit:
 	pnpm test
-	pnpm run lint
+	pnpm run lint:fix
+	pnpm run format
 	pnpm run spell-check
 
 install:
@@ -9,6 +10,6 @@ install:
 
 deploy:
 	pnpm run build
-	cd ./apps/server && rm -r ./node_modules && yarn install --production
+	cd ./apps/server && rm -r ./node_modules && find . -name "*.ts" -type f -delete && yarn install --production
 	sam deploy
 

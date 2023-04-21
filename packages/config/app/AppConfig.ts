@@ -4,14 +4,15 @@ import { defaultsDeep, fromPairs, upperCase } from "lodash";
 import { AnyObject } from "@conduit/types";
 
 import { config } from "./config";
+import { appConfigSchema } from "./config/schema";
 
 const SESSIONS = ["server", "auth"];
 
-export class AppConfig {
+class AppConfig {
 	server: {
 		port: number;
 		appSignature: string;
-		tokenExpiresIn?: string | number;
+		tokenExpiresIn?: number;
 	};
 
 	auth: {
@@ -29,6 +30,10 @@ export class AppConfig {
 	constructor() {
 		this.updaterAppConfigFromJsonConfig();
 		this.updateAppConfigFromEnvs();
+	}
+
+	static getInstance() {
+		return new AppConfig();
 	}
 
 	private updaterAppConfigFromJsonConfig() {
@@ -49,7 +54,7 @@ export class AppConfig {
 		const envKeyToFlattedKey = fromPairs(
 			flattedKeys.map((key) => [upperCase(key).replace(/ /g, "_"), key])
 		);
-		const appConfig: AnyObject = unflatten(
+		let appConfig: AnyObject = unflatten(
 			fromPairs(
 				Object.keys(envKeyToFlattedKey).map((envKey) => [
 					envKeyToFlattedKey[envKey],
@@ -58,10 +63,20 @@ export class AppConfig {
 				])
 			)
 		);
+		appConfig = this.validateFormat(appConfig);
 		SESSIONS.forEach((session) => {
 			this[session] = appConfig[session];
 		});
 	}
+
+	private validateFormat(input: AnyObject) {
+		const { value, error } = appConfigSchema.validate(input);
+		if (error) {
+			throw error;
+		}
+		return value;
+	}
 }
 
-export const appConfig = new AppConfig();
+export const appConfig = AppConfig.getInstance();
+export const getAppConfigInstance = AppConfig.getInstance;

@@ -160,6 +160,7 @@ importers:
       eslint-plugin-import: ^2.22.0
       eslint-plugin-prettier: ^4.2.1
       flat: ^5.0.2
+      joi: ^17.7.0
       lodash: ^4.17.21
       mocha: ^10.2.0
       prettier: ^2.8.7
@@ -168,6 +169,7 @@ importers:
     dependencies:
       '@conduit/types': link:../types
       flat: 5.0.2
+      joi: 17.9.1
       lodash: 4.17.21
     devDependencies:
       '@types/bcrypt': 5.0.0

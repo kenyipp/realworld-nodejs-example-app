@@ -2,7 +2,7 @@
 	"server": {
 		"port": 3100,
 		"appSignature": null,
-		"tokenExpiresIn": "7 days"
+		"tokenExpiresIn": 86400
 	},
 	"auth": {
 		"saltRounds": 10

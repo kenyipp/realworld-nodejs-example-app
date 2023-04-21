@@ -47,7 +47,7 @@ To initialize the database in a non-production environment, you can use the POST
 
 ### Deployment
 
-This project uses the [Express-Serverless](https://github.com/vendia/serverless-express) framework and [Amazon SAM](https://aws.amazon.com/tw/serverless/sam) to deploy the server as a serverless structure. In the root directory, you'll find a [deployment template](./template.yaml) with hints to guide you through the deployment process.
+This project uses the [Express Serverless](https://github.com/vendia/serverless-express) framework and [Amazon SAM](https://aws.amazon.com/tw/serverless/sam) to deploy the server as a serverless structure. In the root directory, you'll find a [deployment template](./template.yaml) with hints to guide you through the deployment process.
 
 To deploy the application, run `sam deploy --guide` in the command line interface. You'll be prompted with questions to configure the deployment. If you need more detailed explanations on the techniques and application architecture, refer to the <a href="#architecture">architecture</a> section.
 
