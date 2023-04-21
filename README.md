@@ -3,6 +3,9 @@
 <p align="center">
   Example Node (Express + Knex) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the <a href="https://github.com/gothinkster/realworld-example-apps">RealWorld</a> API spec.
 </p>
+<p align="center">
+The <a href="https://codebase.show">codebase.show</a> team has approved and included this repository on their <a href="https://codebase.show/projects/realworld?category=backend&language=typescript">project page</a>.
+</p>
 
 <!-- The badges section -->
 <p align="center">
@@ -18,14 +21,24 @@
 <p align="center"> This repository has complete functionality — pull requests and issues are welcome! </p>
 
 <p align="center">
-	<a href="#get_started">Get Started</a>
-	<span>|</span>
 	<a href="#demo">Demo</a>
+	<span>|</span>
+	<a href="#get_started">Get Started</a>
 	<span>|</span>
 	<a href="#architecture">Architecture</a>
 	<span>|</span>
 	<a href="#contributing">Contributing</a>
 </p>
+
+<a id="demo"></a>
+
+## Demo
+
+To demonstrate the functionality of the backend, we have deployed a live demo version of the application. You can visit the demo by following this link: [https://conduit-api-production.kenyip.cc](https://conduit-api-production.kenyip.cc).
+
+The API has several endpoints that you can test out using a tool like Postman or cURL. You can find the documentation for the API endpoints on the [API documentation page](https://conduit-api-production.kenyip.cc). Feel free to use this endpoint to create your amazing frontend applications!
+
+Please note that the demo version of the application is intended for demonstration purposes only and may not be suitable for production use. If you would like to deploy the application yourself, please follow the instructions in the <a href="#get_started">Get Started</a> section of this README.
 
 <a id="get_started"></a>
 

@@ -6,7 +6,7 @@ import { AnyObject } from "@conduit/types";
 import { config } from "./config";
 import { appConfigSchema } from "./config/schema";
 
-const SESSIONS = ["server", "auth"];
+const SESSIONS = ["server", "auth", "database"];
 
 class AppConfig {
 	server: {

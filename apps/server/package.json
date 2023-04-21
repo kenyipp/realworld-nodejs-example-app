@@ -14,8 +14,7 @@
 		"../../packages/utils"
 	],
 	"scripts": {
-		"build": "tsc && tsc-alias",
-		"build:deploy": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
 		"check-types": "tsc --skipLibCheck --noEmit",
 		"dev": "NODE_ENV=development ts-node-dev --no-notify --exit-child -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ./local.ts",
 		"format": "prettier --write .",

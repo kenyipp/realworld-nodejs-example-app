@@ -4,6 +4,7 @@
 	"private": true,
 	"license": "MIT",
 	"author": "Ken Yip",
+	"main": "./build/index.js",
 	"workspaces": [
 		"../types"
 	],

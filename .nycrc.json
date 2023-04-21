@@ -6,5 +6,15 @@
 	"report-dir": "./coverage",
 	"skip-full": false,
 	"temp-dir": "./.nyc_output",
-	"exclude": ["output", "coverage"]
+	"exclude": [
+		"output",
+		"coverage",
+		"**/error/APIError/**",
+		"**/.eslintrc.base.cjs",
+		"**/.eslintrc.cjs",
+		"**/.prettierrc.cjs",
+		"**/local.ts",
+		"**/app.ts",
+		"**/lambda.ts"
+	]
 }

@@ -2,11 +2,7 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "@conduit/config/tsconfig.base.json",
 	"compilerOptions": {
-		"sourceMap": false,
-		"typeRoots": [
-			"node_modules/@conduit/utils/types",
-			"node_modules/@types"
-		]
+		"sourceMap": false
 	},
 	"exclude": ["node_modules"]
 }

@@ -4,10 +4,7 @@
 	"compilerOptions": {
 		"sourceMap": false,
 		"outDir": "./",
-		"typeRoots": [
-			"./types",
-			"node_modules/@conduit/utils/types",
-			"node_modules/@types"
-		]
-	}
+		"typeRoots": ["./types", "node_modules/@types"]
+	},
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"]
 }

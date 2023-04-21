@@ -3,3 +3,8 @@ coverage
 
 .eslintrc.js
 test.ts
+
+node_modules
+**/*.spec.ts
+**/*.test.ts
+**/*.d.ts

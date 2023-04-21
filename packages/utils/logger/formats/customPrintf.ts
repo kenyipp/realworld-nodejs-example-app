@@ -21,7 +21,7 @@ export const customPrintf = (
 			const colorfiedStack = info.stack
 				.split("\n")
 				.slice(1)
-				.map((line, index) => {
+				.map((line: string, index: number) => {
 					if (
 						index === 0 ||
 						(!line.includes("node_modules") && line.includes(pwd))

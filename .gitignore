@@ -140,3 +140,5 @@ db.sqlite
 output
 
 samconfig.toml
+
+build
