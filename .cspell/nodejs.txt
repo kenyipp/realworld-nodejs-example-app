@@ -1,10 +1,4 @@
-# Amazon
-# Express
-# knex
-# Node.js Packages
-# Postman
-# Winston
-APIURL
+apiurl
 cloudwatchlogs
 codegen
 colorfied

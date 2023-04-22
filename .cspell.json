@@ -1,7 +1,9 @@
 {
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
 	"version": "0.2",
 	"language": "en",
 	"useGitignore": true,
+	"caseSensitive": false,
 	"dictionaries": [
 		"typescript",
 		"node",
@@ -22,12 +24,12 @@
 		{
 			"name": "project",
 			"path": "./.cspell/project.txt",
-			"noSuggest": true
+			"description": "Wordings specific to this project and will not be shared with other projects"
 		},
 		{
 			"name": "nodejs",
 			"path": "./.cspell/nodejs.txt",
-			"noSuggest": true
+			"description": "Keywords specific to the Node.js project, including the names of node_modules and the terms used within them"
 		}
 	]
 }

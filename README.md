@@ -3,10 +3,6 @@
 <p align="center">
   Example Node (Express + Knex) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the <a href="https://github.com/gothinkster/realworld-example-apps">RealWorld</a> API spec.
 </p>
-<p align="center">
-The <a href="https://codebase.show">codebase.show</a> team has approved and included this repository on their <a href="https://codebase.show/projects/realworld?category=backend&language=typescript">project page</a>.
-</p>
-
 <!-- The badges section -->
 <p align="center">
 <a href="https://github.com/kenyipp/realworld-nodejs-example-app/actions/workflows/ci.yml"><img src="https://github.com/kenyipp/realworld-nodejs-example-app/workflows/CI/badge.svg" alt="Actions Status"></a>
@@ -16,6 +12,10 @@ The <a href="https://codebase.show">codebase.show</a> team has approved and incl
 <a href="https://snyk.io/test/github/kenyipp/realworld-nodejs-example-app"><img src="https://snyk.io/test/github/kenyipp/realworld-nodejs-example-app/badge.svg" alt="Known Vulnerabilities"></a>
 <!-- Shields.io license badge -->
 <a href="https://github.com/kenyipp/realworld-nodejs-example-app/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/downsample"/></a>
+</p>
+
+<p align="center">
+This repository has been approved and included on the <a href="https://codebase.show/projects/realworld?category=backend&language=typescript">project page</a> by the <a href="https://codebase.show">Codebase.show</a>  team. I am committed to continuously improving this codebase and incorporating new technologies and useful Node modules as I discover them.
 </p>
 
 <p align="center"> This repository has complete functionality — pull requests and issues are welcome! </p>

@@ -1,9 +1,30 @@
 {
-	"name": "realworld",
+	"name": "conduit",
 	"version": "1.0.0",
 	"private": true,
-	"keywords": [],
+	"description": "Example Node (Express + Knex) codebase containing real world examples that adheres to the RealWorld API spec",
+	"keywords": [
+		"conduit",
+		"express",
+		"knex",
+		"swagger",
+		"sam"
+	],
+	"homepage": "https://conduit-api-production.kenyip.cc",
+	"bugs": {
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/issues",
+		"email": "ken20206@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app"
+	},
 	"license": "MIT",
+	"author": {
+		"name": "Ken Yip",
+		"email": "ken20206@gmail.com",
+		"url": "https://kenyip.cc"
+	},
 	"workspaces": [
 		"apps/*",
 		"packages/*"
@@ -13,8 +34,8 @@
 		"build:packages": "turbo run build --filter='./packages/*'",
 		"check-types": "turbo run check-types --parallel",
 		"coverage": "nyc turbo run test",
-		"format": "turbo run format",
 		"dev": "turbo run dev",
+		"format": "turbo run format",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",
 		"spell-check": "cspell \"**\" --no-progress",

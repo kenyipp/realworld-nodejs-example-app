@@ -2,8 +2,21 @@
 	"name": "@conduit/config",
 	"version": "1.0.0",
 	"private": true,
+	"description": "The config module of this mono-repository includes different configurations, such as TypeScript, ESLint, Mocha, and more.",
+	"keywords": [
+		"conduit",
+		"config"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/tree/master/packages/config"
+	},
 	"license": "MIT",
-	"author": "Ken Yip",
+	"author": {
+		"name": "Ken Yip",
+		"email": "ken20206@gmail.com",
+		"url": "https://kenyip.cc"
+	},
 	"main": "./build/index.js",
 	"workspaces": [
 		"../types"

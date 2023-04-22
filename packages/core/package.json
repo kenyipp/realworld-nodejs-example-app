@@ -2,12 +2,21 @@
 	"name": "@conduit/core",
 	"version": "1.0.0",
 	"private": true,
-	"description": "",
+	"description": "The core module of this project contains the main business logic of the application and can be used across different apps",
 	"keywords": [
+		"conduit",
 		"core"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/tree/master/packages/core"
+	},
 	"license": "MIT",
-	"author": "Ken Yip",
+	"author": {
+		"name": "Ken Yip",
+		"email": "ken20206@gmail.com",
+		"url": "https://kenyip.cc"
+	},
 	"workspaces": [
 		"../config",
 		"../types",
@@ -26,7 +35,6 @@
 		"@conduit/config": "*",
 		"@conduit/types": "*",
 		"@conduit/utils": "*",
-		"@types/bcryptjs": "^2.4.2",
 		"async": "^3.2.4",
 		"bcryptjs": "^2.4.3",
 		"dotenv": "^16.0.3",
@@ -43,6 +51,7 @@
 		"@faker-js/faker": "^7.6.0",
 		"@sinonjs/fake-timers": "^10.0.2",
 		"@types/async": "^3.2.18",
+		"@types/bcryptjs": "^2.4.2",
 		"@types/json-schema": "^7.0.11",
 		"@types/jwk-to-pem": "^2.0.1",
 		"@types/knex": "^0.16.1",

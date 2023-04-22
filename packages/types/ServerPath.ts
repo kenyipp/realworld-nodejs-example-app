@@ -21,5 +21,6 @@ export enum ServerPath {
 	UnfavoriteArticle = "/api/articles/:slug/favorite",
 	GetTags = "/api/tags",
 	GetSwaggerJson = "/assets/swagger.json",
-	Documentation = "/"
+	Documentation = "/",
+	Logo = "/images/logo.png"
 }

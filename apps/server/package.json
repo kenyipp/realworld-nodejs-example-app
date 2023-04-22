@@ -2,10 +2,26 @@
 	"name": "@conduit/server",
 	"version": "1.0.0",
 	"private": true,
-	"description": "",
-	"keywords": [],
+	"description": "The server app that provides RESTful API endpoints for this app",
+	"keywords": [
+		"conduit",
+		"server",
+		"apis"
+	],
+	"bugs": {
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/issues",
+		"email": "ken20206@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app"
+	},
 	"license": "MIT",
-	"author": "Ken Yip",
+	"author": {
+		"name": "Ken Yip",
+		"email": "ken20206@gmail.com",
+		"url": "https://kenyip.cc"
+	},
 	"main": "index.js",
 	"workspaces": [
 		"../../packages/config",

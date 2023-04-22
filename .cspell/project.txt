@@ -10,4 +10,5 @@ unfavorited
 unfavoriting
 unfollow
 unfollowed
+unfollowing
 unfollows

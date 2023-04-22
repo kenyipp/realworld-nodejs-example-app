@@ -2,8 +2,20 @@
 	"name": "@conduit/types",
 	"version": "1.0.0",
 	"private": true,
+	"description": "The types module contains definitions for various data structures and objects used throughout the application.",
+	"keywords": [
+		"conduit",
+		"types"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/tree/master/packages/types"
+	},
 	"license": "MIT",
-	"author": "Ken Yip",
+	"author": {
+		"name": "Ken Yip",
+		"email": "ken20206@gmail.com"
+	},
 	"scripts": {
 		"build": "tsc",
 		"check-types": "tsc --skipLibCheck --noEmit"

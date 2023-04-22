@@ -27,9 +27,6 @@ Parameters:
   Domain:
     Type: String
     Description: Specifies the domain of the API server
-  CorsAllowedDomain:
-    Type: List<String>
-    Description: Specifies a list of the origins allowed in the CORS
   Stage:
     Type: String
     Description: Specifies the stage of the application
@@ -110,7 +107,6 @@ Resources:
           - PATCH
           - DELETE
           - OPTIONS
-        AllowOrigins: !Ref CorsAllowedDomain
 
   DomainName:
     Type: AWS::ApiGatewayV2::DomainName
