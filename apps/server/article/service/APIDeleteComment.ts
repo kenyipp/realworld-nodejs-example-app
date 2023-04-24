@@ -28,7 +28,7 @@ export class APIDeleteComment {
 				message: "The requested article's comment was not found."
 			});
 			APIErrorForbidden.assert({
-				condition: user.id === comment.userId,
+				condition: user.id === comment?.userId,
 				message:
 					"You are not able to delete comments that do not belong to you."
 			});

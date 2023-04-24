@@ -34,10 +34,9 @@
 		"strictFunctionTypes": true,
 		// When strictNullChecks is true, null and undefined have their own distinct types
 		// and you’ll get a type error if you try to use them where a concrete value is expected.
-		"strictNullChecks": false,
+		"strictNullChecks": true,
 		// When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.
 		// We should use "!" for property we have not declared
-		// For this project, we use _.assign function so no need to enable this feature
 		"strictPropertyInitialization": false,
 		// Set the type of error to unknown
 		"useUnknownInCatchVariables": true,

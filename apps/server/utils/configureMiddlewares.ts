@@ -53,8 +53,18 @@ export const configureMiddlewares = ({ app }: { app: Express }): void => {
  *
  */
 const logger: morgan.FormatFn<Request, Response> = (tokens, req, res) => {
+	if (
+		!tokens ||
+		!tokens?.status ||
+		!tokens["response-time"] ||
+		!tokens.method ||
+		!tokens.url
+	) {
+		return "";
+	}
+
 	// Extract tokens and response time
-	const status = tokens?.status?.(req, res);
+	const status = tokens.status(req, res);
 	const responseTimeInString = tokens["response-time"](req, res);
 	const responseTime = parseInt(responseTimeInString ?? "", 10);
 
@@ -62,7 +72,9 @@ const logger: morgan.FormatFn<Request, Response> = (tokens, req, res) => {
 	return [
 		chalk.yellow(tokens.method(req, res)),
 		tokens.url(req, res),
-		status && chalk[parseInt(status[0], 10) <= 3 ? "green" : "red"](status),
+		status &&
+			status[0] &&
+			chalk[parseInt(status[0], 10) <= 3 ? "green" : "red"](status),
 		responseTime &&
 			chalk[responseTime > 500 ? "red" : "green"](`${responseTime}ms`)
 	]

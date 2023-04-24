@@ -29,19 +29,23 @@ export class RepoUser {
 		return users;
 	}
 
-	async getUserById({ id }: GetUserByIdInput): Promise<DbDtoUser> {
+	async getUserById({
+		id
+	}: GetUserByIdInput): Promise<DbDtoUser | undefined> {
 		const user = await this.dbUser.getUserById({ id });
 		return user;
 	}
 
-	async getUserByEmail({ email }: GetUserByEmailInput): Promise<DbDtoUser> {
+	async getUserByEmail({
+		email
+	}: GetUserByEmailInput): Promise<DbDtoUser | undefined> {
 		const user = await this.dbUser.getUserByEmail({ email });
 		return user;
 	}
 
 	async getUserByUsername({
 		username
-	}: GetUserByUsernameInput): Promise<DbDtoUser> {
+	}: GetUserByUsernameInput): Promise<DbDtoUser | undefined> {
 		const user = await this.dbUser.getUserByUsername({ username });
 		return user;
 	}

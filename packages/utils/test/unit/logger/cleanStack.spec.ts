@@ -7,7 +7,7 @@ import { DebugTransport } from "./DebugTransport";
 describe("CleanStack", () => {
 	it("should remove the unnecessary error message from the error stack", () => {
 		const { logger, transport, error } = setup();
-		const originalStackLength = error.stack.split("\n").length;
+		const originalStackLength = error.stack!.split("\n").length;
 		logger.error(error);
 		const log = transport.getLatestLog();
 		const newStackLength = log.message.stack.split("\n").length;

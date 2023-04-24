@@ -81,7 +81,7 @@ export class APIUnfavoriteArticle {
 			article,
 			meta,
 			tag,
-			author
+			author: author!
 		});
 		return dtoArticle;
 	}

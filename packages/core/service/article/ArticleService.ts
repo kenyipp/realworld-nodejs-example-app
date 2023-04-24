@@ -338,7 +338,7 @@ export class ArticleService {
 	 */
 	async getArticleCommentById({
 		id
-	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment | undefined> {
 		const comment =
 			await this.getArticleCommentsHandler.getArticleCommentById({ id });
 		return comment;

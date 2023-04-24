@@ -157,6 +157,12 @@ Resources:
             ApiId: !Ref Conduit
             Path: /assets/swagger.json
             Method: GET
+        Logo:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Conduit
+            Path: /images/logo.png
+            Method: GET
       Tracing: Active
 
   User:

@@ -15,6 +15,7 @@ if (
 	process.env.NODE_ENV === Environments.CI ||
 	process.env.NODE_ENV === Environments.Development
 ) {
+	/* istanbul ignore next */
 	router.post(ServerPath.ResetServer, async (_req, res) => {
 		await dangerouslyResetDb();
 		res.send("Ok");

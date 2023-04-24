@@ -24,6 +24,7 @@ module.exports = {
 		"@typescript-eslint/quotes": ["error", "double"],
 		"@typescript-eslint/comma-dangle": ["error", "never"],
 		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
 		// A better practice is to define all needed variables and test data towards the end of the test suite,
 		// so the one interested in seeing tests does not have to scroll down and look for them.
 		// One should be able to see the test cases right away and if interested in their setup and implementation,

@@ -66,6 +66,11 @@ To deploy the application, run `sam deploy --guide` in the command line interfac
 
 For more information on deploying a serverless application with Amazon SAM, please visit the [AWS documentation](https://docs.aws.amazon.com/serverless-application-model/?icmpid=docs_homepage_compute).
 
+<a id="architecture"></a>
+
+## Architecture
+I have written a blog post about the techniques, structure, architecture, and my reflections on this project. For more details, click [here](https://blog.kenyip.cc/realworld-node-js-example-app)!
+
 <a id="contributing"></a>
 
 ## Contributing

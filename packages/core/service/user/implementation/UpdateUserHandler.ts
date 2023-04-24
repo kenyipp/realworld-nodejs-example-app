@@ -53,7 +53,7 @@ export class UpdateUserHandler {
 			bio
 		});
 		user = await this.repoUser.getUserById({ id });
-		return user;
+		return user!;
 	}
 
 	private async validateUserExist({

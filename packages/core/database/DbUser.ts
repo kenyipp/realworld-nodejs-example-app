@@ -55,7 +55,9 @@ export class DbUser {
 	 * @returns {Promise<DbDtoUser|null>} - A promise that resolves to the user object if found, or null if not found.
 	 *
 	 */
-	async getUserById({ id }: GetUserByIdInput): Promise<DbDtoUser> {
+	async getUserById({
+		id
+	}: GetUserByIdInput): Promise<DbDtoUser | undefined> {
 		const user = await this.getUserByIds({ ids: [id] }).then(
 			(users) => users[0]
 		);
@@ -75,7 +77,9 @@ export class DbUser {
 	 * @returns {Promise<DbDtoUser>} - A promise that resolves to the user object if found.
 	 *
 	 */
-	async getUserByEmail({ email }: GetUserByEmailInput): Promise<DbDtoUser> {
+	async getUserByEmail({
+		email
+	}: GetUserByEmailInput): Promise<DbDtoUser | undefined> {
 		const { id } = await knex
 			.first<{ id: string }>({ id: "user_id" })
 			.from(Tables.User)
@@ -100,7 +104,7 @@ export class DbUser {
 	 */
 	async getUserByUsername({
 		username
-	}: GetUserByUsernameInput): Promise<DbDtoUser> {
+	}: GetUserByUsernameInput): Promise<DbDtoUser | undefined> {
 		const { id } = await knex
 			.first<{ id: string }>({ id: "user_id" })
 			.from(Tables.User)
@@ -384,8 +388,8 @@ export class DbUser {
 export interface CreateUserInput {
 	username: string;
 	email: string;
-	bio: string;
-	image: string;
+	bio?: string;
+	image?: string;
 	hash: string;
 }
 

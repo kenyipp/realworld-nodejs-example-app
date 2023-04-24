@@ -21,7 +21,7 @@ describe("Article - Get Meta", () => {
 		const { article, articleService } = await setup();
 		const meta = await articleService.getArticleMetaById({
 			id: article.id,
-			userId: null
+			userId: undefined
 		});
 		expect(meta.id).equals(article.id);
 		expect(meta.favorited).equals(false);

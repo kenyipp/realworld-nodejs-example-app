@@ -81,7 +81,7 @@ export class APIFavoriteArticle {
 			article,
 			meta,
 			tag,
-			author
+			author: author!
 		});
 		return dtoArticle;
 	}

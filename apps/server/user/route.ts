@@ -58,7 +58,13 @@ const registration: Handler = async (req, res) => {
 
 const getCurrentUser: Handler = (req, res) => {
 	const { user } = req;
-	const response = apiGetCurrentUser.execute({ dbDtoUser: user });
+
+	APIErrorInternalServerError.assert({
+		condition: !isNil(user),
+		cause: new Error("The user object is missing")
+	});
+
+	const response = apiGetCurrentUser.execute({ dbDtoUser: user! });
 	return res.json(response);
 };
 
@@ -67,13 +73,18 @@ const updateUser: Handler = async (req, res) => {
 	const updates: DtoInputUpdateUser = req.body.user;
 
 	APIErrorInternalServerError.assert({
+		condition: !isNil(user),
+		cause: new Error("The user object is missing")
+	});
+
+	APIErrorInternalServerError.assert({
 		condition: !isNil(updates),
 		cause: new Error(
 			"Missing request parameters 'userId' and/or request body"
 		)
 	});
 
-	const response = await apiUpdateUser.execute({ user, updates });
+	const response = await apiUpdateUser.execute({ user: user!, updates });
 	return res.json(response);
 };
 
@@ -86,21 +97,49 @@ const getProfile: Handler = async (req, res) => {
 		cause: new Error("Missing request parameters 'username'")
 	});
 
-	const response = await apiGetProfile.execute({ user, username });
+	const response = await apiGetProfile.execute({ user, username: username! });
 	return res.json(response);
 };
 
 const followUser: Handler = async (req, res) => {
 	const { user } = req;
 	const { username } = req.params;
-	const response = await apiFollowUser.execute({ user, username });
+
+	APIErrorInternalServerError.assert({
+		condition: !isNil(user),
+		cause: new Error("The user object is missing'")
+	});
+
+	APIErrorInternalServerError.assert({
+		condition: !isNil(username),
+		cause: new Error("Missing request parameters 'username'")
+	});
+
+	const response = await apiFollowUser.execute({
+		user: user!,
+		username: username!
+	});
 	return res.json(response);
 };
 
 const unfollowUser: Handler = async (req, res) => {
 	const { user } = req;
 	const { username } = req.params;
-	const response = await apiUnfollowUser.execute({ user, username });
+
+	APIErrorInternalServerError.assert({
+		condition: !isNil(user),
+		cause: new Error("The user object is missing'")
+	});
+
+	APIErrorInternalServerError.assert({
+		condition: !isNil(username),
+		cause: new Error("Missing request parameters 'username'")
+	});
+
+	const response = await apiUnfollowUser.execute({
+		user: user!,
+		username: username!
+	});
 	return res.json(response);
 };
 

@@ -142,3 +142,5 @@ output
 samconfig.toml
 
 build
+
+.vscode

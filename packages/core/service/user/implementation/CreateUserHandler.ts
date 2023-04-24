@@ -55,7 +55,7 @@ export class CreateUserHandler {
 			bio
 		});
 		const user = await this.repoUser.getUserById({ id: userId });
-		return user;
+		return user!;
 	}
 }
 

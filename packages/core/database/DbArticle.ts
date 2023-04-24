@@ -153,7 +153,7 @@ export class DbArticle {
 		const dbDtoArticleTag = await this.getTagsByArticleIds({
 			articleIds: [articleId]
 		}).then((docs) => docs[0]);
-		return dbDtoArticleTag;
+		return dbDtoArticleTag!;
 	}
 
 	/**
@@ -209,9 +209,11 @@ export class DbArticle {
 	 * @returns {Promise<object>} A Promise that resolves to the retrieved article object.
 	 *
 	 */
-	async getArticleById({ id }: GetArticleByIdInput): Promise<DbDtoArticle> {
+	async getArticleById({
+		id
+	}: GetArticleByIdInput): Promise<DbDtoArticle | undefined> {
 		if (!id) {
-			return null;
+			return undefined;
 		}
 		// Retrieves an array with the article object.
 		const [article] = await this.getArticlesByIds({ ids: [id] });
@@ -233,7 +235,7 @@ export class DbArticle {
 	 */
 	async getArticleBySlug({
 		slug
-	}: GetArticleBySlugInput): Promise<DbDtoArticle> {
+	}: GetArticleBySlugInput): Promise<DbDtoArticle | undefined> {
 		const articleId = await knex
 			.first<{ id: string }>({ id: "article_id" })
 			.from(Tables.Article)
@@ -325,7 +327,7 @@ export class DbArticle {
 	): Promise<number> {
 		const count = await this.getQueryByFilters(filters)
 			.count<{ count: number }[]>("*", { as: "count" })
-			.then((response) => response[0].count);
+			.then((response) => response[0]?.count ?? 0);
 		return count;
 	}
 
@@ -526,7 +528,7 @@ export class DbArticle {
 			.from(Tables.ArticleComment)
 			.where("rec_status", RecStatus.Normal)
 			.where("article_id", articleId)
-			.then((response) => response[0].count);
+			.then((response) => response[0]?.count ?? 0);
 		return count;
 	}
 
@@ -576,7 +578,7 @@ export class DbArticle {
 	 */
 	async getArticleCommentById({
 		id
-	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment | undefined> {
 		const comment = await this.getArticleCommentsByIds({ ids: [id] }).then(
 			(comments) => comments[0]
 		);
@@ -705,7 +707,7 @@ export class DbArticle {
 	async getArticleMetaById({
 		id,
 		userId
-	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
+	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta | undefined> {
 		const meta = await this.getArticleMetaByIds({ ids: [id], userId }).then(
 			(docs) => docs[0]
 		);
@@ -916,7 +918,7 @@ export interface IsArticleFavoritedInput {
 
 export interface GetArticleMetaByIdInput {
 	id: string;
-	userId: string;
+	userId?: string;
 }
 
 export interface GetArticleMetaByIdsInput {

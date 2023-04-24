@@ -94,9 +94,9 @@ describe("Article - Comment", () => {
 				articleId: article.id
 			});
 			expect(comments).have.lengthOf(1);
-			expect(comments[0].id).equals(comment.id);
-			expect(comments[0].userId).equals(comment.userId);
-			expect(comments[0].userId).equals(user.id);
+			expect(comments[0]!.id).equals(comment.id);
+			expect(comments[0]!.userId).equals(comment.userId);
+			expect(comments[0]!.userId).equals(user.id);
 
 			const count = await articleService.countArticleCommentsByArticleId({
 				articleId: article.id
@@ -119,9 +119,9 @@ describe("Article - Comment", () => {
 				articleId: article.id
 			});
 			expect(comments).have.lengthOf(1);
-			expect(comments[0].id).equals(comment.id);
-			expect(comments[0].userId).equals(comment.userId);
-			expect(comments[0].userId).equals(user.id);
+			expect(comments[0]!.id).equals(comment.id);
+			expect(comments[0]!.userId).equals(comment.userId);
+			expect(comments[0]!.userId).equals(user.id);
 
 			count = await articleService.countArticleCommentsByArticleId({
 				articleId: article.id

@@ -34,7 +34,7 @@ export class UpdateArticleHandler {
 		if (!article) {
 			throw new ArticleNotFoundError({});
 		}
-		let slug: string;
+		let slug: string | undefined;
 		if (title && article.title !== title) {
 			await this.validateIfArticleExist({ title });
 			slug = slugify(title);

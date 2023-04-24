@@ -7,10 +7,10 @@ pre-commit:
 
 deploy:
 	pnpm run build
-	cd ./apps/server && rm -r ./node_modules && yarn install --production
+	cd ./apps/server && rm -r ./node_modules && find / -type f -name "*.ts" -delete && yarn install --production
+	sam deploy
 
 install:
+	git stash
 	cd ./apps/server && rm -r ./node_modules
 	pnpm install
-
-

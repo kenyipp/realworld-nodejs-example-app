@@ -52,14 +52,20 @@ export const auth = async (
 	try {
 		const decoded = verifyJsonWebToken({ accessToken: accessToken ?? "" });
 		const user = await userService.getUserById({ id: decoded.userId });
-		if (decoded.hash !== hashDbDtoUser({ dbDtoUser: user })) {
+
+		APIErrorUnauthorized.assert({
+			condition: !isNil(user),
+			errorCode: ErrorCodes.InvalidAuthUser
+		});
+
+		if (decoded.hash !== hashDbDtoUser({ dbDtoUser: user! })) {
 			throw new TokenExpiredError(
 				"As one of the user's login credentials has been updated, please obtain a new token.",
-				user.updatedAt
+				user!.updatedAt
 			);
 		}
 		APIErrorForbidden.assert({
-			condition: user.statusId !== UserStatus.Banned,
+			condition: user!.statusId !== UserStatus.Banned,
 			message:
 				"Sorry, your account has been banned. Please contact the support team for further information."
 		});

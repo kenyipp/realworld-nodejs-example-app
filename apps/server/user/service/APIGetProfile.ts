@@ -37,10 +37,10 @@ export class APIGetProfile {
 		const following = user
 			? await this.userService.isFollowing({
 					followerId: user.id,
-					followingId: targeted.id
+					followingId: targeted!.id
 			  })
 			: false;
-		const profile = new DtoProfile({ dbDtoUser: targeted, following });
+		const profile = new DtoProfile({ dbDtoUser: targeted!, following });
 		return { profile };
 	}
 }

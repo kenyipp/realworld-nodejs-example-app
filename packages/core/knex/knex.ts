@@ -5,7 +5,7 @@ import { Environments } from "@conduit/types";
 import { config } from "../knexfile";
 
 export const knex = Knex(
-	config[process.env.NODE_ENV || Environments.Development]
+	config[process.env.NODE_ENV ?? Environments.Development]!
 );
 
 /**
@@ -26,7 +26,7 @@ export const dangerouslyResetDb = async () => {
 			"You cannot reset the database using this function in a non-testing environment"
 		);
 	}
-	await knex.migrate.rollback(null, true);
+	await knex.migrate.rollback(undefined, true);
 	await knex.migrate.latest();
 	await knex.seed.run();
 };

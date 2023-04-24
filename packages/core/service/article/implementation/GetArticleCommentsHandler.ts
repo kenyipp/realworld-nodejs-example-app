@@ -54,7 +54,7 @@ export class GetArticleCommentsHandler {
 	 */
 	async getArticleCommentById({
 		id
-	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment | undefined> {
 		const comment = await this.repoArticle.getArticleCommentById({ id });
 		return comment;
 	}

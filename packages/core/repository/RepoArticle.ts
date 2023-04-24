@@ -68,14 +68,16 @@ export class RepoArticle {
 		await this.dbArticle.updateArticleById(input);
 	}
 
-	async getArticleById({ id }: GetArticleByIdInput): Promise<DbDtoArticle> {
+	async getArticleById({
+		id
+	}: GetArticleByIdInput): Promise<DbDtoArticle | undefined> {
 		const article = await this.dbArticle.getArticleById({ id });
 		return article;
 	}
 
 	async getArticleBySlug({
 		slug
-	}: GetArticleBySlugInput): Promise<DbDtoArticle> {
+	}: GetArticleBySlugInput): Promise<DbDtoArticle | undefined> {
 		const article = await this.dbArticle.getArticleBySlug({ slug });
 		return article;
 	}
@@ -145,7 +147,7 @@ export class RepoArticle {
 
 	async getArticleCommentById({
 		id
-	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment> {
+	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment | undefined> {
 		const comment = await this.dbArticle.getArticleCommentById({ id });
 		return comment;
 	}
@@ -184,7 +186,7 @@ export class RepoArticle {
 	async getArticleMetaById({
 		id,
 		userId
-	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta> {
+	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta | undefined> {
 		const meta = await this.dbArticle.getArticleMetaById({ id, userId });
 		return meta;
 	}

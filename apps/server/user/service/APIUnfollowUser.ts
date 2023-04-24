@@ -51,10 +51,10 @@ export class APIUnfollowUser {
 		try {
 			await this.userService.unfollowUser({
 				followerId: user.id,
-				followingId: targeted.id
+				followingId: targeted!.id
 			});
 			const profile = new DtoProfile({
-				dbDtoUser: targeted,
+				dbDtoUser: targeted!,
 				following: false
 			});
 			return { profile };
@@ -77,7 +77,7 @@ interface APIUnfollowUserConstructor {
 
 interface APIUnfollowUserInput {
 	username: string;
-	user?: DbDtoUser;
+	user: DbDtoUser;
 }
 
 interface APIUnfollowUserOutput {

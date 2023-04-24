@@ -46,7 +46,7 @@ export class CreateArticleHandler {
 		const article = await this.repoArticle.getArticleById({
 			id: articleId
 		});
-		return article;
+		return article!;
 	}
 
 	/**

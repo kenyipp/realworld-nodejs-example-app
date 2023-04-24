@@ -38,10 +38,10 @@ class AppConfig {
 
 	private updaterAppConfigFromJsonConfig() {
 		let baseConfig = config.default;
-		if (config[process.env.NODE_ENV]) {
+		if (config[process.env.NODE_ENV!]) {
 			baseConfig = defaultsDeep(
 				{},
-				config[process.env.NODE_ENV],
+				config[process.env.NODE_ENV!],
 				baseConfig
 			);
 		}
@@ -59,7 +59,7 @@ class AppConfig {
 				Object.keys(envKeyToFlattedKey).map((envKey) => [
 					envKeyToFlattedKey[envKey],
 					process.env[envKey] ||
-						flattedAppConfig[envKeyToFlattedKey[envKey]]
+						flattedAppConfig[envKeyToFlattedKey[envKey]!]
 				])
 			)
 		);

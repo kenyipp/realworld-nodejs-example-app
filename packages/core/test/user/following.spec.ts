@@ -54,7 +54,7 @@ describe("User - following", () => {
 	describe("Unfollow an User", () => {
 		it("should be able to unfollow an user", async () => {
 			const { userService, userA, userB } = await setup();
-			let isFollowing: boolean = null;
+			let isFollowing = false;
 			await userService.followUser({
 				followerId: userA.id,
 				followingId: userB.id

@@ -42,10 +42,12 @@ export class APIGetComments {
 							.getUserByIds({ ids: authorIds })
 							.then((authors) => indexToDoc(authors, "id")),
 					() =>
-						this.userService.getIsUsersFollowingByUserId({
-							followerId: user?.id,
-							followingIds: authorIds
-						})
+						user
+							? this.userService.getIsUsersFollowingByUserId({
+									followerId: user?.id,
+									followingIds: authorIds
+							  })
+							: Promise.resolve({})
 				],
 				{
 					concurrency:
@@ -54,11 +56,13 @@ export class APIGetComments {
 							: Infinity
 				}
 			);
-			const dtoComments = comments.map((comment) => {
-				const author = authorIdToAuthors[comment.userId];
-				const following = isUsersFollowing[comment.userId];
-				return new DtoComment({ comment, author, following });
-			});
+			const dtoComments = comments
+				.filter((comment) => authorIdToAuthors[comment.userId])
+				.map((comment) => {
+					const author = authorIdToAuthors[comment.userId]!;
+					const following = isUsersFollowing[comment.userId] || false;
+					return new DtoComment({ comment, author, following });
+				});
 			return { comments: dtoComments };
 		} catch (error) {
 			throw this.convertErrorToAPIError(error);
@@ -87,7 +91,7 @@ interface APIGetCommentsConstructor {
 
 interface APIGetCommentsInput {
 	slug: string;
-	user: DbDtoUser;
+	user?: DbDtoUser;
 }
 
 interface APIGetCommentsOutput {

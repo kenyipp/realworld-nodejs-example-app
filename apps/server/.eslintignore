@@ -4,7 +4,7 @@ coverage
 .eslintrc.js
 test.ts
 
-node_modules
-**/*.spec.ts
-**/*.test.ts
+node_modules/*
+
 **/*.d.ts
+**/*.spec.ts

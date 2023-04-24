@@ -1,3 +1,4 @@
+import { isNil } from "lodash";
 import pAll from "p-all";
 
 import { DbDtoUser } from "@conduit/core/database/dto";
@@ -50,9 +51,15 @@ export class APIGetArticle {
 							: Infinity
 				}
 			);
+
+			ArticleNotFoundError.assert({
+				condition: !isNil(author),
+				message: "Invalid article"
+			});
+
 			const dtoArticle = new DtoArticle({
 				article,
-				author,
+				author: author!,
 				meta,
 				tag
 			});

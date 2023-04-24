@@ -6,8 +6,8 @@ import { type AnyFunction, Environments } from "@conduit/types";
 
 const client = new AWS.CloudWatchLogs({
 	credentials: {
-		accessKeyId: process.env.AWS_ACCESS_KEY,
-		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+		accessKeyId: process.env.AWS_ACCESS_KEY!,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
 	}
 });
 
@@ -38,12 +38,12 @@ export class CloudWatchTransport extends Transport {
 			.describeLogStreams({ logGroupName: this.logGroup })
 			.promise()
 			.then((response) =>
-				response.logStreams.find(
+				response.logStreams?.find(
 					(stream) => stream.logStreamName === logStreamName
 				)
 			);
 
-		let nextUploadSequenceToken = null;
+		let nextUploadSequenceToken: string | undefined;
 
 		if (!logStream) {
 			await client

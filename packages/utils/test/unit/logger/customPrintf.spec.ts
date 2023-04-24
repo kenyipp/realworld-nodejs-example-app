@@ -7,9 +7,14 @@ import { DebugTransport } from "./DebugTransport";
 describe("CustomPrintf", () => {
 	it("should able to log the message using the customPrintf function", () => {
 		const { logger, message } = setup();
-		["info", "debug", "error", "silly", "warn"].forEach((method) => {
+		["info", "debug", "silly", "warn"].forEach((method) => {
 			logger[method](message);
 		});
+	});
+
+	it("should able to log the error using the customPrintf function", () => {
+		const { logger, message } = setup();
+		logger.error(new Error(message));
 	});
 });
 

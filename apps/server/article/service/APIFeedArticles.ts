@@ -102,7 +102,7 @@ export class APIFeedArticles {
 				const tag = articleIdToTags[id];
 				const meta = articleIdToMeta[id];
 				if (!article || !author || !meta || !tag) {
-					return null;
+					return undefined;
 				}
 				return new DtoArticle({
 					article,
@@ -111,7 +111,7 @@ export class APIFeedArticles {
 					tag
 				});
 			})
-			.filter((article) => article !== null);
+			.filter((article) => article !== null) as DtoArticle[];
 	}
 
 	private convertErrorToAPIError(error: any) {

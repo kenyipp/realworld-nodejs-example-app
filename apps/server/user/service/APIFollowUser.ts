@@ -51,10 +51,10 @@ export class APIFollowUser {
 		try {
 			await this.userService.followUser({
 				followerId: user.id,
-				followingId: targeted.id
+				followingId: targeted!.id
 			});
 			const profile = new DtoProfile({
-				dbDtoUser: targeted,
+				dbDtoUser: targeted!,
 				following: true
 			});
 			return { profile };
@@ -77,7 +77,7 @@ interface APIFollowUserConstructor {
 
 interface APIFollowUserInput {
 	username: string;
-	user?: DbDtoUser;
+	user: DbDtoUser;
 }
 
 interface APIFollowUserOutput {

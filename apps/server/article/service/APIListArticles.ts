@@ -91,18 +91,23 @@ export class APIListArticles {
 					process.env.NODE_ENV === Environments.Testing ? 1 : Infinity
 			}
 		);
-		return articleIds.map((id) => {
-			const article = articleIdToArticle[id];
-			const author = authorIdToAuthor[article.userId];
-			const tag = articleIdToTags[id];
-			const meta = articleIdToMeta[id];
-			return new DtoArticle({
-				article,
-				author,
-				meta,
-				tag
-			});
-		});
+		return articleIds
+			.map((id) => {
+				const article = articleIdToArticle[id]!;
+				const author = authorIdToAuthor[article.userId];
+				const tag = articleIdToTags[id];
+				const meta = articleIdToMeta[id];
+				if (!article || !author || !tag || !meta) {
+					return undefined;
+				}
+				return new DtoArticle({
+					article,
+					author,
+					meta,
+					tag
+				});
+			})
+			.filter((article) => Boolean(article)) as DtoArticle[];
 	}
 
 	private convertErrorToAPIError(error: any) {

@@ -100,7 +100,9 @@ export class UserService {
 	 * @returns {Promise<DbDtoUser|null>} - A promise that resolves to the user object if found, or null if not found.
 	 *
 	 */
-	async getUserById({ id }: GetUserByIdInput): Promise<DbDtoUser> {
+	async getUserById({
+		id
+	}: GetUserByIdInput): Promise<DbDtoUser | undefined> {
 		const user = await this.repoUser.getUserById({ id });
 		return user;
 	}
@@ -120,7 +122,7 @@ export class UserService {
 	 */
 	async getUserByUsername({
 		username
-	}: GetUserByUsernameInput): Promise<DbDtoUser> {
+	}: GetUserByUsernameInput): Promise<DbDtoUser | undefined> {
 		const user = await this.repoUser.getUserByUsername({ username });
 		return user;
 	}
@@ -138,7 +140,9 @@ export class UserService {
 	 * @returns {Promise<DbDtoUser|null>} - A promise that resolves to the user object if found, or null if not found.
 	 *
 	 */
-	async getUserByEmail({ email }: GetUserByEmailInput): Promise<DbDtoUser> {
+	async getUserByEmail({
+		email
+	}: GetUserByEmailInput): Promise<DbDtoUser | undefined> {
 		const user = await this.repoUser.getUserByEmail({ email });
 		return user;
 	}

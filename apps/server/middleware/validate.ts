@@ -40,7 +40,7 @@ const validate =
  * @returns {string[]} an array of error messages describing the validation errors
  *
  */
-const mapValidationError = (error: Joi.ValidationError): string[] => {
+const mapValidationError = (error?: Joi.ValidationError): string[] => {
 	if (!error) {
 		return [];
 	}
@@ -53,7 +53,7 @@ const mapValidationError = (error: Joi.ValidationError): string[] => {
 		if (detail.type.endsWith(".base")) {
 			return `Expected '${detail.path.join(".")}' to be a ${
 				detail.type.split(".")[0]
-			}, but received '${typeof detail.context.value}' instead`;
+			}, but received '${typeof detail?.context?.value}' instead`;
 		}
 		return detail.message;
 	});

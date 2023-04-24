@@ -32,7 +32,7 @@ export class APIUserLogin {
 		});
 
 		APIErrorForbidden.assert({
-			condition: user.statusId !== UserStatus.Banned,
+			condition: user?.statusId !== UserStatus.Banned,
 			message:
 				"Sorry, your account has been banned. Please contact support for more information."
 		});
@@ -40,7 +40,7 @@ export class APIUserLogin {
 		try {
 			this.authService.comparePassword({
 				password,
-				encryptedPassword: user.hash
+				encryptedPassword: user!.hash
 			});
 		} catch (error) {
 			if (error instanceof PasswordNotMatchError) {
@@ -53,7 +53,7 @@ export class APIUserLogin {
 			throw new APIErrorInternalServerError({});
 		}
 
-		const dtoUser = new DtoUser({ dbDtoUser: user });
+		const dtoUser = new DtoUser({ dbDtoUser: user! });
 		return { user: dtoUser };
 	}
 }

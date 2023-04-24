@@ -48,7 +48,7 @@ export class APIUpdateUser {
 		userId: string;
 	}): Promise<DtoUser> {
 		const updatedUser = await this.userService.getUserById({ id: userId });
-		const dtoUser = new DtoUser({ dbDtoUser: updatedUser });
+		const dtoUser = new DtoUser({ dbDtoUser: updatedUser! });
 		return dtoUser;
 	}
 

@@ -15,8 +15,8 @@ describe("Article - List Articles", () => {
 			limit: 10
 		});
 		expect(articles).have.lengthOf(2);
-		expect(articles[0].id).equals(articleB.id);
-		expect(articles[1].id).equals(articleA.id);
+		expect(articles[0]!.id).equals(articleB.id);
+		expect(articles[1]!.id).equals(articleA.id);
 	});
 
 	it("should be able to return a filtered article list by tags", async () => {
@@ -32,7 +32,7 @@ describe("Article - List Articles", () => {
 			tag
 		});
 		expect(articles).have.lengthOf(1);
-		expect(articles[0].id).equals(articleA.id);
+		expect(articles[0]!.id).equals(articleA.id);
 	});
 
 	it("should be able to return a filtered article list by the author's name", async () => {
@@ -47,14 +47,14 @@ describe("Article - List Articles", () => {
 			limit: 10
 		});
 		expect(articles).have.lengthOf(3);
-		expect(articles[0].id).equals(article.id);
+		expect(articles[0]!.id).equals(article.id);
 		articles = await articleService.getArticlesByFilters({
 			offset: 0,
 			limit: 10,
 			author: user.username
 		});
 		expect(articles).have.lengthOf(1);
-		expect(articles[0].id).equals(article.id);
+		expect(articles[0]!.id).equals(article.id);
 	});
 
 	it("should be able to return a filtered article list that is favorited by user", async () => {
@@ -95,7 +95,7 @@ describe("Article - List Articles", () => {
 			limit: 1
 		});
 		expect(articles).have.lengthOf(1);
-		expect(articles[0].id).equals(articleB.id);
+		expect(articles[0]!.id).equals(articleB.id);
 	});
 
 	it("should be able to paginate the articles using the offset parameter", async () => {
@@ -105,7 +105,7 @@ describe("Article - List Articles", () => {
 			limit: 1
 		});
 		expect(articles).have.lengthOf(1);
-		expect(articles[0].id).equals(articleA.id);
+		expect(articles[0]!.id).equals(articleA.id);
 	});
 
 	it("should hidden article's posts if the user who posted them has been banned", async () => {
@@ -219,12 +219,12 @@ describe("Article - List Articles", () => {
 		expect(count).equals(0);
 	});
 
-	let clock: FakeTimers.InstalledClock = null;
+	let clock: FakeTimers.InstalledClock | undefined;
 
 	beforeEach(async () => {
 		const now = Date.now();
 		clock = FakeTimers.install();
-		clock.setSystemTime(now);
+		clock!.setSystemTime(now);
 		await dangerouslyResetDb();
 	});
 
@@ -242,11 +242,11 @@ describe("Article - List Articles", () => {
 		const articleA = await articleService.createArticle(
 			getCreateArticleInput({ userId: user.id })
 		);
-		clock.setSystemTime(moment().add(1, "seconds").toDate());
+		clock?.setSystemTime?.(moment().add(1, "seconds").toDate());
 		const articleB = await articleService.createArticle(
 			getCreateArticleInput({ userId: user.id })
 		);
-		clock.setSystemTime(moment().add(1, "seconds").toDate());
+		clock?.setSystemTime?.(moment().add(1, "seconds").toDate());
 		return {
 			articleService,
 			userService,

@@ -40,7 +40,7 @@ export class CreateArticleCommentHandler {
 			userId
 		});
 		const comment = await this.repoArticle.getArticleCommentById({ id });
-		return comment;
+		return comment!;
 	}
 
 	/**
