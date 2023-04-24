@@ -1,32 +1,28 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"globalEnv": [
+		"NODE_ENV",
+		"SERVER_APP_SIGNATURE",
+		"AUTH_SALT_ROUNDS",
+		"PWD",
+		"LOG_LEVEL",
+		"AWS_ACCESS_KEY",
+		"AWS_SECRET_ACCESS_KEY"
+	],
 	"pipeline": {
-		"build": {
-			"cache": false
-		},
+		"build": {},
 		"check-types": {
-			"outputs": []
-		},
-		"clean": {
-			"cache": false
+			"inputs": [
+				"**/*.ts"
+			]
 		},
 		"dev": {
-			"cache": false
+			"cache": false,
+			"persistent": true
 		},
-		"format": {
-			"outputs": []
-		},
-		"lint": {
-			"outputs": []
-		},
-		"lint:fix": {
-			"outputs": []
-		},
-		"start": {
-			"cache": false
-		},
-		"test": {
-			"cache": false
-		}
+		"format": {},
+		"lint": {},
+		"lint:fix": {},
+		"test": {}
 	}
 }

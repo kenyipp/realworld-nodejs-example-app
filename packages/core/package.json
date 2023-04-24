@@ -67,6 +67,7 @@
 		"eslint": "^7.5.0",
 		"eslint-config-airbnb-base": "^14.2.1",
 		"eslint-config-airbnb-typescript": "^17.0.0",
+		"eslint-config-turbo": "^1.9.3",
 		"eslint-plugin-import": "^2.22.0",
 		"mocha": "^10.1.0",
 		"sinon": "^14.0.2",

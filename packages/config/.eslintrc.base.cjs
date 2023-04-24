@@ -4,6 +4,7 @@ module.exports = {
 		"eslint-config-airbnb-base",
 		"airbnb-typescript",
 		"plugin:@typescript-eslint/recommended",
+		"turbo",
 		"prettier"
 	],
 	env: {

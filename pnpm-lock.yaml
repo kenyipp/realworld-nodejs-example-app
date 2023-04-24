@@ -54,6 +54,7 @@ importers:
       eslint-config-airbnb-base: ^14.2.1
       eslint-config-airbnb-typescript: ^17.0.0
       eslint-config-prettier: ^8.8.0
+      eslint-config-turbo: ^1.9.3
       eslint-plugin-import: ^2.22.0
       eslint-plugin-prettier: ^4.2.1
       express: ^4.18.2
@@ -126,6 +127,7 @@ importers:
       eslint-config-airbnb-base: 14.2.1_4heylg5ce4zxl5r7mnxe6vqlki
       eslint-config-airbnb-typescript: 17.0.0_5a2vhfyiruxo2bmzqzb66gv3ka
       eslint-config-prettier: 8.8.0_eslint@7.32.0
+      eslint-config-turbo: 1.9.3_eslint@7.32.0
       eslint-plugin-import: 2.27.5_uwxra2a4urbdqqaqh3aw45jq4a
       eslint-plugin-prettier: 4.2.1_mouiu7tdcm2dtderipseaggmee
       mocha: 10.2.0
@@ -157,6 +159,7 @@ importers:
       eslint-config-airbnb-base: ^14.2.1
       eslint-config-airbnb-typescript: ^17.0.0
       eslint-config-prettier: ^8.8.0
+      eslint-config-turbo: ^1.9.3
       eslint-plugin-import: ^2.22.0
       eslint-plugin-prettier: ^4.2.1
       flat: ^5.0.2
@@ -186,6 +189,7 @@ importers:
       eslint-config-airbnb-base: 14.2.1_4heylg5ce4zxl5r7mnxe6vqlki
       eslint-config-airbnb-typescript: 17.0.0_5a2vhfyiruxo2bmzqzb66gv3ka
       eslint-config-prettier: 8.8.0_eslint@7.32.0
+      eslint-config-turbo: 1.9.3_eslint@7.32.0
       eslint-plugin-import: 2.27.5_uwxra2a4urbdqqaqh3aw45jq4a
       eslint-plugin-prettier: 4.2.1_mouiu7tdcm2dtderipseaggmee
       mocha: 10.2.0
@@ -220,6 +224,7 @@ importers:
       eslint: ^7.5.0
       eslint-config-airbnb-base: ^14.2.1
       eslint-config-airbnb-typescript: ^17.0.0
+      eslint-config-turbo: ^1.9.3
       eslint-plugin-import: ^2.22.0
       joi: ^17.7.0
       jwk-to-pem: ^2.0.5
@@ -271,6 +276,7 @@ importers:
       eslint: 7.32.0
       eslint-config-airbnb-base: 14.2.1_4heylg5ce4zxl5r7mnxe6vqlki
       eslint-config-airbnb-typescript: 17.0.0_bmxhrfvtv4yjxe7n6eqahedypa
+      eslint-config-turbo: 1.9.3_eslint@7.32.0
       eslint-plugin-import: 2.27.5_uwxra2a4urbdqqaqh3aw45jq4a
       mocha: 10.2.0
       sinon: 14.0.2
@@ -317,6 +323,7 @@ importers:
       eslint: ^7.32.0
       eslint-config-airbnb-base: ^14.2.1
       eslint-config-airbnb-typescript: ^17.0.0
+      eslint-config-turbo: ^1.9.3
       eslint-plugin-import: ^2.22.0
       fast-json-stable-stringify: ^2.1.0
       knex: ^2.4.2
@@ -367,6 +374,7 @@ importers:
       eslint: 7.32.0
       eslint-config-airbnb-base: 14.2.1_4heylg5ce4zxl5r7mnxe6vqlki
       eslint-config-airbnb-typescript: 17.0.0_5a2vhfyiruxo2bmzqzb66gv3ka
+      eslint-config-turbo: 1.9.3_eslint@7.32.0
       eslint-plugin-import: 2.27.5_uwxra2a4urbdqqaqh3aw45jq4a
       mocha: 10.2.0
       mysql2: 3.0.0-rc.1
@@ -3176,6 +3184,15 @@ packages:
       eslint: 7.32.0
     dev: true
 
+  /eslint-config-turbo/1.9.3_eslint@7.32.0:
+    resolution: {integrity: sha512-QG6jxFQkrGSpQqlFKefPdtgUfr20EbU0s4tGGIuGFOcPuJEdsY6VYZpZUxNJvmMcTGqPgMyOPjAFBKhy/DPHLA==}
+    peerDependencies:
+      eslint: '>6.6.0'
+    dependencies:
+      eslint: 7.32.0
+      eslint-plugin-turbo: 1.9.3_eslint@7.32.0
+    dev: true
+
   /eslint-import-resolver-node/0.3.7:
     resolution: {integrity: sha512-gozW2blMLJCeFpBwugLTGyvVjNoeo1knonXAcatC6bjPBZitotxdWf7Gimr25N4c0AAOo4eOUfaG82IJPDpqCA==}
     dependencies:
@@ -3263,6 +3280,14 @@ packages:
       eslint-config-prettier: 8.8.0_eslint@7.32.0
       prettier: 2.8.7
       prettier-linter-helpers: 1.0.0
+    dev: true
+
+  /eslint-plugin-turbo/1.9.3_eslint@7.32.0:
+    resolution: {integrity: sha512-ZsRtksdzk3v+z5/I/K4E50E4lfZ7oYmLX395gkrUMBz4/spJlYbr+GC8hP9oVNLj9s5Pvnm9rLv/zoj5PVYaVw==}
+    peerDependencies:
+      eslint: '>6.6.0'
+    dependencies:
+      eslint: 7.32.0
     dev: true
 
   /eslint-scope/5.1.1:
