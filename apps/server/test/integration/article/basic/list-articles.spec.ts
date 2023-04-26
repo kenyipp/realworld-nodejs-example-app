@@ -49,7 +49,7 @@ describe("Article - List Articles", () => {
 
 	it("should be able to retrieve a list of articles filtered by tag", async () => {
 		await setup();
-		let response: Response = null;
+		let response: Response | null = null;
 
 		response = await request
 			.get(ServerPath.ListArticles)

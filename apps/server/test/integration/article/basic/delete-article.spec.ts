@@ -18,7 +18,7 @@ describe("Article - Delete Article", () => {
 	it("should be able to delete an article", async () => {
 		const { article, accessToken } = await setup();
 
-		let response: Response = null;
+		let response: Response | null = null;
 
 		response = await request
 			.delete(ServerPath.DeleteArticle.replace(":slug", article.slug))

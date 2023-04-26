@@ -1,6 +1,6 @@
 import { DbDtoArticleComment, DbDtoUser } from "@conduit/core/database/dto";
 
-import { DtoProfile } from "../../user/dto";
+import { DtoProfile } from "../../user/dto/DtoProfile";
 
 export class DtoComment {
 	id: string;

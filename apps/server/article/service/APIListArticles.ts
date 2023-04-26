@@ -7,7 +7,7 @@ import { Environments } from "@conduit/types/Environments";
 import { indexToDoc, logger } from "@conduit/utils";
 import { APIError, APIErrorInternalServerError } from "@conduit/utils/error";
 
-import { DtoArticle, DtoInputGetArticleFeed } from "../dto";
+import { DtoArticle, DtoInputGetArticles } from "../dto";
 
 export class APIListArticles {
 	private articleService: ArticleService;
@@ -125,7 +125,7 @@ interface APIListArticlesConstructor {
 }
 
 interface APIListArticlesInput {
-	input: DtoInputGetArticleFeed;
+	input: DtoInputGetArticles;
 	user?: DbDtoUser;
 }
 

@@ -5,7 +5,7 @@ import {
 	DbDtoUser
 } from "@conduit/core/database/dto";
 
-import { DtoProfile } from "../../user/dto";
+import { DtoProfile } from "../../user/dto/DtoProfile";
 
 export class DtoArticle {
 	slug: string;

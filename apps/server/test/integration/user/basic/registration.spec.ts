@@ -36,7 +36,7 @@ describe("User - Registration", () => {
 	});
 
 	it("should return 409 - Conflict if the username or email has been used before", async () => {
-		let response: Response = null;
+		let response: Response | null = null;
 		response = await request.post(ServerPath.Registration).send({
 			user: {
 				username: "Jacob",
@@ -56,7 +56,7 @@ describe("User - Registration", () => {
 	});
 
 	it("should return 400 - Bad Request if the password doesn't match the policy", async () => {
-		let response: Response = null;
+		let response: Response | null = null;
 		response = await request.post(ServerPath.Registration).send({
 			user: {
 				username: "Jacob",

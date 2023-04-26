@@ -1,11 +1,11 @@
 import { Handler } from "express";
 import Router from "express-promise-router";
 
-import { Factory } from "@conduit/core";
 import { ServerPath } from "@conduit/types";
 import { APIErrorInternalServerError } from "@conduit/utils";
 
 import { auth, authRequired, validate } from "../middleware";
+import { ServiceFactory } from "./Factory";
 import {
 	DtoInputAddComment,
 	DtoInputCreateArticle,
@@ -20,44 +20,22 @@ import {
 	getArticlesSchema,
 	updateArticleSchema
 } from "./schema";
-import {
-	APIAddComments,
-	APICreateArticle,
-	APIDeleteArticle,
-	APIDeleteComment,
-	APIFavoriteArticle,
-	APIFeedArticles,
-	APIGetArticle,
-	APIGetComments,
-	APIGetTags,
-	APIListArticles,
-	APIUnfavoriteArticle,
-	APIUpdateArticle
-} from "./service";
 
 export const router = Router();
-const factory = new Factory();
-const articleService = factory.newArticleService();
-const userService = factory.newUserService();
+const factory = new ServiceFactory();
 
-const apiAddComments = new APIAddComments({ articleService });
-const apiCreateArticle = new APICreateArticle({ articleService });
-const apiDeleteArticle = new APIDeleteArticle({ articleService });
-const apiDeleteComment = new APIDeleteComment({ articleService });
-const apiFavoriteArticle = new APIFavoriteArticle({
-	articleService,
-	userService
-});
-const apiFeedArticles = new APIFeedArticles({ articleService, userService });
-const apiGetArticle = new APIGetArticle({ articleService, userService });
-const apiGetComments = new APIGetComments({ articleService, userService });
-const apiGetTags = new APIGetTags({ articleService });
-const apiListArticles = new APIListArticles({ articleService, userService });
-const apiUnfavoriteArticle = new APIUnfavoriteArticle({
-	articleService,
-	userService
-});
-const apiUpdateArticle = new APIUpdateArticle({ articleService });
+const apiAddComments = factory.newAPIAddComments();
+const apiCreateArticle = factory.newAPICreateArticle();
+const apiDeleteArticle = factory.newAPIDeleteArticle();
+const apiDeleteComment = factory.newAPIDeleteComment();
+const apiFavoriteArticle = factory.newAPIFavoriteArticle();
+const apiFeedArticles = factory.newAPIFeedArticles();
+const apiGetArticle = factory.newAPIGetArticle();
+const apiGetComments = factory.newAPIGetComments();
+const apiGetTags = factory.newAPIGetTags();
+const apiListArticles = factory.newAPIListArticles();
+const apiUnfavoriteArticle = factory.newAPIUnfavoriteArticle();
+const apiUpdateArticle = factory.newAPIUpdateArticle();
 
 const getFeedArticles: Handler = async (req, res) => {
 	const { user } = req;

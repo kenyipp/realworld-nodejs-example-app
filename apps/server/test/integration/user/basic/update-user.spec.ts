@@ -35,7 +35,7 @@ describe("User - Update", () => {
 
 	it("should be able to update the user password", async () => {
 		const { user, accessToken } = await setup();
-		let response: Response = null;
+		let response: Response | null = null;
 		response = await request
 			.put(ServerPath.UpdateUser)
 			.set("Authorization", `Bearer ${accessToken}`)
@@ -57,7 +57,7 @@ describe("User - Update", () => {
 
 	it("should invalidate old access token after user updates their password", async () => {
 		const { accessToken } = await setup();
-		let response: Response = null;
+		let response: Response | null = null;
 		response = await request
 			.put(ServerPath.UpdateUser)
 			.set("Authorization", `Bearer ${accessToken}`)

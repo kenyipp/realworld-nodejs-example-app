@@ -37,7 +37,7 @@ describe("Article - Feed Articles", () => {
 			followerId: user.id,
 			followingId: authors.authorA.id
 		});
-		let response: Response = null;
+		let response: Response | null = null;
 
 		response = await request
 			.get(ServerPath.FeedArticles)

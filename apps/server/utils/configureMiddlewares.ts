@@ -20,7 +20,10 @@ import { Environments, ServerPath } from "@conduit/types";
 export const configureMiddlewares = ({ app }: { app: Express }): void => {
 	// Add security-related HTTP headers to the response
 	app.use((req, res, next) => {
-		if (req.path === ServerPath.Documentation) {
+		if (
+			req.path === ServerPath.Documentation ||
+			req.path === ServerPath.GraphQL
+		) {
 			return next();
 		}
 		return helmet()(req, res, next);

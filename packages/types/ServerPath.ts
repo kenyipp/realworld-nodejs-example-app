@@ -22,5 +22,6 @@ export enum ServerPath {
 	GetTags = "/api/tags",
 	GetSwaggerJson = "/assets/swagger.json",
 	Documentation = "/",
-	Logo = "/images/logo.png"
+	Logo = "/images/logo.png",
+	GraphQL = "/graphql"
 }
