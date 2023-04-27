@@ -64,6 +64,7 @@ importers:
       graphql: 15.3.0
       helmet: ^6.1.1
       joi: ^17.7.0
+      json-to-graphql-query: ^2.2.5
       jsonwebtoken: ^9.0.0
       lodash: ^4.17.21
       md5: ^2.3.0
@@ -136,6 +137,7 @@ importers:
       eslint-config-turbo: 1.9.3_eslint@7.32.0
       eslint-plugin-import: 2.27.5_uwxra2a4urbdqqaqh3aw45jq4a
       eslint-plugin-prettier: 4.2.1_mouiu7tdcm2dtderipseaggmee
+      json-to-graphql-query: 2.2.5
       mocha: 10.2.0
       pm2: 5.3.0
       prettier: 2.8.7
@@ -4802,6 +4804,10 @@ packages:
 
   /json-stringify-safe/5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
+    dev: true
+
+  /json-to-graphql-query/2.2.5:
+    resolution: {integrity: sha512-5Nom9inkIMrtY992LMBBG1Zaekrc10JaRhyZgprwHBVMDtRgllTvzl0oBbg13wJsVZoSoFNNMaeIVQs0P04vsA==}
     dev: true
 
   /json5/1.0.2:

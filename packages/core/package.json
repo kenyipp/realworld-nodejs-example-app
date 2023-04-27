@@ -29,7 +29,7 @@
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
 		"migrate-db": "knex migrate:latest",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+		"test": "NODE_ENV=testing ts-mocha ./test/**/*.spec.ts"
 	},
 	"dependencies": {
 		"@conduit/config": "*",

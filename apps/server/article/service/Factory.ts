@@ -1,4 +1,4 @@
-import { Factory } from "@conduit/core";
+import { Factory as ServiceFactory } from "@conduit/core";
 import { ArticleService, UserService } from "@conduit/core/service";
 
 import {
@@ -14,81 +14,81 @@ import {
 	APIListArticles,
 	APIUnfavoriteArticle,
 	APIUpdateArticle
-} from "./service";
+} from ".";
 
-export class ServiceFactory {
+export class Factory {
 	private articleService: ArticleService;
 	private userService: UserService;
 
 	constructor() {
-		const factory = new Factory();
+		const factory = new ServiceFactory();
 		this.articleService = factory.newArticleService();
 		this.userService = factory.newUserService();
 	}
 
-	newAPIAddComments() {
+	newAPIAddComments(): APIAddComments {
 		return new APIAddComments({ articleService: this.articleService });
 	}
 
-	newAPICreateArticle() {
+	newAPICreateArticle(): APICreateArticle {
 		return new APICreateArticle({ articleService: this.articleService });
 	}
 
-	newAPIDeleteArticle() {
+	newAPIDeleteArticle(): APIDeleteArticle {
 		return new APIDeleteArticle({ articleService: this.articleService });
 	}
 
-	newAPIDeleteComment() {
+	newAPIDeleteComment(): APIDeleteComment {
 		return new APIDeleteComment({ articleService: this.articleService });
 	}
 
-	newAPIFavoriteArticle() {
+	newAPIFavoriteArticle(): APIFavoriteArticle {
 		return new APIFavoriteArticle({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIFeedArticles() {
+	newAPIFeedArticles(): APIFeedArticles {
 		return new APIFeedArticles({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIGetArticle() {
+	newAPIGetArticle(): APIGetArticle {
 		return new APIGetArticle({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIGetComments() {
+	newAPIGetComments(): APIGetComments {
 		return new APIGetComments({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIGetTags() {
+	newAPIGetTags(): APIGetTags {
 		return new APIGetTags({ articleService: this.articleService });
 	}
 
-	newAPIListArticles() {
+	newAPIListArticles(): APIListArticles {
 		return new APIListArticles({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIUnfavoriteArticle() {
+	newAPIUnfavoriteArticle(): APIUnfavoriteArticle {
 		return new APIUnfavoriteArticle({
 			articleService: this.articleService,
 			userService: this.userService
 		});
 	}
 
-	newAPIUpdateArticle() {
+	newAPIUpdateArticle(): APIUpdateArticle {
 		return new APIUpdateArticle({ articleService: this.articleService });
 	}
 }

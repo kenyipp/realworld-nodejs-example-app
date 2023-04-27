@@ -128,12 +128,12 @@ interface APIFeedArticlesConstructor {
 	userService: UserService;
 }
 
-interface APIFeedArticlesInput {
+export interface APIFeedArticlesInput {
 	input: DtoInputGetArticleFeed;
 	user: DbDtoUser;
 }
 
-interface APIFeedArticlesOutput {
+export interface APIFeedArticlesOutput {
 	articles: DtoArticle[];
 	articlesCount: number;
 }

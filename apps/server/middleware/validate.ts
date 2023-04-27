@@ -10,13 +10,11 @@ import { APIErrorUnprocessableEntity } from "@conduit/utils";
  * If validation fails, an APIErrorUnprocessableEntity will be thrown with a payload containing
  * an array of error messages describing the validation errors.
  *
- * @param {ValidationType} - the of the request data to be validated (query, body or params)
- *
  */
 const validate =
 	(type: ValidationType) =>
 	(input: Joi.AnySchema) =>
-	(req: Request, _res: Response, next: NextFunction) => {
+	(req: Request<any, any, any, any>, _res: Response, next: NextFunction) => {
 		const { value, error } = input.validate(req[type], {
 			abortEarly: false
 		});

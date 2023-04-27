@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import supertest from "supertest";
+import { jsonToGraphQLQuery } from "json-to-graphql-query";
 
 import { Factory, dangerouslyResetDb } from "@conduit/core";
 import {
@@ -18,22 +19,22 @@ describe("Article - Get Article", () => {
 	it("should be able to retrieve a list of all articles", async () => {
 		const { articles } = await setup();
 		const totalArticleCount = Object.keys(articles).length;
-
-		const response = await request.post(ServerPath.GraphQL).send({
-			query: `{
-				articles {
-				  articles {
-					slug
-					title
-					description
-					body
-					favorited
-					favoritesCount
-				  }
-				  articlesCount
-				}
-			}`
-		});
+		const query = {
+			articles: {
+				articles: {
+					slug: true,
+					title: true,
+					description: true,
+					body: true,
+					favorited: true,
+					favoritesCount: true
+				},
+				articlesCount: true
+			}
+		};
+		const response = await request
+			.post(ServerPath.GraphQL)
+			.send({ query: jsonToGraphQLQuery({ query }) });
 
 		expect(response.body.data).is.not.null;
 		expect(response.body.data.articles.articles).instanceOf(Array);

@@ -30,7 +30,7 @@ const userService = Factory.getInstance().newUserService();
  *
  */
 export const auth = async (
-	req: Request,
+	req: Request<any, any, any, any>,
 	_res: Response,
 	next: NextFunction
 ) => {
@@ -96,7 +96,7 @@ export const auth = async (
 };
 
 export const authRequired = (
-	req: Request,
+	req: Request<any, any, any, any>,
 	res: Response,
 	next: NextFunction
 ) => {

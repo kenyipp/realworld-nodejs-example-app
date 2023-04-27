@@ -72,11 +72,11 @@ interface APICreateArticleConstructor {
 	articleService: ArticleService;
 }
 
-interface APICreateArticleInput {
+export interface APICreateArticleInput {
 	input: DtoInputCreateArticle;
 	user: DbDtoUser;
 }
 
-interface APICreateArticleOutput {
+export interface APICreateArticleOutput {
 	article: DtoArticle;
 }

@@ -129,7 +129,7 @@ interface APIListArticlesInput {
 	user?: DbDtoUser;
 }
 
-interface APIListArticlesOutput {
+export interface APIListArticlesOutput {
 	articles: DtoArticle[];
 	articlesCount: number;
 }

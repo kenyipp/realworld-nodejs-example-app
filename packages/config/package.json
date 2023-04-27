@@ -27,7 +27,7 @@
 		"format": "prettier --write .",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+		"test": "NODE_ENV=testing ts-mocha ./test/**/*.spec.ts"
 	},
 	"dependencies": {
 		"@conduit/types": "*",

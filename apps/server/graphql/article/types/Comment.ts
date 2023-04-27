@@ -1,7 +1,7 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 
-import { GraphQLDate } from "../scalars";
-import { ProfileType } from "./Profile";
+import { GraphQLDate } from "../../scalars";
+import { ProfileType } from "../../user/types/Profile";
 
 export const CommentType = new GraphQLObjectType({
 	name: "Comment",

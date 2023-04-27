@@ -33,12 +33,12 @@
 		"build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
 		"check-deps": "dependency-cruiser --exclude '^node_modules' ./",
 		"check-types": "tsc --skipLibCheck --noEmit",
-		"dev": "NODE_ENV=development ts-node-dev --no-notify --exit-child -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ./local.ts",
+		"dev": "NODE_ENV=development ts-node-dev --no-notify --exit-child --respawn --transpile-only --ignore-watch node_modules ./local.ts",
 		"format": "prettier --write .",
 		"lint": "eslint --ext .ts --ext .ts .",
 		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
 		"start:ci": "NODE_ENV=ci pm2 start ./local.js",
-		"test": "NODE_ENV=testing ts-mocha -r tsconfig-paths/register ./test/**/*.spec.ts"
+		"test": "NODE_ENV=testing ts-mocha ./test/**/*.spec.ts"
 	},
 	"dependencies": {
 		"@conduit/config": "*",
@@ -94,6 +94,7 @@
 		"eslint-config-turbo": "^1.9.3",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-prettier": "^4.2.1",
+		"json-to-graphql-query": "^2.2.5",
 		"mocha": "^10.1.0",
 		"pm2": "^5.3.0",
 		"prettier": "^2.8.7",

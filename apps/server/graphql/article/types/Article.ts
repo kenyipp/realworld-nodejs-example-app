@@ -7,8 +7,8 @@ import {
 	GraphQLString
 } from "graphql";
 
-import { GraphQLDate } from "../scalars";
-import { ProfileType } from "./Profile";
+import { GraphQLDate } from "../../scalars";
+import { ProfileType } from "../../user/types/Profile";
 
 export const ArticleType = new GraphQLObjectType({
 	name: "Article",
