@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import supertest from "supertest";
 import { jsonToGraphQLQuery } from "json-to-graphql-query";
+import supertest from "supertest";
 
 import { Factory, dangerouslyResetDb } from "@conduit/core";
 import { getCreateUserInput } from "@conduit/core/test/mockData";

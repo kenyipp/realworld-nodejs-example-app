@@ -12,13 +12,42 @@ import { v4 as Uuid } from "uuid";
 
 import { RecStatus, Tables, UserStatus } from "@conduit/types";
 
-import { knex } from "../knex";
+import { knex } from "../../knex";
 import type {
 	DbDtoArticle,
 	DbDtoArticleComment,
 	DbDtoArticleMeta,
 	DbDtoArticleTag
-} from "./dto";
+} from "../dto";
+import {
+	ArticleFilters,
+	CountArticleCommentsByArticleIdInput,
+	CountArticlesByFiltersInput,
+	CreateArticleCommentInput,
+	CreateArticleInput,
+	CreateArticleOutput,
+	CreateTagsForArticleInput,
+	CreateTagsForArticleOutput,
+	DeleteArticleByIdInput,
+	DeleteArticleCommentByIdInput,
+	FavoriteArticleInput,
+	GetArticleByIdInput,
+	GetArticleBySlugInput,
+	GetArticleCommentByIdInput,
+	GetArticleCommentIdsByArticleIdInput,
+	GetArticleCommentsByArticleIdInput,
+	GetArticleCommentsByIdsInput,
+	GetArticleIdsByFiltersInput,
+	GetArticleMetaByIdInput,
+	GetArticleMetaByIdsInput,
+	GetArticlesByIdsInput,
+	GetTagsByArticleIdInput,
+	GetTagsByArticleIdsInput,
+	IsArticleFavoritedInput,
+	UnfavoriteArticleInput,
+	UpdateArticleByIdInput,
+	UpdateArticleByIdOutput
+} from "./types";
 
 export class DbArticle {
 	/**
@@ -43,7 +72,7 @@ export class DbArticle {
 		description,
 		body,
 		userId
-	}: CreateArticleInput): Promise<string> {
+	}: CreateArticleInput): CreateArticleOutput {
 		const articleId = Uuid();
 		await knex
 			.insert({
@@ -77,7 +106,7 @@ export class DbArticle {
 	async createTagsForArticle({
 		articleId,
 		tagList
-	}: CreateTagsForArticleInput): Promise<void> {
+	}: CreateTagsForArticleInput): CreateTagsForArticleOutput {
 		await knex
 			.insert(
 				tagList.map((tag) => ({
@@ -109,7 +138,7 @@ export class DbArticle {
 		slug,
 		description,
 		body
-	}: UpdateArticleByIdInput): Promise<void> {
+	}: UpdateArticleByIdInput): UpdateArticleByIdOutput {
 		if (!title && !description && !body) {
 			return;
 		}
@@ -814,118 +843,4 @@ export class DbArticle {
 			.then((rows) => rows.map((row) => row.tag));
 		return tags;
 	}
-}
-
-export interface CreateArticleInput {
-	title: string;
-	slug: string;
-	description: string;
-	body: string;
-	userId: string;
-}
-
-export interface CreateTagsForArticleInput {
-	articleId: string;
-	tagList: string[];
-}
-
-export interface GetTagsByArticleIdInput {
-	articleId: string;
-}
-
-export interface GetTagsByArticleIdsInput {
-	articleIds: string[];
-}
-
-export interface UpdateArticleByIdInput {
-	id: string;
-	title?: string;
-	slug?: string;
-	description?: string;
-	body?: string;
-}
-
-export interface GetArticleByIdInput {
-	id: string;
-}
-
-export interface GetArticleBySlugInput {
-	slug: string;
-}
-
-export interface GetArticlesByIdsInput {
-	ids: string[];
-}
-
-export interface ArticleFilters {
-	tag?: string;
-	author?: string;
-	favorited?: string;
-	followedBy?: string;
-}
-
-export type GetArticleIdsByFiltersInput = ArticleFilters & {
-	limit: number;
-	offset: number;
-};
-
-export type CountArticlesByFiltersInput = ArticleFilters;
-
-export interface DeleteArticleByIdInput {
-	id: string;
-}
-
-export interface CreateArticleCommentInput {
-	articleId: string;
-	body: string;
-	userId: string;
-}
-
-export interface GetArticleCommentIdsByArticleIdInput {
-	articleId: string;
-}
-
-export interface CountArticleCommentsByArticleIdInput {
-	articleId: string;
-}
-
-export interface GetArticleCommentsByIdsInput {
-	ids: string[];
-}
-
-export interface GetArticleCommentByIdInput {
-	id: string;
-}
-
-export interface DeleteArticleCommentByIdInput {
-	id: string;
-}
-
-export interface FavoriteArticleInput {
-	articleId: string;
-	userId: string;
-}
-
-export interface UnfavoriteArticleInput {
-	articleId: string;
-	userId: string;
-}
-
-export interface IsArticleFavoritedInput {
-	articleId: string;
-	userId: string;
-}
-
-export interface GetArticleMetaByIdInput {
-	id: string;
-	userId?: string;
-}
-
-export interface GetArticleMetaByIdsInput {
-	ids: string[];
-	userId?: string;
-}
-
-export interface GetArticleCommentsByArticleIdInput {
-	articleId: string;
 }

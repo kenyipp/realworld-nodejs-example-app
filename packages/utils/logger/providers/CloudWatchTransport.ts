@@ -1,10 +1,10 @@
-import AWS from "aws-sdk";
+import { CloudWatchLogs } from "@aws-sdk/client-cloudwatch-logs";
 import moment from "moment";
 import Transport, { TransportStreamOptions } from "winston-transport";
 
 import { type AnyFunction, Environments } from "@conduit/types";
 
-const client = new AWS.CloudWatchLogs({
+const client = new CloudWatchLogs({
 	credentials: {
 		accessKeyId: process.env.AWS_ACCESS_KEY!,
 		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
@@ -36,7 +36,6 @@ export class CloudWatchTransport extends Transport {
 
 		const logStream = await client
 			.describeLogStreams({ logGroupName: this.logGroup })
-			.promise()
 			.then((response) =>
 				response.logStreams?.find(
 					(stream) => stream.logStreamName === logStreamName
@@ -46,29 +45,25 @@ export class CloudWatchTransport extends Transport {
 		let nextUploadSequenceToken: string | undefined;
 
 		if (!logStream) {
-			await client
-				.createLogStream({
-					logGroupName: this.logGroup,
-					logStreamName
-				})
-				.promise();
+			await client.createLogStream({
+				logGroupName: this.logGroup,
+				logStreamName
+			});
 		} else {
 			nextUploadSequenceToken = logStream.uploadSequenceToken;
 		}
 
-		await client
-			.putLogEvents({
-				logGroupName: this.logGroup,
-				logStreamName,
-				logEvents: [
-					{
-						timestamp: moment(info.timestamp).toDate().getTime(),
-						message: JSON.stringify(info)
-					}
-				],
-				sequenceToken: nextUploadSequenceToken
-			})
-			.promise();
+		await client.putLogEvents({
+			logGroupName: this.logGroup,
+			logStreamName,
+			logEvents: [
+				{
+					timestamp: moment(info.timestamp).toDate().getTime(),
+					message: JSON.stringify(info)
+				}
+			],
+			sequenceToken: nextUploadSequenceToken
+		});
 
 		callback();
 	}

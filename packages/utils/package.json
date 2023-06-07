@@ -32,10 +32,10 @@
 		"test": "NODE_ENV=testing ts-mocha ./test/**/*.spec.ts"
 	},
 	"dependencies": {
+		"@aws-sdk/client-cloudwatch-logs": "^3.347.1",
 		"@colors/colors": "^1.5.0",
 		"@conduit/config": "*",
 		"@conduit/types": "*",
-		"aws-sdk": "^2.1359.0",
 		"clean-stack": "3.0.1",
 		"fast-json-stable-stringify": "^2.1.0",
 		"knex": "^2.4.2",
@@ -50,7 +50,6 @@
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^7.6.0",
-		"@types/aws-sdk": "^2.7.0",
 		"@types/bcrypt": "^5.0.0",
 		"@types/chai": "^4.3.4",
 		"@types/json-schema": "^7.0.11",
