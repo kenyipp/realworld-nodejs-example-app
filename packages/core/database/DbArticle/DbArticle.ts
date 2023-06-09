@@ -16,35 +16,55 @@ import { knex } from "../../knex";
 import type {
 	DbDtoArticle,
 	DbDtoArticleComment,
-	DbDtoArticleMeta,
-	DbDtoArticleTag
+	DbDtoArticleMeta
 } from "../dto";
 import {
 	ArticleFilters,
 	CountArticleCommentsByArticleIdInput,
+	CountArticleCommentsByArticleIdOutput,
 	CountArticlesByFiltersInput,
+	CountArticlesByFiltersOutput,
 	CreateArticleCommentInput,
+	CreateArticleCommentOutput,
 	CreateArticleInput,
 	CreateArticleOutput,
 	CreateTagsForArticleInput,
 	CreateTagsForArticleOutput,
 	DeleteArticleByIdInput,
+	DeleteArticleByIdOutput,
 	DeleteArticleCommentByIdInput,
+	DeleteArticleCommentByIdOutput,
 	FavoriteArticleInput,
+	FavoriteArticleOutput,
+	GetAllTagsOutput,
 	GetArticleByIdInput,
+	GetArticleByIdOutput,
 	GetArticleBySlugInput,
+	GetArticleBySlugOutput,
 	GetArticleCommentByIdInput,
+	GetArticleCommentByIdOutput,
 	GetArticleCommentIdsByArticleIdInput,
+	GetArticleCommentIdsByArticleIdOutput,
 	GetArticleCommentsByArticleIdInput,
+	GetArticleCommentsByArticleIdOutput,
 	GetArticleCommentsByIdsInput,
+	GetArticleCommentsByIdsOutput,
 	GetArticleIdsByFiltersInput,
+	GetArticleIdsByFiltersOutput,
 	GetArticleMetaByIdInput,
+	GetArticleMetaByIdOutput,
 	GetArticleMetaByIdsInput,
+	GetArticleMetaByIdsOutput,
 	GetArticlesByIdsInput,
+	GetArticlesByIdsOutput,
 	GetTagsByArticleIdInput,
+	GetTagsByArticleIdOutput,
 	GetTagsByArticleIdsInput,
+	GetTagsByArticleIdsOutput,
 	IsArticleFavoritedInput,
+	IsArticleFavoritedOutput,
 	UnfavoriteArticleInput,
+	UnfavoriteArticleOutput,
 	UpdateArticleByIdInput,
 	UpdateArticleByIdOutput
 } from "./types";
@@ -178,7 +198,7 @@ export class DbArticle {
 	 */
 	async getTagsByArticleId({
 		articleId
-	}: GetTagsByArticleIdInput): Promise<DbDtoArticleTag> {
+	}: GetTagsByArticleIdInput): GetTagsByArticleIdOutput {
 		const dbDtoArticleTag = await this.getTagsByArticleIds({
 			articleIds: [articleId]
 		}).then((docs) => docs[0]);
@@ -200,7 +220,7 @@ export class DbArticle {
 	 */
 	async getTagsByArticleIds({
 		articleIds
-	}: GetTagsByArticleIdsInput): Promise<DbDtoArticleTag[]> {
+	}: GetTagsByArticleIdsInput): GetTagsByArticleIdsOutput {
 		if (articleIds.length < 1) {
 			return [];
 		}
@@ -240,7 +260,7 @@ export class DbArticle {
 	 */
 	async getArticleById({
 		id
-	}: GetArticleByIdInput): Promise<DbDtoArticle | undefined> {
+	}: GetArticleByIdInput): GetArticleByIdOutput {
 		if (!id) {
 			return undefined;
 		}
@@ -264,7 +284,7 @@ export class DbArticle {
 	 */
 	async getArticleBySlug({
 		slug
-	}: GetArticleBySlugInput): Promise<DbDtoArticle | undefined> {
+	}: GetArticleBySlugInput): GetArticleBySlugOutput {
 		const articleId = await knex
 			.first<{ id: string }>({ id: "article_id" })
 			.from(Tables.Article)
@@ -290,7 +310,7 @@ export class DbArticle {
 	 */
 	async getArticlesByIds({
 		ids
-	}: GetArticlesByIdsInput): Promise<DbDtoArticle[]> {
+	}: GetArticlesByIdsInput): GetArticlesByIdsOutput {
 		// If no article IDs are provided, an empty array is returned.
 		if (ids.length < 1) {
 			return [];
@@ -329,7 +349,7 @@ export class DbArticle {
 	 */
 	async getArticleIdsByFilters(
 		filters: GetArticleIdsByFiltersInput
-	): Promise<string[]> {
+	): GetArticleIdsByFiltersOutput {
 		const ids = await this.getQueryByFilters(filters)
 			.select<{ id: string }[]>({ id: "article_id" })
 			.offset(filters.limit * filters.offset)
@@ -353,7 +373,7 @@ export class DbArticle {
 	 */
 	async countArticlesByFilters(
 		filters: CountArticlesByFiltersInput
-	): Promise<number> {
+	): CountArticlesByFiltersOutput {
 		const count = await this.getQueryByFilters(filters)
 			.count<{ count: number }[]>("*", { as: "count" })
 			.then((response) => response[0]?.count ?? 0);
@@ -441,7 +461,7 @@ export class DbArticle {
 	 * @returns {Promise<void>} - A Promise that resolves with no value upon successful deletion of the article.
 	 *
 	 */
-	async deleteArticleById({ id }: DeleteArticleByIdInput): Promise<void> {
+	async deleteArticleById({ id }: DeleteArticleByIdInput): DeleteArticleByIdOutput {
 		await knex
 			.table(Tables.Article)
 			.update({ rec_status: RecStatus.Deleted })
@@ -467,7 +487,7 @@ export class DbArticle {
 		articleId,
 		body,
 		userId
-	}: CreateArticleCommentInput): Promise<string> {
+	}: CreateArticleCommentInput): CreateArticleCommentOutput {
 		const articleCommentId = Uuid();
 		await knex.table(Tables.ArticleComment).insert({
 			article_comment_id: articleCommentId,
@@ -494,7 +514,7 @@ export class DbArticle {
 	 */
 	async getArticleCommentsByArticleId({
 		articleId
-	}: GetArticleCommentsByArticleIdInput): Promise<DbDtoArticleComment[]> {
+	}: GetArticleCommentsByArticleIdInput): GetArticleCommentsByArticleIdOutput {
 		const comments = await knex
 			.select<DbDtoArticleComment[]>({
 				id: "article_comment_id",
@@ -525,7 +545,7 @@ export class DbArticle {
 	 */
 	async getArticleCommentIdsByArticleId({
 		articleId
-	}: GetArticleCommentIdsByArticleIdInput): Promise<string[]> {
+	}: GetArticleCommentIdsByArticleIdInput): GetArticleCommentIdsByArticleIdOutput {
 		const ids = await knex
 			.select<{ id: string }[]>({ id: "article_comment_id" })
 			.from(Tables.ArticleComment)
@@ -551,7 +571,7 @@ export class DbArticle {
 	 */
 	async countArticleCommentsByArticleId({
 		articleId
-	}: CountArticleCommentsByArticleIdInput): Promise<number> {
+	}: CountArticleCommentsByArticleIdInput): CountArticleCommentsByArticleIdOutput {
 		const count = await knex
 			.count<{ count: number }[]>("*", { as: "count" })
 			.from(Tables.ArticleComment)
@@ -576,7 +596,7 @@ export class DbArticle {
 	 */
 	async getArticleCommentsByIds({
 		ids
-	}: GetArticleCommentsByIdsInput): Promise<DbDtoArticleComment[]> {
+	}: GetArticleCommentsByIdsInput): GetArticleCommentsByIdsOutput {
 		const comments = await knex
 			.select<DbDtoArticleComment[]>({
 				id: "article_comment_id",
@@ -607,7 +627,7 @@ export class DbArticle {
 	 */
 	async getArticleCommentById({
 		id
-	}: GetArticleCommentByIdInput): Promise<DbDtoArticleComment | undefined> {
+	}: GetArticleCommentByIdInput): GetArticleCommentByIdOutput {
 		const comment = await this.getArticleCommentsByIds({ ids: [id] }).then(
 			(comments) => comments[0]
 		);
@@ -629,7 +649,7 @@ export class DbArticle {
 	 */
 	async deleteArticleCommentById({
 		id
-	}: DeleteArticleCommentByIdInput): Promise<void> {
+	}: DeleteArticleCommentByIdInput): DeleteArticleCommentByIdOutput {
 		await knex
 			.table(Tables.ArticleComment)
 			.update({ rec_status: RecStatus.Deleted })
@@ -653,7 +673,7 @@ export class DbArticle {
 	async favoriteArticle({
 		articleId,
 		userId
-	}: FavoriteArticleInput): Promise<void> {
+	}: FavoriteArticleInput): FavoriteArticleOutput {
 		await knex
 			.insert({
 				article_favorite_id: Uuid(),
@@ -682,7 +702,7 @@ export class DbArticle {
 	async unfavoriteArticle({
 		articleId,
 		userId
-	}: UnfavoriteArticleInput): Promise<void> {
+	}: UnfavoriteArticleInput): UnfavoriteArticleOutput {
 		await knex
 			.table(Tables.ArticleFavorite)
 			.update({ rec_status: RecStatus.Deleted })
@@ -707,7 +727,7 @@ export class DbArticle {
 	async isArticleFavorited({
 		articleId,
 		userId
-	}: IsArticleFavoritedInput): Promise<boolean> {
+	}: IsArticleFavoritedInput): IsArticleFavoritedOutput {
 		const isFavorited = await knex
 			.first<{ id: string }>({ id: "article_favorite_id" })
 			.from(Tables.ArticleFavorite)
@@ -736,7 +756,7 @@ export class DbArticle {
 	async getArticleMetaById({
 		id,
 		userId
-	}: GetArticleMetaByIdInput): Promise<DbDtoArticleMeta | undefined> {
+	}: GetArticleMetaByIdInput): GetArticleMetaByIdOutput {
 		const meta = await this.getArticleMetaByIds({ ids: [id], userId }).then(
 			(docs) => docs[0]
 		);
@@ -761,7 +781,7 @@ export class DbArticle {
 	async getArticleMetaByIds({
 		ids,
 		userId
-	}: GetArticleMetaByIdsInput): Promise<DbDtoArticleMeta[]> {
+	}: GetArticleMetaByIdsInput): GetArticleMetaByIdsOutput {
 		if (ids.length < 1) {
 			return [];
 		}
@@ -829,7 +849,7 @@ export class DbArticle {
 	 * @returns {Promise<string[]>} - An array of distinct tags.
 	 *
 	 */
-	async getAllTags(): Promise<string[]> {
+	async getAllTags(): GetAllTagsOutput {
 		const tags = await knex
 			.distinct<{ tag: string }[]>("tag")
 			.from(Tables.ArticleTag)
