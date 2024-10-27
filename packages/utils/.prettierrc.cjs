@@ -1,1 +1,1 @@
-module.exports = require("@conduit/config/.prettierrc.json");
+module.exports = require('@conduit/config/.prettierrc.json');

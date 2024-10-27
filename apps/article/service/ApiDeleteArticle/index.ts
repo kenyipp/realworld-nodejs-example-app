@@ -1,0 +1,1 @@
+export { ApiDeleteArticle } from './ApiDeleteArticle';

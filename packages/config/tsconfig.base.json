@@ -1,95 +1,96 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"display": "Default",
-	"compilerOptions": {
-		// Warn user if the code is provably unreachable due to the use of JavaScript syntax
-		"allowUnreachableCode": false,
-		// Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.
-		"alwaysStrict": true,
-		// With exactOptionalPropertyTypes enabled, TypeScript applies stricter rules around how it handles properties on type or interfaces which have a ? prefix.
-		// "exactOptionalPropertyTypes": true,
-		// Report errors for fallthrough cases in switch statements
-		"noFallthroughCasesInSwitch": true,
-		// TypeScript will issue an error whenever it would have inferred any
-		"noImplicitAny": false,
-		// Receive the error when override is missing
-		"noImplicitOverride": false,
-		// When enabled, TypeScript will check all code paths in a function to ensure they return a value.
-		"noImplicitReturns": true,
-		// Raise error on ‘this’ expressions with an implied ‘any’ type.
-		"noImplicitThis": true,
-		// Raise an error because the unknown field uses dot syntax instead of indexed syntax
-		"noPropertyAccessFromIndexSignature": false,
-		// Add undefined to any un-declared field in the type
-		"noUncheckedIndexedAccess": true,
-		// Report errors on unused local variables
-		// Disable on development
-		"noUnusedLocals": false,
-		// Disable because for express middleware function
-		"noUnusedParameters": false,
-		// When set, TypeScript will check that the built-in methods of functions call, bind, and apply
-		// are invoked with correct argument for the underlying function
-		"strictBindCallApply": true,
-		// When enabled, this flag causes functions parameters to be checked more correctly.
-		"strictFunctionTypes": true,
-		// When strictNullChecks is true, null and undefined have their own distinct types
-		// and you’ll get a type error if you try to use them where a concrete value is expected.
-		"strictNullChecks": true,
-		// When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.
-		// We should use "!" for property we have not declared
-		"strictPropertyInitialization": false,
-		// Set the type of error to unknown
-		"useUnknownInCatchVariables": true,
-		// Sets the module system for the program. See the Modules reference page for more information.
-		// You very likely want "CommonJS" for node projects.
-		"module": "CommonJS",
-		// A series of entries which re-map imports to lookup locations relative to the baseUrl.
-		"paths": {},
-		// Allows importing modules with a ‘.json’ extension, which is a common practice in node projects.
-		"resolveJsonModule": true,
-		// Generate .d.ts files for every TypeScript or JavaScript file inside your project
-		"declaration": false,
-		// Offers a way to configure the root directory for where declaration files are emitted.
-		// "declarationDir": "types"
-		// Down leveling is TypeScript’s term for transpiling to an older version of JavaScript
-		"downlevelIteration": true,
-		// Only emit .d.ts files; do not emit .js files.
-		"emitDeclarationOnly": false,
-		// Helper functions are instead imported from the tslib module.
-		"importHelpers": false,
-		// Do not erase const enum declarations in generated code.
-		"preserveConstEnums": true,
-		// Enables the generation of sourcemap files.
-		// These files allow debuggers and other tools to display the original TypeScript source code when actually working with the emitted JavaScript files.
-		"sourceMap": true,
-		// Do not emit declarations for code that has an @internal annotation in its JSDoc comment.
-		"stripInternal": true,
-		// Allow JavaScript files to be imported inside your project, instead of just .ts and .tsx files.
-		"allowJs": true,
-		// Allow import as default when the module does not explicitly specify a default export.
-		"allowSyntheticDefaultImports": true,
-		// Enables experimental support for emitting type metadata for decorators which works with the module reflect-metadata.
-		"emitDecoratorMetadata": true,
-		// Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
-		"experimentalDecorators": true,
-		"lib": ["ES2022"],
-		"generateCpuProfile": "profile.cpuprofile",
-		"target": "ES2022",
-		"moduleResolution": "node",
-		"strict": true,
-		"removeComments": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
-	},
-	"exclude": [
-		"node_modules",
-		"build",
-		".next",
-		"dist",
-		"test.ts",
-		"output",
-		"coverage",
-		"*.spec.ts"
-	]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
+  "compilerOptions": {
+    // Warn user if the code is provably unreachable due to the use of JavaScript syntax
+    "allowUnreachableCode": false,
+    // Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.
+    "alwaysStrict": true,
+    // With exactOptionalPropertyTypes enabled, TypeScript applies stricter rules around how it handles properties on type or interfaces which have a ? prefix.
+    // "exactOptionalPropertyTypes": true,
+    // Report errors for fallthrough cases in switch statements
+    "noFallthroughCasesInSwitch": true,
+    // TypeScript will issue an error whenever it would have inferred any
+    "noImplicitAny": false,
+    // Receive the error when override is missing
+    "noImplicitOverride": false,
+    // When enabled, TypeScript will check all code paths in a function to ensure they return a value.
+    "noImplicitReturns": true,
+    // Raise error on ‘this’ expressions with an implied ‘any’ type.
+    "noImplicitThis": true,
+    // Raise an error because the unknown field uses dot syntax instead of indexed syntax
+    "noPropertyAccessFromIndexSignature": false,
+    // Add undefined to any un-declared field in the type
+    "noUncheckedIndexedAccess": true,
+    // Report errors on unused local variables
+    // Disable on development
+    "noUnusedLocals": false,
+    // Disable because for express middleware function
+    "noUnusedParameters": false,
+    // When set, TypeScript will check that the built-in methods of functions call, bind, and apply
+    // are invoked with correct argument for the underlying function
+    "strictBindCallApply": true,
+    // When enabled, this flag causes functions parameters to be checked more correctly.
+    "strictFunctionTypes": true,
+    // When strictNullChecks is true, null and undefined have their own distinct types
+    // and you’ll get a type error if you try to use them where a concrete value is expected.
+    "strictNullChecks": true,
+    // When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.
+    // We should use "!" for property we have not declared
+    "strictPropertyInitialization": false,
+    // Set the type of error to unknown
+    "useUnknownInCatchVariables": true,
+    // Sets the module system for the program. See the Modules reference page for more information.
+    // You very likely want "CommonJS" for node projects.
+    "module": "CommonJS",
+    // A series of entries which re-map imports to lookup locations relative to the baseUrl.
+    "paths": {},
+    // Allows importing modules with a ‘.json’ extension, which is a common practice in node projects.
+    "resolveJsonModule": true,
+    // Generate .d.ts files for every TypeScript or JavaScript file inside your project
+    "declaration": false,
+    // Offers a way to configure the root directory for where declaration files are emitted.
+    // "declarationDir": "types"
+    // Down leveling is TypeScript’s term for transpiling to an older version of JavaScript
+    "downlevelIteration": true,
+    // Only emit .d.ts files; do not emit .js files.
+    "emitDeclarationOnly": false,
+    // Helper functions are instead imported from the tslib module.
+    "importHelpers": false,
+    // Do not erase const enum declarations in generated code.
+    "preserveConstEnums": true,
+    // Enables the generation of sourcemap files.
+    // These files allow debuggers and other tools to display the original TypeScript source code when actually working with the emitted JavaScript files.
+    "sourceMap": true,
+    // Do not emit declarations for code that has an @internal annotation in its JSDoc comment.
+    "stripInternal": true,
+    // Allow JavaScript files to be imported inside your project, instead of just .ts and .tsx files.
+    "allowJs": true,
+    // Allow import as default when the module does not explicitly specify a default export.
+    "allowSyntheticDefaultImports": true,
+    // Enables experimental support for emitting type metadata for decorators which works with the module reflect-metadata.
+    "emitDecoratorMetadata": true,
+    // Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
+    "experimentalDecorators": true,
+    "lib": ["ES2022"],
+    "generateCpuProfile": "profile.cpuprofile",
+    "target": "ES2022",
+    "moduleResolution": "node",
+    "strict": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    ".next",
+    "dist",
+    "test.ts",
+    "output",
+    "coverage",
+    "**/*.spec.ts",
+    "jest.config.js"
+  ]
 }

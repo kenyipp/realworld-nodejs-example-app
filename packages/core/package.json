@@ -1,80 +1,80 @@
 {
-	"name": "@conduit/core",
-	"version": "1.0.0",
-	"private": true,
-	"description": "The core module of this project contains the main business logic of the application and can be used across different apps",
-	"keywords": [
-		"conduit",
-		"core"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/tree/master/packages/core"
-	},
-	"license": "MIT",
-	"author": {
-		"name": "Ken Yip",
-		"email": "ken20206@gmail.com",
-		"url": "https://kenyip.cc"
-	},
-	"workspaces": [
-		"../config",
-		"../types",
-		"../utils"
-	],
-	"scripts": {
-		"build": "tsc",
-		"check-types": "tsc --skipLibCheck --noEmit",
-		"format": "prettier --write .",
-		"lint": "eslint --ext .ts --ext .ts .",
-		"lint:fix": "eslint --ext .ts --ext .ts . --fix",
-		"migrate-db": "knex migrate:latest",
-		"test": "NODE_ENV=testing ts-mocha ./test/**/*.spec.ts"
-	},
-	"dependencies": {
-		"@conduit/config": "*",
-		"@conduit/types": "*",
-		"@conduit/utils": "*",
-		"async": "^3.2.4",
-		"bcryptjs": "^2.4.3",
-		"dotenv": "^16.0.3",
-		"joi": "^17.7.0",
-		"jwk-to-pem": "^2.0.5",
-		"knex": "^2.3.0",
-		"lodash": "^4.17.21",
-		"moment": "^2.29.4",
-		"mysql2": "3.0.0-rc.1",
-		"slugify": "^1.6.6",
-		"uuid": "^9.0.0"
-	},
-	"devDependencies": {
-		"@faker-js/faker": "^7.6.0",
-		"@sinonjs/fake-timers": "^10.0.2",
-		"@types/async": "^3.2.18",
-		"@types/bcryptjs": "^2.4.2",
-		"@types/json-schema": "^7.0.11",
-		"@types/jwk-to-pem": "^2.0.1",
-		"@types/knex": "^0.16.1",
-		"@types/lodash": "^4.14.192",
-		"@types/mocha": "^10.0.1",
-		"@types/node": "^18.11.9",
-		"@types/sinon": "^10.0.13",
-		"@types/uuid": "^8.3.4",
-		"@typescript-eslint/eslint-plugin": "^5.57.0",
-		"@typescript-eslint/parser": "^5.57.0",
-		"better-sqlite3": "^7.6.2",
-		"chai": "^4.3.6",
-		"eslint": "^7.5.0",
-		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-config-airbnb-typescript": "^17.0.0",
-		"eslint-config-turbo": "^1.9.3",
-		"eslint-plugin-import": "^2.22.0",
-		"mocha": "^10.1.0",
-		"sinon": "^14.0.2",
-		"source-map-support": "^0.5.21",
-		"ts-mocha": "^10.0.0",
-		"ts-node": "^10.9.1",
-		"ts-node-dev": "^2.0.0",
-		"typescript": "^4.9.5"
-	}
+  "name": "@conduit/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The core module of this project encapsulates the main business logic and is reusable across multiple applications",
+  "keywords": [
+    "conduit",
+    "core"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kenyipp/realworld-nodejs-example-app/tree/master/packages/core"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Ken Yip",
+    "email": "ken20206@gmail.com",
+    "url": "https://kenyip.cc"
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "check-types": "tsc --skipLibCheck --noEmit",
+    "db:migrate": "NODE_CONFIG_DIR='../../../../config' knex migrate:latest --knexfile ./database/knex/knexfile",
+    "dev": "NODE_ENV=dev ts-node-dev -r tsconfig-paths/register --no-deprecation --no-notify --exit-child --respawn --transpile-only --ignore-watch node_modules ./test.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettify": "prettier --write .",
+    "test": "NODE_CONFIG_DIR='../../config' NODE_ENV=test jest tests/** --forceExit --maxWorkers=4 --detectOpenHandles",
+    "test:coverage": "yarn test --coverage"
+  },
+  "dependencies": {
+    "@conduit/config": "*",
+    "@conduit/types": "*",
+    "@conduit/utils": "*",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "fast-json-stable-stringify": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "moment": "^2.30.1",
+    "mysql2": "^3.11.3",
+    "serialize-error": "8.1.0",
+    "slugify": "^1.6.6",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@jest/types": "^29.6.3",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/chance": "^1.1.6",
+    "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/lodash": "^4.17.10",
+    "@types/moment": "^2.13.0",
+    "@types/sinon": "^17.0.3",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.3.0",
+    "chance": "^1.1.12",
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^26.2.0",
+    "jest-when": "^3.6.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "sinon": "17.0.1",
+    "ts-jest": "^26.1.0",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.6.3"
+  }
 }

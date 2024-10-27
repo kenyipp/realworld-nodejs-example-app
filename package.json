@@ -1,56 +1,37 @@
 {
-	"name": "conduit",
-	"version": "1.0.0",
-	"private": true,
-	"description": "Example Node (Express + Knex) codebase containing real world examples that adheres to the RealWorld API spec",
-	"keywords": [
-		"conduit",
-		"express",
-		"knex",
-		"swagger",
-		"sam"
-	],
-	"homepage": "https://conduit-api-production.kenyip.cc",
-	"bugs": {
-		"url": "https://github.com/kenyipp/realworld-nodejs-example-app/issues",
-		"email": "ken20206@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kenyipp/realworld-nodejs-example-app"
-	},
-	"license": "MIT",
-	"author": {
-		"name": "Ken Yip",
-		"email": "ken20206@gmail.com",
-		"url": "https://kenyip.cc"
-	},
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
-	"scripts": {
-		"build": "turbo run build",
-		"build:packages": "turbo run build --filter='./packages/*'",
-		"check-types": "turbo run check-types --parallel",
-		"coverage": "nyc turbo run test",
-		"dev": "turbo run dev",
-		"format": "turbo run format",
-		"lint": "turbo run lint --parallel",
-		"lint:fix": "turbo run lint:fix --parallel",
-		"spell-check": "cspell \"**\" --no-progress",
-		"start": "turbo run start",
-		"test": "turbo run test --parallel"
-	},
-	"dependencies": {
-		"turbo": "^1.9.1"
-	},
-	"devDependencies": {
-		"@istanbuljs/nyc-config-typescript": "^1.0.2",
-		"cspell": "^6.31.1",
-		"eslint": "^8.38.0",
-		"newman": "^5.3.2",
-		"nyc": "^15.1.0"
-	},
-	"packageManager": "pnpm@7.14.0"
+  "name": "conduit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example Node (Express + Knex) codebase containing real world examples that adheres to the RealWorld API spec",
+  "main": "index.js",
+  "scripts": {
+    "start": "turbo start",
+    "start:ci": "turbo start:ci",
+    "build": "turbo build",
+    "test": "turbo test --parallel",
+    "test:coverage": "turbo test:coverage --parallel",
+    "check-types": "turbo check-types",
+    "dev": "turbo dev --filter=@conduit/local",
+    "deploy": "cd ./infra && yarn deploy",
+    "clean": "./scripts/clean.sh",
+    "merge-coverage": "istanbul-merge --out .nyc_output/coverage.json ./**/**/coverage/coverage-final.json && nyc report --reporter=lcov --reporter=text",
+    "prettify": "turbo prettify",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "db:migrate": "turbo db:migrate",
+    "spell-check": "cspell \"**\" --no-progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "packageManager": "yarn@1.22.19",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "cspell": "^8.15.2",
+    "istanbul-merge": "^2.0.0",
+    "nyc": "^17.1.0",
+    "turbo": "^2.2.3"
+  }
 }

@@ -1,33 +1,39 @@
-import colors from "@colors/colors/safe";
-import { format } from "winston";
+import colors from '@colors/colors/safe';
+import { get } from 'lodash';
+import { format } from 'winston';
+
+const isDevelopment = process.env.NODE_ENV === 'dev';
 
 const labelMiddleware = format(
-	(info, options: LabelOptions = DefaultLabelOptions) => {
-		const {
-			colorify = DefaultLabelOptions.colorify,
-			labelColor = DefaultLabelOptions.labelColor
-		} = options;
+  (info, options: LabelOptions = DefaultLabelOptions) => {
+    const {
+      color = DefaultLabelOptions.color,
+      labelColor = DefaultLabelOptions.labelColor
+    } = options;
 
-		const { label, message } = info;
+    const { label, message } = info;
 
-		if (label) {
-			info.message = `${
-				colorify ? colors[labelColor](`[${label}]`) : `[${label}]`
-			} ${message}`;
-		}
+    if (label) {
+      // eslint-disable-next-line no-param-reassign
+      info.message = `${
+        color && isDevelopment && get(colors, labelColor)
+          ? get(colors, labelColor)(`[${label}]`)
+          : `[${label}]`
+      } ${message}`;
+    }
 
-		return info;
-	}
+    return info;
+  }
 );
 
 export interface LabelOptions {
-	colorify: boolean;
-	labelColor: string;
+  color: boolean;
+  labelColor: string;
 }
 
 const DefaultLabelOptions = {
-	colorify: false,
-	labelColor: "yellow"
+  color: false,
+  labelColor: 'yellow'
 };
 
 export { labelMiddleware as label };

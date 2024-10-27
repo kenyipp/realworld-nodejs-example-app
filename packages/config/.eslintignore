@@ -1,5 +1,0 @@
-# Coverage directory used by tools like istanbul
-coverage
-
-.eslintrc.js
-test.ts

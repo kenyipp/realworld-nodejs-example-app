@@ -1,8 +1,7 @@
-import { format } from "winston";
-
-import { Environments } from "@conduit/types";
+import { format } from 'winston';
 
 export const environment = format((info) => {
-	info.environment = process.env.NODE_ENV || Environments.Development;
-	return info;
+  // eslint-disable-next-line no-param-reassign
+  info.environment = process.env.NODE_ENV || 'development';
+  return info;
 });

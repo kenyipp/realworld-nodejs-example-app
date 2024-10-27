@@ -24,3 +24,5 @@ trivago
 unflatten
 vendia
 graphiql
+uncolorize
+cicd

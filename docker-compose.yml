@@ -1,33 +1,52 @@
-version: "3"
+version: '3.8'
 
 services:
-
-  #
-  localstack:
-    container_name: conduit-localstack
-    image: localstack/localstack
+  server:
+    container_name: conduit-local
+    build:
+      context: .
+      dockerfile: ./apps/local/Dockerfile
     ports:
-      - "127.0.0.1:4566:4566"
-      - "127.0.0.1:4510-4559:4510-4559"
-
-  #
-  redis:
-    container_name: conduit-redis
-    image: redis:alpine
-    command: redis-server
-    restart: unless-stopped
-    ports:
-      - 6379:6379
-
-  #
-  mysql:
-    image: mysql
-    container_name: conduit-mysql
-    restart: always
+      - "3100:3100"
+    command: node apps/local/local.js
     environment:
-      - MYSQL_ROOT_PASSWORD=mysql
-      - MYSQL_USER=mysql
-      - MYSQL_PASSWORD=mysql
-      - MYSQL_DATABASE=conduit
+      - NODE_ENV=develop
+      - MODE=local
+      - DOMAIN=localhost
+      - AUTH_JWT_SECRET=how-do-you-turn-this-on-in-2024
+      - AUTH_JWT_EXPIRES_IN=1d
+      - DATABASE_HOST=conduit-mysql
+      - DATABASE_PORT=3306
+      - DATABASE_USER=conduit
+      - DATABASE_PASSWORD=how-do-you-turn-this-on-twice
+      - DATABASE_NAME=conduit-local
+    depends_on:
+      - mysql
+      - db-migration
+
+  mysql:
+    image: mysql:8.0
+    container_name: conduit-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: how-do-you-turn-this-on 
+      MYSQL_DATABASE: conduit-local        
+      MYSQL_USER: conduit
+      MYSQL_PASSWORD: how-do-you-turn-this-on-twice      
     ports:
-      - 3306:3306
+      - "3306:3306"
+
+  db-migration:
+    container_name: conduit-db-migration
+    command: ["yarn", "db:migrate"]
+    build:
+      context: .
+      dockerfile: ./packages/core/database/Dockerfile
+    environment:
+      - NODE_ENV=develop
+      - DATABASE_HOST=conduit-mysql
+      - DATABASE_PORT=3306
+      - DATABASE_USER=conduit
+      - DATABASE_PASSWORD=how-do-you-turn-this-on-twice
+      - DATABASE_NAME=conduit-local
+    depends_on:
+      - mysql

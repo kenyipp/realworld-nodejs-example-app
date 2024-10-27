@@ -1,0 +1,18 @@
+{
+  "nodeEnv": "ci",
+  "mode": "local",
+  "domain": "localhost",
+  "auth": {
+    "expiresIn": "1d",
+    "jwtSecret": "how_do_you_turn_this_on"
+  },
+  "database": {
+    "conduit": {
+      "host": "localhost",
+      "port": "3306",
+      "user": "mysql",
+      "password": "mysql",
+      "database": "conduit"
+    }
+  }
+}

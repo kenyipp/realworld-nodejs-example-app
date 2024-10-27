@@ -1,0 +1,1 @@
+export { ApiFavoriteArticle } from './ApiFavoriteArticle';

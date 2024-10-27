@@ -1,0 +1,1 @@
+export { ApiGetArticle } from './ApiGetArticle';

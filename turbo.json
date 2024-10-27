@@ -1,28 +1,69 @@
 {
-	"$schema": "https://turborepo.org/schema.json",
-	"globalEnv": [
-		"NODE_ENV",
-		"SERVER_APP_SIGNATURE",
-		"AUTH_SALT_ROUNDS",
-		"PWD",
-		"LOG_LEVEL",
-		"AWS_ACCESS_KEY",
-		"AWS_SECRET_ACCESS_KEY"
-	],
-	"pipeline": {
-		"build": {},
-		"check-types": {
-			"inputs": [
-				"**/*.ts"
-			]
-		},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"format": {},
-		"lint": {},
-		"lint:fix": {},
-		"test": {}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NODE_ENV"
+  ],
+  "cacheDir": ".turbo/cache",
+  "tasks": {
+    "test": {
+      "dependsOn": [
+        "^test"
+      ]
+    },
+    "test:coverage": {
+      "dependsOn": [
+        "^test:coverage"
+      ]
+    },
+    "db:migrate": {
+      "outputLogs": "full",
+      "dependsOn": [
+        "^db:migrate"
+      ]
+    },
+    "deploy": {
+      "dependsOn": [
+        "^deploy"
+      ],
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ]
+    },
+    "lint:fix": {
+      "dependsOn": [
+        "^lint:fix"
+      ]
+    },
+    "build": {
+      "outputLogs": "full",
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "check-types": {
+      "dependsOn": [
+        "^check-types"
+      ]
+    },
+    "prettify": {
+      "dependsOn": [
+        "^prettify"
+      ]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "start": {
+      "persistent": true,
+      "cache": false
+    },
+    "start:ci": {
+      "persistent": true,
+      "cache": false
+    }
+  }
 }

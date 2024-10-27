@@ -1,11 +1,11 @@
-import { type Environments } from "@conduit/types";
+import { DbDtoUser } from '@conduit/core';
 
 declare global {
-	namespace NodeJS {
-		interface ProcessEnv {
-			NODE_ENV: Environments;
-		}
-	}
+  namespace Express {
+    interface Request {
+      user?: DbDtoUser;
+    }
+  }
 }
 
 // If this file has no import/export statements (i.e. is a script)

@@ -1,0 +1,54 @@
+{
+  "name": "@conduit/local",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "Ken Yip",
+    "email": "ken20206@gmail.com",
+    "url": "https://kenyip.cc"
+  },
+  "main": "index.js",
+  "workspaces": [
+    "../app",
+    "../user",
+    "../article",
+    "../../packages/middleware",
+    "../../packages/utils"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --skipLibCheck --noEmit",
+    "dev": "NODE_CONFIG_DIR='../../config' NODE_ENV=ci ts-node-dev --no-notify --exit-child --respawn --transpile-only --ignore-watch node_modules ./local.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettify": "prettier --write .",
+    "start": "NODE_CONFIG_DIR='../../config' node local.js",
+    "start:ci": "NODE_CONFIG_DIR='../../config' pm2 start local.js"
+  },
+  "dependencies": {
+    "@conduit/app": "*",
+    "@conduit/article": "*",
+    "@conduit/user": "*",
+    "@conduit/middleware": "*",
+    "@conduit/utils": "*",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "pm2": "^5.3.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
+  }
+}

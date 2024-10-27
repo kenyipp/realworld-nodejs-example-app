@@ -1,9 +1,9 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"compilerOptions": {
-		"sourceMap": false
-	},
-	"exclude": [
-		"node_modules"
-	]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@conduit/config/tsconfig.base.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "outDir": "./"
+  },
+  "include": ["./**/*"]
 }

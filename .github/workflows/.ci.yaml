@@ -1,0 +1,87 @@
+name: Continuous Integration
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'  # Ignore changes to markdown files
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.18.0
+          cache: 'yarn'  # Cache Yarn dependencies
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile  # Ensures dependencies match yarn.lock
+
+      - name: Run Code Linting
+        run: yarn lint
+
+      - name: Execute Unit Tests
+        run: yarn test:coverage
+
+      - name: Merge Coverage Reports
+        run: yarn merge-coverage
+        if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'  # Run only on develop and master
+
+      - name: Upload Coverage Reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+        if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'  # Run only on develop and master
+
+  e2e-test:
+    name: End To End Test
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: ci
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: mysql
+          MYSQL_PASSWORD: mysql
+          MYSQL_USER: mysql
+          MYSQL_DATABASE: conduit
+        ports:
+          - 3306:3306
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'  # Cache Yarn dependencies
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile  # Ensures dependencies match yarn.lock
+
+      - name: Run Database Migration
+        run: yarn db:migrate
+
+      - name: Build Application
+        run: yarn build
+
+      - name: Start Server in the Background
+        run: yarn start:ci --filter=@conduit/local
+
+      - name: Wait for the Server to Start
+        run: ./scripts/wait-for-readiness.sh
+
+      - name: Install Newman
+        run: npm install -g newman 
+
+      - name: Run Integration Test
+        run: ./scripts/api-test.sh

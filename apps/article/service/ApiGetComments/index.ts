@@ -1,0 +1,1 @@
+export { ApiGetComments } from './ApiGetComments';

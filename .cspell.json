@@ -27,6 +27,11 @@
 			"description": "Wordings specific to this project and will not be shared with other projects"
 		},
 		{
+			"name": "aws",
+			"path": "./.cspell/aws.txt",
+			"description": "Keywords specific to the AWS project, including the names of AWS services and the terms used within them"
+		},
+		{
 			"name": "nodejs",
 			"path": "./.cspell/nodejs.txt",
 			"description": "Keywords specific to the Node.js project, including the names of node_modules and the terms used within them"

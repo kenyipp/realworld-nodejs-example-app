@@ -1,43 +1,38 @@
 import {
-	type ComparePasswordInput,
-	type EncryptPasswordInput,
-	PasswordHandler
-} from "./implementation/PasswordHandler";
+  AccessTokenHandler,
+  ComparePasswordInput,
+  ComparePasswordOutput,
+  EncryptPasswordInput,
+  EncryptPasswordOutput,
+  GenerateAccessTokenInput,
+  GenerateAccessTokenOutput,
+  PasswordHandler,
+  VerifyAccessTokenInput,
+  VerifyAccessTokenOutput
+} from './implementations';
 
 export class AuthService {
-	private passwordHandler: PasswordHandler;
+  private passwordHandler: PasswordHandler;
+  private accessTokenHandler: AccessTokenHandler;
 
-	constructor() {
-		this.passwordHandler = new PasswordHandler();
-	}
+  constructor() {
+    this.passwordHandler = new PasswordHandler();
+    this.accessTokenHandler = new AccessTokenHandler();
+  }
 
-	/**
-	 *
-	 * Encrypts the given password using bcrypt algorithm and returns the encrypted password.
-	 *
-	 * @param {Object} input - The input object for encrypting the password.
-	 * @param {string} input.password - The password to be encrypted.
-	 *
-	 * @throws {PasswordRequirementsNotMetError} If the password does not meet the requirements.
-	 * @returns {string} The encrypted password.
-	 *
-	 */
-	encryptPassword({ password }: EncryptPasswordInput): string {
-		return this.passwordHandler.encryptPassword({ password });
-	}
+  generateAccessToken(input: GenerateAccessTokenInput): GenerateAccessTokenOutput {
+    return this.accessTokenHandler.generateAccessToken(input);
+  }
 
-	/**
-	 *
-	 * Compares a password with the encrypted password and throws an error if they do not match.
-	 *
-	 * @param {Object} input - The input object containing the password and encrypted password to compare.
-	 * @param {string} input.password - The password to compare.
-	 * @param {string} input.encryptedPassword - The encrypted password to compare.
-	 *
-	 * @throws {PasswordNotMatchError} If the password does not match the encrypted password.
-	 *
-	 */
-	comparePassword({ password, encryptedPassword }: ComparePasswordInput) {
-		this.passwordHandler.comparePassword({ password, encryptedPassword });
-	}
+  verifyAccessToken(input: VerifyAccessTokenInput): VerifyAccessTokenOutput {
+    return this.accessTokenHandler.verifyAccessToken(input);
+  }
+
+  async encryptPassword(input: EncryptPasswordInput): EncryptPasswordOutput {
+    return this.passwordHandler.encryptPassword(input);
+  }
+
+  async comparePassword(input: ComparePasswordInput): ComparePasswordOutput {
+    await this.passwordHandler.comparePassword(input);
+  }
 }

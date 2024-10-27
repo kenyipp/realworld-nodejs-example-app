@@ -1,0 +1,18 @@
+{
+  "nodeEnv": "NODE_ENV",
+  "mode": "MODE",
+  "domain": "DOMAIN",
+  "auth": {
+    "expiresIn": "AUTH_EXPIRES_IN",
+    "jwtSecret": "AUTH_JWT_SECRET"
+  },
+  "database": {
+    "conduit": {
+      "host": "DATABASE_HOST",
+      "port": "DATABASE_PORT",
+      "user": "DATABASE_USER",
+      "password": "DATABASE_PASSWORD",
+      "database": "DATABASE_NAME"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+export { ApiFeedArticles } from './ApiFeedArticles';

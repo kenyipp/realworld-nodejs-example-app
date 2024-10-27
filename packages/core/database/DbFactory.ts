@@ -1,5 +1,5 @@
-import { DbArticle } from "./DbArticle";
-import { DbUser } from "./DbUser";
+import { DbArticle } from './DbArticle';
+import { DbUser } from './DbUser';
 
 /**
  *
@@ -7,13 +7,13 @@ import { DbUser } from "./DbUser";
  *
  */
 export class DbFactory {
-	newDbArticle(): DbArticle {
-		const dbArticle = new DbArticle();
-		return dbArticle;
-	}
+  newDbUser(): DbUser {
+    const dbUser = new DbUser();
+    return dbUser;
+  }
 
-	newDbUser(): DbUser {
-		const dbUser = new DbUser();
-		return dbUser;
-	}
+  newDbArticle(): DbArticle {
+    const dbArticle = new DbArticle();
+    return dbArticle;
+  }
 }

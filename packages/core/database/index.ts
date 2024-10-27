@@ -1,5 +1,4 @@
-export * from "./dto";
-
-export * from "./DbArticle";
-export * from "./DbFactory";
-export * from "./DbUser";
+export { DbFactory } from './DbFactory';
+export * from './DbUser';
+export * from './DbArticle';
+export { dangerouslyResetDb } from './knex';

@@ -1,3 +1,4 @@
-export * from "./article/ArticleService";
-export * from "./auth/AuthService";
-export * from "./user/UserService";
+export * from './ServiceFactory';
+export * from './auth';
+export * from './user';
+export * from './article';
