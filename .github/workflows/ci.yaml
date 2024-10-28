@@ -4,7 +4,9 @@ on:
   push:
     paths-ignore:
       - '**.md'  # Ignore changes to markdown files
-
+    branches-ignore:
+      - 'master' # We have a separate workflow for master branch
+      
 jobs:
   lint:
     name: Lint
