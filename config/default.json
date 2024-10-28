@@ -1,8 +1,5 @@
 {
   "mode": "lambda",
-  "aws": {
-    "region": "us-east-1"
-  },
   "auth": {
     "expiresIn": "1d"
   },

@@ -28,7 +28,7 @@ export const knexConfig: KnexConfig = {
     client: 'mysql2',
     connection: config.database.conduit
   },
-  master: {
+  prod: {
     client: 'mysql2',
     connection: config.database.conduit
   }

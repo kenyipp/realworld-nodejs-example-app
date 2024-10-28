@@ -30,8 +30,8 @@
   "dependencies": {
     "@conduit/app": "*",
     "@conduit/article": "*",
-    "@conduit/user": "*",
     "@conduit/middleware": "*",
+    "@conduit/user": "*",
     "@conduit/utils": "*",
     "dotenv": "^16.4.5",
     "express": "^4.21.1"

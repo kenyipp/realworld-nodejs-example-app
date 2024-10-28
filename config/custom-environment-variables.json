@@ -1,6 +1,5 @@
 {
   "nodeEnv": "NODE_ENV",
-  "mode": "MODE",
   "domain": "DOMAIN",
   "auth": {
     "expiresIn": "AUTH_EXPIRES_IN",
