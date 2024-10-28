@@ -1,0 +1,9 @@
+{
+  "aws": {
+    "region": "us-east-1"
+  },
+  "github": {
+    "repository": "realworld-nodejs-example-app",
+    "owner": "kenyipp"
+  }
+}

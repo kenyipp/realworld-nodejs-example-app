@@ -5,7 +5,7 @@
 </p>
 <!-- The badges section -->
 <p align="center">
-<a href="https://github.com/kenyipp/realworld-nodejs-example-app/actions/workflows/ci.yml"><img src="https://github.com/kenyipp/realworld-nodejs-example-app/workflows/CI/badge.svg" alt="Actions Status"></a>
+<a href="https://github.com/kenyipp/realworld-nodejs-example-app/actions/workflows/ci.yml"><img src="https://github.com/kenyipp/realworld-nodejs-example-app/workflows/Continuous Integration/badge.svg" alt="Actions Status"></a>
 <a href="https://app.codacy.com/gh/kenyipp/realworld-nodejs-example-app/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade"><img src="https://img.shields.io/codacy/grade/d920979be4dc45feb55dcd462ef88229" /></a>
 <a href="https://codecov.io/gh/kenyipp/realworld-nodejs-example-app"><img src="https://codecov.io/gh/kenyipp/realworld-nodejs-example-app/branch/master/graph/badge.svg?token=AMBNXM57T8" alt="codecov"></a>
 <!-- Snyk.io vulnerabilities badge -->
@@ -17,6 +17,8 @@
 <p align="center">
 This repository has been approved and included on the <a href="https://codebase.show/projects/realworld?category=backend&language=typescript">project page</a> by the <a href="https://codebase.show">Codebase.show</a>  team. I am committed to continuously improving this codebase and incorporating new technologies and useful Node modules as I discover them.
 </p>
+
+<p align="center"> I created a separate <a href="https://github.com/kenyipp/realworld-nodejs-example-app-infra?tab=readme-ov-file">repository</a> to deploy this project architecture via <a href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html">Aws Cdk</a>. Please check this repository. </p>
 
 <p align="center"> This repository has complete functionality — pull requests and issues are welcome! </p>
 
@@ -30,48 +32,65 @@ This repository has been approved and included on the <a href="https://codebase.
 	<a href="#contributing">Contributing</a>
 </p>
 
-<a id="demo"></a>
-
 ## Demo
 
-To demonstrate the functionality of the backend, we have deployed a live demo version of the application. You can visit the demo by following this link: [https://conduit-api-production.kenyip.cc](https://conduit-api-production.kenyip.cc).
+To demonstrate the functionality of the backend, we have deployed a live demo version of the application. You can visit the demo by following this link: [https://conduit-api-develop.kenyip.cc](https://conduit-api-develop.kenyip.cc).
 
-The API has several endpoints that you can test out using a tool like Postman or cURL. You can find the documentation for the API endpoints on the [API documentation page](https://conduit-api-production.kenyip.cc). Feel free to use this endpoint to create your amazing frontend applications!
+The API has several endpoints that you can test out using a tool like Postman or cURL. You can find the documentation for the API endpoints on the [API documentation page](https://conduit-api-develop.kenyip.cc). Feel free to use this endpoint to create your amazing frontend applications!
 
 Please note that the demo version of the application is intended for demonstration purposes only and may not be suitable for production use. If you would like to deploy the application yourself, please follow the instructions in the <a href="#get_started">Get Started</a> section of this README.
 
 <a id="get_started"></a>
 
 ## Get Started
-This project utilizes [PNPM](https://pnpm.io) as its package manager. Kindly ensure that you have installed PNPM before commencing work on this project.
+This project utilizes [Yarn](https://classic.yarnpkg.com/en/) as its package manager. Please ensure that Yarn is installed before you begin working on this project.
+
+### Start the Program Using Docker
+
+To start the Docker setup, run the following commands:
+
+```sh
+docker-compose build
+docker-compose up -d
+```
+
+The Docker Compose configuration includes the API server, MySQL database, and the necessary program to set up the required tables for the application to function correctly.
 
 ### Local Development
 
-To install all dependencies and launch the development server, execute the following commands:
+1. Configure the environment variables according to the table below:
 
-```sh
-pnpm install
-pnpm run dev
-```
+| Env                         | Description                                   | Required |
+|------------------------------|-----------------------------------------------|----------|
+| NODE_ENV                     | Environment in which the application is running (e.g., develop, test, ci, production) | Yes      |
+| DOMAIN                       | Domain name for the application               | No       |
+| AUTH_EXPIRES_IN             | Duration for which the authentication token is valid | No       |
+| AUTH_JWT_SECRET              | Secret key used for signing JWT tokens        | Yes      |
+| DATABASE_HOST                | Hostname of the database server               | Yes      |
+| DATABASE_PORT                | Port number on which the database is listening | Yes      |
+| DATABASE_USER                | Username for database authentication           | Yes      |
+| DATABASE_PASSWORD            | Password for database authentication           | Yes      |
+| DATABASE_NAME                | Name of the database to connect to            | Yes      |
 
-Afterward, navigate to [http://localhost:3100/api/health-check](http://localhost:3100/api/health-check) to verify if the server is operating correctly.
+2. Execute the following commands to install all dependencies and launch the development server:
 
-To initialize the database in a non-production environment, you can use the POST API at [http://localhost:3100/api/reset](http://localhost:3100/api/reset), which quickly resets the database.
+	```sh
+	yarn
+	yarn dev
+	```
+
+3. Afterward, navigate to [http://localhost:3100/api/health-check](http://localhost:3100/api/health-check) to verify if the server is operating correctly.
 
 ### Deployment
 
-This project uses the [Express Serverless](https://github.com/vendia/serverless-express) framework and [Amazon SAM](https://aws.amazon.com/tw/serverless/sam) to deploy the server as a serverless structure. In the root directory, you'll find a [deployment template](./template.yaml) with hints to guide you through the deployment process.
+This project utilizes the <a href="https://github.com/vendia/serverless-express">Express Serverless</a> framework along with <a href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html">Amazon CDK</a> to deploy the server in a serverless architecture. You can find the [./infra](infra) folder in the root directory, which contains all the setup code related to this server. To view the entire architecture, including roles, buckets, and the CodeBuild pipeline, please refer to [this repository](https://github.com/kenyipp/realworld-nodejs-example-app-infra).
 
-To deploy the application, run `sam deploy --guide` in the command line interface. You'll be prompted with questions to configure the deployment. If you need more detailed explanations on the techniques and application architecture, refer to the <a href="#architecture">architecture</a> section.
+To deploy the application, run `yarn deploy --all` in the command line interface. If you need more detailed explanations on the techniques and application architecture, refer to the <a href="#architecture">architecture</a> section.
 
 For more information on deploying a serverless application with Amazon SAM, please visit the [AWS documentation](https://docs.aws.amazon.com/serverless-application-model/?icmpid=docs_homepage_compute).
 
-<a id="architecture"></a>
-
 ## Architecture
 I have written a blog post about the techniques, structure, architecture, and my reflections on this project. For more details, click [here](https://blog.kenyip.cc/realworld-node-js-example-app)!
-
-<a id="contributing"></a>
 
 ## Contributing
 

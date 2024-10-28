@@ -1,0 +1,16 @@
+{
+  "nodeEnv": "NODE_ENV",
+  "aws": {
+    "region": "AWS_REGION",
+    "accountId": "AWS_ACCOUNT_ID",
+    "arn": {
+      "role": {
+        "lambda": "AWS_ROLE_LAMBDA_ARN"
+      }
+    }
+  },
+  "github": {
+    "repository": "GITHUB_REPOSITORY",
+    "owner": "GITHUB_OWNER"
+  }
+}
