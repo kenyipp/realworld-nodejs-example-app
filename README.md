@@ -6,7 +6,6 @@
 <!-- The badges section -->
 <p align="center">
 <a href="https://github.com/kenyipp/realworld-nodejs-example-app/actions/workflows/ci.yml"><img src="https://github.com/kenyipp/realworld-nodejs-example-app/workflows/Continuous Integration/badge.svg" alt="Actions Status"></a>
-<a href="https://app.codacy.com/gh/kenyipp/realworld-nodejs-example-app/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade"><img src="https://img.shields.io/codacy/grade/d920979be4dc45feb55dcd462ef88229" /></a>
 <a href="https://codecov.io/gh/kenyipp/realworld-nodejs-example-app"><img src="https://codecov.io/gh/kenyipp/realworld-nodejs-example-app/branch/master/graph/badge.svg?token=AMBNXM57T8" alt="codecov"></a>
 <!-- Snyk.io vulnerabilities badge -->
 <a href="https://snyk.io/test/github/kenyipp/realworld-nodejs-example-app"><img src="https://snyk.io/test/github/kenyipp/realworld-nodejs-example-app/badge.svg" alt="Known Vulnerabilities"></a>
@@ -23,18 +22,18 @@ This repository has been approved and included on the <a href="https://codebase.
 <p align="center"> This repository has complete functionality — pull requests and issues are welcome! </p>
 
 <p align="center">
-	<a href="#demo">Demo</a>
-	<span>|</span>
-	<a href="#get_started">Get Started</a>
-	<span>|</span>
-	<a href="#architecture">Architecture</a>
-	<span>|</span>
-	<a href="#contributing">Contributing</a>
+<a href="#demo">Demo</a>
+<span>|</span>
+<a href="#get_started">Get Started</a>
+<span>|</span>
+<a href="#architecture">Architecture</a>
+<span>|</span>
+<a href="#contributing">Contributing</a>
 </p>
 
 ## Demo
 
-To demonstrate the functionality of the backend, we have deployed a live demo version of the application. You can visit the demo by following this link: [https://conduit-api-develop.kenyip.cc](https://conduit-api-develop.kenyip.cc).
+To demonstrate the functionality of the backend, we have deployed a live demo version of the application. You can visit the demo by following this link: [https://conduit-api-prod.kenyip.cc](https://conduit-api-prod.kenyip.cc).
 
 The API has several endpoints that you can test out using a tool like Postman or cURL. You can find the documentation for the API endpoints on the [API documentation page](https://conduit-api-develop.kenyip.cc). Feel free to use this endpoint to create your amazing frontend applications!
 

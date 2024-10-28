@@ -21,7 +21,11 @@
     "db:migrate": "turbo db:migrate",
     "spell-check": "cspell \"**\" --no-progress"
   },
-  "author": "",
+  "author": {
+    "name": "Ken Yip",
+    "email": "ken20206@gmail.com",
+    "url": "https://kenyip.cc"
+  },
   "license": "ISC",
   "packageManager": "yarn@1.22.19",
   "workspaces": [
