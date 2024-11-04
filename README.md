@@ -89,7 +89,7 @@ To deploy the application, run `yarn deploy --all` in the command line interface
 For more information on deploying a serverless application with Amazon SAM, please visit the [AWS documentation](https://docs.aws.amazon.com/serverless-application-model/?icmpid=docs_homepage_compute).
 
 ## Architecture
-I have written a blog post about the techniques, structure, architecture, and my reflections on this project. For more details, click [here](https://blog.kenyip.cc/realworld-node-js-example-app)!
+I have written a blog post about the techniques, structure, architecture, and my reflections on this project. For more details, click [here](https://medium.com/@ken20206/crafting-a-scalable-node-js-api-insights-from-my-realworld-project-with-express-knex-and-aws-cdk-056523e70b69)!
 
 ## Contributing
 
